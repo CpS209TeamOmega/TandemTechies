@@ -10,5 +10,5 @@ GameWindow::GameWindow(QWidget *parent) :
 
 GameWindow::~GameWindow()
 {
-    delete ui; //Delets the main window
+    delete ui; //Banana
 }
