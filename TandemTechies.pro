@@ -13,8 +13,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        gamewindow.cpp
+        gamewindow.cpp\
+        entity.cpp\
+        gamemodel.cpp\
+        player.cpp\
+        scoremanager.cpp
 
-HEADERS  += gamewindow.h
+HEADERS  += gamewindow.h\
+        entity.h\
+        gamemodel.h\
+        player.h\
+        scoremanager.h
 
 FORMS    += gamewindow.ui
+
+QMAKE_CXXFLAGS += -std=c++11
