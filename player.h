@@ -11,6 +11,9 @@ public:
     Player();
 
     void update();
+
+    //save the status of the player entity
+    void keepMeHere();
 };
 
 #endif // PLAYER_H
