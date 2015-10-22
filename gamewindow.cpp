@@ -10,5 +10,5 @@ GameWindow::GameWindow(QWidget *parent) :
 
 GameWindow::~GameWindow()
 {
-    delete ui; //Horror
+    delete ui; //Chicken
 }
