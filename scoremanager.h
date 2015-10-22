@@ -5,6 +5,7 @@ class ScoreManager
 {
 public:
     ScoreManager();
+
 };
 
 #endif // SCOREMANAGER_H
