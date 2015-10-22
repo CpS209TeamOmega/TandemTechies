@@ -5,8 +5,12 @@
 
 class Player : public Entity
 {
+    bool jumping, falling;
+
 public:
     Player();
+
+    void update();
 };
 
 #endif // PLAYER_H

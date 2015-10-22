@@ -3,3 +3,7 @@
 Player::Player()
 {
 }
+
+void Player::update() {
+
+}
