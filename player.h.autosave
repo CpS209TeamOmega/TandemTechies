@@ -8,7 +8,7 @@ class Player : public Entity
 public:
     Player();
 
-    //saves position and such of player entity
+    //saves position and such of player entityl
     void keepMeHere();
 };
 
