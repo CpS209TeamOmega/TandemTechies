@@ -17,13 +17,17 @@ SOURCES += main.cpp\
         entity.cpp\
         gamemodel.cpp\
         player.cpp\
-        scoremanager.cpp
+        scoremanager.cpp \
+    level.cpp \
+    block.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
         gamemodel.h\
         player.h\
-        scoremanager.h
+        scoremanager.h \
+    level.h \
+    block.h
 
 FORMS    += gamewindow.ui
 

@@ -10,5 +10,5 @@ GameWindow::GameWindow(QWidget *parent) :
 
 GameWindow::~GameWindow()
 {
-    delete ui; //Chick-fil-a sauce
+    delete ui;
 }

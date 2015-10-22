@@ -5,8 +5,12 @@
 
 class Player : public Entity
 {
+    bool jumping, falling;
+
 public:
     Player();
+
+    void update();
 
     //save the status of the player entity
     void keepMeHere();

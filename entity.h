@@ -15,7 +15,7 @@ public:
 
     bool isCollidingWith(Entity& otherEntity);
 
-    void update() = 0;
+    virtual void update() = 0;
 
     //Getters
     int getX() { return rect.x(); }
@@ -25,10 +25,10 @@ public:
     QRect getRect() { return rect; }
 
     //Setters
-    void setX(int newX) { x = newX; }
-    void setY(int newY) { y = newY; }
-    void setWidth(int newWidth) { width = newWidth; }
-    void setHeight(int newHeight) { height = newHeight; }
+    void setX(int newX) { rect.setX(newX); }
+    void setY(int newY) { rect.setY(newY); }
+    void setWidth(int newWidth) { rect.setWidth(newWidth); }
+    void setHeight(int newHeight) { rect.setHeight(newHeight); }
 };
 
 #endif // ENTITY_H
