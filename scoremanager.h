@@ -2,27 +2,22 @@
 #define SCOREMANAGER_H
 
 #include <QHash>
-#include <QtSql/QSqlDatabase>
 #include <QDebug>
-
+#include <QString>
 
 class ScoreManager
 {
 private:
-    QSqlDatabase db;
-    QHash<string, int> dashBoard;
-    QHash<string, int> scoreTable;
+    QHash<QString, int> dashBoard;
     int hiScore;
 
 public:
     ScoreManager();//create database, set everything, check open
 
     int getHiScore();//return the highest score ever
-    QHash<string, int> getTable();//return the records of scores and players(hashtable)
+    QHash<QString, int> getTable();//return the records of scores and players(hashtable)
 
-    bool addScore(string player, int score);//Add to scoreTable and update dashBoard
-
-    bool updateDash();//called whenever addScore is called
+    bool addScore(QString player, int score);//Add to scoreTable and update dashBoard
 };
 
 #endif // SCOREMANAGER_H

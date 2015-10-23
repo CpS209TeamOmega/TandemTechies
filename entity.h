@@ -10,9 +10,6 @@ class Entity
 public:
     Entity();
 
-    //save the status of an entity
-    virtual void keepMeHere();
-
     bool isCollidingWith(Entity& otherEntity);
 
     virtual void update() = 0;

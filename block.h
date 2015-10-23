@@ -7,6 +7,8 @@ class Block : public Entity
 {
 public:
     Block();
+
+    void update();
 };
 
 #endif // BLOCK_H

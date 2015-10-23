@@ -2,4 +2,9 @@
 
 Block::Block()
 {
+
+}
+
+void Block::update() {
+
 }
