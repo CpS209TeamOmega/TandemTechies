@@ -9,6 +9,8 @@ public:
     Block();
 
     void update();
+
+    void savePosition();
 };
 
 #endif // BLOCK_H

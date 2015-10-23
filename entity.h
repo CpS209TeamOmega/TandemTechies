@@ -14,6 +14,8 @@ public:
 
     virtual void update() = 0;
 
+    virtual void savePosition() = 0;
+
     //Getters
     int getX() { return rect.x(); }
     int getY() { return rect.y(); }
