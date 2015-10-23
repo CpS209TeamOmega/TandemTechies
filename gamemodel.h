@@ -6,16 +6,22 @@
 
 class GameModel
 {
-    QList<Level*> levels;
-    int currentLevel;
+    QList<Level*> levels; //All of the current levels loaded into memory
+    int currentLevel;     //The current level you are on in the levels QList
 
 public:
     GameModel();
 
+    //This method is called on every frame refresh.
     void update();
 
-    //save and load functions
+    //Resets the game, or basically creates a new game
+    void resetGame();
+
+    //Save game state
     void save();
+
+    //Load game state
     void load();
 };
 
