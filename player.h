@@ -6,6 +6,7 @@
 class Player : public Entity
 {
     bool jumping, falling;
+    int velocity;
 
 public:
     Player();
@@ -13,7 +14,7 @@ public:
     void update();
 
     //save the status of the player entity
-    void keepMeHere();
+    void savePosition();
 };
 
 #endif // PLAYER_H
