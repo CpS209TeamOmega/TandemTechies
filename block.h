@@ -9,7 +9,6 @@ public:
     Block();
 
     void update();
-
     void savePosition();
 };
 

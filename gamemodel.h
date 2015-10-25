@@ -9,6 +9,14 @@ class GameModel
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
 
+    //current mode
+    bool curMode;
+
+    //difficulty levels
+    bool easyMode;
+    bool normalMode;
+    bool hardMode;
+
 public:
     GameModel();
 
@@ -23,6 +31,16 @@ public:
 
     //Load game state
     void load();
+
+    //getters
+    int getLevel() { return currentLevel; }
+    bool getEasyMode() { return easyMode; }
+    bool getNormMode() { return normalMode; }
+    bool getHardMode() { return hardMode; }
+
+    //setters
+    void setMode(bool newCurMode) { curMode = newCurMode; }
+
 };
 
 #endif // GAMEMODEL_H

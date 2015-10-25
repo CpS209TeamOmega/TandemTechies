@@ -19,7 +19,8 @@ SOURCES += main.cpp\
         player.cpp\
         scoremanager.cpp \
     level.cpp \
-    block.cpp
+    block.cpp \
+    collectibles.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -27,7 +28,8 @@ HEADERS  += gamewindow.h\
         player.h\
         scoremanager.h \
     level.h \
-    block.h
+    block.h \
+    collectibles.h
 
 FORMS    += gamewindow.ui
 
