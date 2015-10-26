@@ -13,7 +13,6 @@ public:
     bool isCollidingWith(Entity& otherEntity);
 
     virtual void update() = 0;
-
     virtual void savePosition() = 0;
 
     //Getters

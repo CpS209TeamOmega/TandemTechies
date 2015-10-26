@@ -2,12 +2,15 @@
 
 Player::Player()
 {
-}
-
-void Player::update() {
 
 }
 
-void Player::savePosition() {
+void Player::update()
+{
+
+}
+
+void Player::savePosition()
+{
 
 }

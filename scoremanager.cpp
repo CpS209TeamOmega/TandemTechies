@@ -3,7 +3,8 @@
 
 ScoreManager::ScoreManager()
 {
-
+    curScore = 0;
+    highScore = 0;
 }
 
 int ScoreManager::getHiScore()
@@ -15,7 +16,6 @@ int ScoreManager::getHiScore()
         {
             highScore = dashBoard.value(i);
         }
-
     }
     return highScore;
 }
@@ -33,7 +33,6 @@ void ScoreManager::loadScores()
 {
     for(int i = 0; i < dashBoard.size() - 1; i++)
     {
-        dashBoard.next();
         //output stuff
     }
 }

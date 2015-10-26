@@ -6,24 +6,28 @@
 #include <QDebug>
 #include <QString>
 
+#include "block.h"
+#include "collectibles.h"
+
 class ScoreManager
 {
 private:
-    QString fileName = "scores.dat"; //The file to save the scores to
-    QHash<QString, int> dashBoard;   //The virtual score "dashboard"
+    //The file to save the scores to
+    QString fileName;
 
-    int curScore;                    //The current score in-game
-    int highScore;                   //The highest score  
-    int scorePlus;                   //amount added to curScore when something happens
+    //The virtual score "dashboard"
+    QHash<QString, int> dashBoard;
+
+    //The current score in-game
+    int curScore;
+    //The highest score
+    int highScore;
 
 public:
     ScoreManager();
 
     //return the highest score ever
     int getHiScore();
-
-    //return the records of scores and players
-    QHash<QString, int> getAllScores() { return dashBoard; }
 
     //Saves the scores to the file
     void saveScores();
@@ -32,10 +36,10 @@ public:
     void loadScores();
 
     //Adds a score to the list of high scores
-    bool addScore(QString player, int score);//Add to scoreTable and update dashBoard
+    bool addScore(QString player, int score);
 
     //getters
-    int getScore() { return currentScore; }
+    int getCurScore() { return curScore; }
     QHash<QString, int> getScores() { return dashBoard; }
 
     //setters

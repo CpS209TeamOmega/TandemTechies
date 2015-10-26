@@ -9,6 +9,9 @@ private:
     //whether or not a collectible has been collected
     bool collected;
 
+    //score that this entitiy adds to total score
+    int scorePlus;
+
 public:
     Collectibles();
 
@@ -22,13 +25,12 @@ public:
     bool getCollect();
     int getX() { return rect.x(); }
     int getY() { return rect.y(); }
-    int getScore() { return scorePlus; }
+    int getScorePlus() { return scorePlus; }
 
     //setters
     void setCollect(bool newBool) { collected = newbool; }
     void setX(int newX) { x = newX; }
     void setY(int newY) { y = newY; }
-    void setScore(int newScore) { scorePlus = newScore; }
 };
 
 #endif // COLLECTIBLES_H

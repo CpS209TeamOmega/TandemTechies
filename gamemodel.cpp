@@ -7,6 +7,12 @@ GameModel::GameModel()
     levels << level;
 }
 
-void GameModel::update() {
+void GameModel::update()
+{
     levels[currentLevel]->update();
+}
+
+void GameModel::resetGame()
+{
+
 }

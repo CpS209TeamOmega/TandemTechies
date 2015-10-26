@@ -1,15 +1,22 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "player.h"
+#include <QList>
+
+#include "entity.h"
 #include "block.h"
 #include "collectibles.h"
+#include "player.h"
 
 class Level
 {
     Player player;
-    Block **blocks;
-    QList<Collectibles *> collectibleList;//All of the collectibles within a level
+
+    //list of the blocks within a level
+    //these do not have the possibility of adding points
+    QList<Block *> blocks;
+    //list of the collectibles within a level
+    QList<Collectibles *> collectibles;
 
 public:
     Level();

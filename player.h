@@ -2,11 +2,15 @@
 #define PLAYER_H
 
 #include "entity.h"
+#include "block.h"
 
 class Player : public Entity
 {
     bool jumping, falling;
     int velocity;
+
+    //these have the possiblity of adding points
+    QList<Block *> blockInventory;
 
 public:
     Player();

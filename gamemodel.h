@@ -2,18 +2,24 @@
 #define GAMEMODEL_H
 
 #include <QList>
+
 #include "level.h"
+#include "scoremanager.h"
 
 class GameModel
 {
-    QList<Level*> levels; //All of the current levels loaded into memory
-    int currentLevel;     //The current level you are on in the levels QList
+    //All of the current levels loaded into memory
+    QList<Level*> levels;
+
+    //The current level you are on in the levels QList
+    int currentLevel;
 
     //current mode
     bool curMode;
 
     //difficulty levels
-    bool easyMode;
+    //if xMode == true.... apply things....
+    bool cheatMode;
     bool normalMode;
     bool hardMode;
 
@@ -34,7 +40,7 @@ public:
 
     //getters
     int getLevel() { return currentLevel; }
-    bool getEasyMode() { return easyMode; }
+    bool getCheatMode() { return cheatMode; }
     bool getNormMode() { return normalMode; }
     bool getHardMode() { return hardMode; }
 

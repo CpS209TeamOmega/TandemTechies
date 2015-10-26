@@ -5,6 +5,7 @@ Level::Level()
     delete[] blocks;
 }
 
-void Level::update() {
+void Level::update()
+{
 
 }
