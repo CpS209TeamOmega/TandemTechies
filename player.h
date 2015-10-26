@@ -9,7 +9,8 @@ class Player : public Entity
     int velocity;
 
 public:
-    Player();
+    Player() : Entity() { }
+    Player(int initX, int initY) : Entity(initX, initY) { }
 
     void update();
 

@@ -6,7 +6,9 @@
 class Block : public Entity
 {
 public:
-    Block();
+    Block() : Entity() { }
+    Block(int initX, int initY) : Entity(initX, initY) { }
+    ~Block() { }
 
     void update();
 

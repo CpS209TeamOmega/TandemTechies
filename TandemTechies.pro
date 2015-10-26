@@ -19,7 +19,8 @@ SOURCES += main.cpp\
         player.cpp\
         scoremanager.cpp \
     level.cpp \
-    block.cpp
+    block.cpp \
+    exit.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -27,8 +28,12 @@ HEADERS  += gamewindow.h\
         player.h\
         scoremanager.h \
     level.h \
-    block.h
+    block.h \
+    exit.h
 
 FORMS    += gamewindow.ui
 
 QMAKE_CXXFLAGS += -std=c++11
+
+RESOURCES += \
+    resources.qrc

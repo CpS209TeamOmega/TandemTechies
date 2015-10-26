@@ -5,10 +5,13 @@
 
 class Entity
 {
+    static int SIZE;
     QRect rect;
 
 public:
-    Entity();
+    Entity() : rect(0, 0, SIZE, SIZE) { }
+    Entity(int initX, int initY) : rect(initX, initY, SIZE, SIZE) { }
+    virtual ~Entity() { }
 
     bool isCollidingWith(Entity& otherEntity);
 
