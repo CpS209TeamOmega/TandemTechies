@@ -7,6 +7,8 @@
 #include <QString>
 #include <QList>
 
+class Entity;
+
 class Level
 {
     Player* player;
@@ -24,6 +26,8 @@ public:
 
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
+
+    Player& getPlayer() { return *player; }
 };
 
 #endif // LEVEL_H

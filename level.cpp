@@ -1,3 +1,4 @@
+#include "entity.h"
 #include "level.h"
 #include <QDebug>
 
@@ -34,11 +35,11 @@ void Level::load(QList<QString> data) {
         for(int x = 0; x < data[y].length(); x++) {
             QChar type = data[y].at(x);
             if(type == 'b') {
-                list << new Block(x, y);
+                list << new Block(this, x, y);
             } else if(type == 'p') {
-                player = new Player(x, y);
+                player = new Player(this, x, y);
             } else if(type == 'x') {
-                exit = new Exit(x, y);
+                exit = new Exit(this, x, y);
             } else if(type == ' ') {
                 list << nullptr;
             }

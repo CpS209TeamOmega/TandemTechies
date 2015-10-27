@@ -3,11 +3,10 @@
 
 #include "entity.h"
 
-class Exit : public Entity
-{
+class Exit : public Entity {
 public:
-    Exit() : Entity() { }
-    Exit(int initX, int initY) : Entity(initX, initY) { }
+    Exit(Level* initLevel) : Entity(initLevel) { }
+    Exit(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
 
     void update();
 

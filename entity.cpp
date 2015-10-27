@@ -1,3 +1,4 @@
+#include "level.h"
 #include "entity.h"
 
 int Entity::SIZE = 32;

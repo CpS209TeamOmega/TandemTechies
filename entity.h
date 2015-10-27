@@ -3,15 +3,19 @@
 
 #include <QRect>
 
+class Level;
+
 class Entity
 {
     static int SIZE;
+
+protected:
+    Level* level;
     QRect rect;
 
 public:
-    Entity() : rect(0, 0, SIZE, SIZE) { }
-    Entity(int initX, int initY) : rect(initX, initY, SIZE, SIZE) { }
-    virtual ~Entity() { }
+    Entity(Level* initLevel) : level(initLevel), rect(0, 0, SIZE, SIZE) { }
+    Entity(Level* initLevel, int initX, int initY) : level(initLevel), rect(initX, initY, SIZE, SIZE) { }
 
     bool isCollidingWith(Entity& otherEntity);
 

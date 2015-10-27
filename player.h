@@ -3,14 +3,13 @@
 
 #include "entity.h"
 
-class Player : public Entity
-{
+class Player : public Entity {
     bool jumping, falling;
     int velocity;
 
 public:
-    Player() : Entity() { }
-    Player(int initX, int initY) : Entity(initX, initY) { }
+    Player(Level* initLevel) : Entity(initLevel) { }
+    Player(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
 
     void update();
 
