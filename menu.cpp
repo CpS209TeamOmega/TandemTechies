@@ -1,3 +1,8 @@
+//**********************************************************
+// File: menu.cpp
+// Desc: The game menu's implementation
+//**********************************************************
+
 #include "menu.h"
 #include "ui_menu.h"
 
@@ -7,6 +12,7 @@ Menu::Menu(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::WindowStaysOnTopHint);
+    setWindowModality(Qt::ApplicationModal);
 }
 
 Menu::~Menu()

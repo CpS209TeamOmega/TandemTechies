@@ -1,3 +1,8 @@
+//**********************************************************
+// File: level.cpp
+// Desc: The implementation of the level class
+//**********************************************************
+
 #include "entity.h"
 #include "level.h"
 #include "gamewindow.h"
@@ -19,6 +24,7 @@ Level::~Level() {
 }
 
 void Level::update() {
+    //Update all objects in the game
     for(int y = 0; y < blocks.size(); y++) {
         for(int x = 0; x < blocks[y].size(); x++) {
             if(blocks[y][x] != nullptr) {
@@ -29,6 +35,7 @@ void Level::update() {
     player->update();
     exit->update();
 
+    //Update the x and y offsets relative to the player
     xOffs = player->getX() - (GameWindow::WIDTH / 2);
     yOffs = player->getY() - (GameWindow::HEIGHT / 2);
 }
