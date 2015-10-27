@@ -35,11 +35,11 @@ void Level::load(QList<QString> data) {
         for(int x = 0; x < data[y].length(); x++) {
             QChar type = data[y].at(x);
             if(type == 'b') {
-                list << new Block(this, x, y);
+                list << new Block(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == 'p') {
-                player = new Player(this, x, y);
+                player = new Player(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == 'x') {
-                exit = new Exit(this, x, y);
+                exit = new Exit(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == ' ') {
                 list << nullptr;
             }

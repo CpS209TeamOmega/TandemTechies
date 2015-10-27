@@ -7,10 +7,6 @@ GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
-
-    if(!loadLevels()) {
-        qDebug() << "Unable to load levels!";
-    }
 }
 
 void GameModel::update() {

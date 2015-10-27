@@ -28,6 +28,7 @@ public:
     void setNumBlocks(int newNum) { numBlocks = newNum; }
 
     Player& getPlayer() { return *player; }
+    QList<QList<Block*>>& getBlocks() { return blocks; }
 };
 
 #endif // LEVEL_H

@@ -7,8 +7,6 @@ class Level;
 
 class Entity
 {
-    static int SIZE;
-
 protected:
     Level* level;
     QRect rect;
@@ -35,6 +33,8 @@ public:
     void setY(int newY) { rect.setY(newY); }
     void setWidth(int newWidth) { rect.setWidth(newWidth); }
     void setHeight(int newHeight) { rect.setHeight(newHeight); }
+
+    static int SIZE;
 };
 
 #endif // ENTITY_H
