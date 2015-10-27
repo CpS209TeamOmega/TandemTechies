@@ -1,9 +1,18 @@
+//**********************************************************
+// File: gamemodel.h
+// Desc: This is the model of the entire game. It includes
+//          all of the game levels, the current level, and
+//          methods to update and edit the game data.
+//**********************************************************
+
 #ifndef GAMEMODEL_H
 #define GAMEMODEL_H
 
 #include <QList>
 #include "level.h"
 
+//The class containing all the data and methods
+//for the entire game.
 class GameModel
 {
     QList<Level*> levels; //All of the current levels loaded into memory
