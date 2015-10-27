@@ -8,6 +8,7 @@ class Player : public Entity
     bool jumping, falling;
     int velocity;
 
+
 public:
     Player();
 

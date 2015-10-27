@@ -19,7 +19,9 @@ SOURCES += main.cpp\
         player.cpp\
         scoremanager.cpp \
     level.cpp \
-    block.cpp
+    block.cpp \
+    inputhandler.cpp \
+    menu.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -27,8 +29,11 @@ HEADERS  += gamewindow.h\
         player.h\
         scoremanager.h \
     level.h \
-    block.h
+    block.h \
+    inputhandler.h \
+    menu.h
 
-FORMS    += gamewindow.ui
+FORMS    += gamewindow.ui \
+    menu.ui
 
 QMAKE_CXXFLAGS += -std=c++11

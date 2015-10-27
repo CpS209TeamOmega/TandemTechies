@@ -14,6 +14,8 @@ public:
     ~Level();
 
     void update();
+
+    void playerMvmnt();
 };
 
 #endif // LEVEL_H

@@ -2,6 +2,7 @@
 #define GAMEMODEL_H
 
 #include <QList>
+
 #include "level.h"
 
 class GameModel
@@ -17,6 +18,8 @@ public:
     //save and load functions
     void save();
     void load();
+
+    void playerInput(int p);
 };
 
 #endif // GAMEMODEL_H
