@@ -32,6 +32,9 @@ public:
     //<initY> The starting y position
     Entity(Level* initLevel, int initX, int initY) : level(initLevel), rect(initX, initY, SIZE, SIZE), buddy(nullptr) { }
 
+    //Destructor for entity class
+    virtual ~Entity() { }
+
     //Tests is the entity is touching any other entity
     //<otherEntity> The  entity to test if it's colliding
     bool isCollidingWith(Entity* otherEntity);

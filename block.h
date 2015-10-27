@@ -23,6 +23,9 @@ public:
     //<initY> The starting y position of the exit
     Block(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
 
+    //Destructor for block
+    ~Block() { }
+
     //Updates the block. All that is done here is setting
     //the position of the block to reflect the player's position
     void update();

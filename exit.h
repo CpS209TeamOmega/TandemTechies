@@ -22,6 +22,9 @@ public:
     //<initY> The starting y position of the exit
     Exit(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
 
+    //Destructor for exit
+    ~Exit() { }
+
     //Checks to see if the player is touching the exit,
     //then sets the level to finished.
     void update();
