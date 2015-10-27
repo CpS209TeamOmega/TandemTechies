@@ -2,6 +2,9 @@
 #include "ui_gamewindow.h"
 #include <QLabel>
 #include <QDebug>
+#include <QObject>
+
+#include <QKeyEvent>
 
 int GameWindow::WIDTH = 1024;
 int GameWindow::HEIGHT = 768;
@@ -11,7 +14,14 @@ GameWindow::GameWindow(QWidget *parent) :
     ui(new Ui::GameWindow)
 {
     ui->setupUi(this);
+
     setFixedSize(WIDTH, HEIGHT);
+
+    QObject::connect(&menu, SIGNAL(startGame()), this, SLOT(start()));
+    QObject::connect(&menu, SIGNAL(loadGame()), this, SLOT(load()));
+    QObject::connect(&menu, SIGNAL(exitGame()), this, SLOT(exit()));
+
+
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -56,6 +66,9 @@ GameWindow::GameWindow(QWidget *parent) :
          connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
          timer->start();
     }
+
+    menu.show();
+
 }
 
 void GameWindow::timerHit() {
@@ -65,4 +78,27 @@ void GameWindow::timerHit() {
 GameWindow::~GameWindow()
 {
     delete ui;
+}
+
+void GameWindow::start(){
+    qDebug() << "start signal recieved";
+    this->show();
+}
+
+void GameWindow::load(){
+    qDebug() << "load signal recieved";
+    this->show();
+}
+
+void GameWindow::exit(){
+    qDebug() << "exit signal recieved";
+    this->close();
+}
+
+void GameWindow::keyPressEvent(QKeyEvent *k){
+    model.playerInputP(k->key());
+}
+
+void GameWindow::keyReleaseEvent(QKeyEvent *k){
+    model.playerInputR(k->key());
 }
