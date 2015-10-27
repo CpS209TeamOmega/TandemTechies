@@ -3,6 +3,6 @@
 
 int Entity::SIZE = 64;
 
-bool Entity::isCollidingWith(Entity &otherEntity) {
-    return rect.intersects(otherEntity.getRect());
+bool Entity::isCollidingWith(Entity *otherEntity) {
+    return rect.intersects(otherEntity->getRect());
 }

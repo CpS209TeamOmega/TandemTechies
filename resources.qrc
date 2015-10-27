@@ -3,5 +3,6 @@
         <file>images/player.png</file>
         <file>images/block.png</file>
         <file>levels.dat</file>
+        <file>images/exit.png</file>
     </qresource>
 </RCC>

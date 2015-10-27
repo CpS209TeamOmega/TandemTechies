@@ -1,5 +1,6 @@
 #include "entity.h"
 #include "level.h"
+#include "gamewindow.h"
 #include <QDebug>
 
 Level::Level(QList<QString> data)
@@ -27,6 +28,9 @@ void Level::update() {
     }
     player->update();
     exit->update();
+
+    xOffs = player->getX() - (GameWindow::WIDTH / 2);
+    yOffs = player->getY() - (GameWindow::HEIGHT / 2);
 }
 
 void Level::load(QList<QString> data) {
