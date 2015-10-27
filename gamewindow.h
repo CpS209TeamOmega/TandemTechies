@@ -25,6 +25,14 @@ public:
 
 private:
     Ui::GameWindow *ui;
+
+private slots:
+    void start();
+    void load();
+    void exit();
+    void keyPressEvent(QKeyEvent *k);
+    void keyReleaseEvent(QKeyEvent *k);
+
 };
 
 #endif // GAMEWINDOW_H

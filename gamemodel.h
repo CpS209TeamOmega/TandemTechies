@@ -28,7 +28,9 @@ public:
     void load();
 
 
-    void playerInput(int p);
+    void playerInputP(int p);
+    void playerInputR(int r);
+
 
     //Loads the levels into the game so we can actually play
     bool loadLevels();
