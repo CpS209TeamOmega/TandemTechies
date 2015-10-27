@@ -51,3 +51,46 @@ GameModel::~GameModel() {
         delete levels[i];
     }
 }
+
+void GameModel::playerInputP(int p){
+    switch (p){
+    case Qt::Key_Up:
+        qDebug() << "U key pressed";
+        break;
+    case Qt::Key_Down:
+        qDebug() << "D key pressed";
+        break;
+    case Qt::Key_Left:
+        qDebug() << "L key pressed";
+        break;
+    case Qt::Key_Right:
+        qDebug() << "R key pressed";
+        break;
+    default:
+
+        break;
+    }
+}
+
+
+void GameModel::playerInputR(int r){
+    switch (r){
+    case Qt::Key_Up:
+        qDebug() << "U key released";
+        break;
+    case Qt::Key_Down:
+        qDebug() << "D key released";
+        break;
+    case Qt::Key_Left:
+        qDebug() << "L key released";
+        //levels.at(currentLevel)->getPlayer().setX(levels.at(currentLevel)->getPlayer().getX()-1);
+
+        break;
+    case Qt::Key_Right:
+        qDebug() << "R key released";
+        break;
+    default:
+
+        break;
+    }
+}

@@ -29,6 +29,10 @@ public:
     ~Level();
 
     void update();
+
+
+    void playerMvmnt();
+
     void load(QList<QString> data);
 
     void setName(QString newName) { name = newName; }
@@ -37,8 +41,10 @@ public:
     Player* getPlayer() { return player; }
     Exit* getExit() { return exit; }
     QList<QList<Block*>>& getBlocks() { return blocks; }
+
     int getXOffs() { return xOffs; }
     int getYOffs() { return yOffs; }
+
 };
 
 #endif // LEVEL_H

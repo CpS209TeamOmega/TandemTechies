@@ -10,6 +10,9 @@
 #include <QTimer>
 #include "gamemodel.h"
 
+#include "gamemodel.h"
+#include "menu.h"
+
 namespace Ui {
 class GameWindow;
 }
@@ -18,9 +21,11 @@ class GameWindow : public QMainWindow
 {
     Q_OBJECT
 
-    GameModel model;        //So we can access the framework or model of the game
-    int fps = 20;           //The frames per second of the game - it is very low
-                            //    because we are not using the graphics card
+    GameModel model;
+    Menu menu;
+
+    int fps = 20;
+
 
 public:
     explicit GameWindow(QWidget *parent = 0);
@@ -34,6 +39,14 @@ public slots:
 
 private:
     Ui::GameWindow *ui;
+
+private slots:
+    void start();
+    void load();
+    void exit();
+    void keyPressEvent(QKeyEvent *k);
+    void keyReleaseEvent(QKeyEvent *k);
+
 };
 
 #endif // GAMEWINDOW_H

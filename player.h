@@ -7,6 +7,7 @@ class Player : public Entity {
     bool jumping, falling;
     int velocity;
 
+
 public:
     Player(Level* initLevel) : Entity(initLevel) { }
     Player(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
