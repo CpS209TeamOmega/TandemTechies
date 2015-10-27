@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QMainWindow>
+#include "gamemodel.h"
 
 #include "gamemodel.h"
 #include "menu.h"
@@ -16,6 +17,7 @@ class GameWindow : public QMainWindow
 
     GameModel model;
     Menu menu;
+
 
 public:
     explicit GameWindow(QWidget *parent = 0);

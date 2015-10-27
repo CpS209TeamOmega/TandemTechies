@@ -1,10 +1,10 @@
+#include "level.h"
 #include "block.h"
 
-Block::Block()
-{
+void Block::update() {
 
 }
 
-void Block::update() {
+void Block::savePosition() {
 
 }

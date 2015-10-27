@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     level.cpp \
     block.cpp \
     inputhandler.cpp \
-    menu.cpp
+    menu.cpp \
+    exit.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -31,9 +32,14 @@ HEADERS  += gamewindow.h\
     level.h \
     block.h \
     inputhandler.h \
-    menu.h
+    menu.h \
+    exit.h
+
 
 FORMS    += gamewindow.ui \
     menu.ui
 
 QMAKE_CXXFLAGS += -std=c++11
+
+RESOURCES += \
+    resources.qrc

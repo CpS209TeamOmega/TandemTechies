@@ -8,15 +8,26 @@
 class ScoreManager
 {
 private:
-    QHash<QString, int> dashBoard;
-    int hiScore;
+    QString fileName = "scores.dat"; //The file to save the scores to
+    QHash<QString, int> dashBoard;   //The virtual score "dashboard"
+    int currentScore;                //The current score in-game
 
 public:
-    ScoreManager();//create database, set everything, check open
+    ScoreManager();
 
-    int getHiScore();//return the highest score ever
-    QHash<QString, int> getTable();//return the records of scores and players(hashtable)
+    //return the highest score ever
+    int getHiScore();
 
+    //return the records of scores and players
+    QHash<QString, int> getAllScores();
+
+    //Saves the scores to the file
+    void saveScores();
+
+    //Loads all of the scores from file
+    void loadScores();
+
+    //Adds a score to the list of high scores
     bool addScore(QString player, int score);//Add to scoreTable and update dashBoard
 };
 
