@@ -16,6 +16,8 @@ class Level
     QList<QList<Block*>> blocks;
     int numBlocks;
     QString name;
+    int xOffs;
+    int yOffs;
 
 public:
     Level(QList<QString> data);
@@ -31,8 +33,12 @@ public:
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
 
-    Player& getPlayer() { return *player; }
+    Player* getPlayer() { return player; }
+    Exit* getExit() { return exit; }
     QList<QList<Block*>>& getBlocks() { return blocks; }
+
+    int getXOffs() { return xOffs; }
+    int getYOffs() { return yOffs; }
 
 };
 

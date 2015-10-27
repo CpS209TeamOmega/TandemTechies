@@ -6,13 +6,16 @@
 
 #include <QKeyEvent>
 
+int GameWindow::WIDTH = 1024;
+int GameWindow::HEIGHT = 768;
+
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow)
 {
     ui->setupUi(this);
 
-    setFixedSize(1024, 768);
+    setFixedSize(WIDTH, HEIGHT);
 
     QObject::connect(&menu, SIGNAL(startGame()), this, SLOT(start()));
     QObject::connect(&menu, SIGNAL(loadGame()), this, SLOT(load()));
@@ -34,22 +37,42 @@ GameWindow::GameWindow(QWidget *parent) :
                        lbl->setGeometry(b->getX(), b->getY(), b->getWidth(), b->getHeight());
                        lbl->setPixmap(blockPic);
                        lbl->setScaledContents(true);
+                       b->setBuddy(lbl);
                        lbl->show();
                  }
              }
          }
 
-         Player p = model.getCurrentLevel()->getPlayer();
+         Player* p = model.getCurrentLevel()->getPlayer();
          QLabel* plbl = new QLabel(this);
-         plbl->setGeometry(p.getX(), p.getY(), p.getWidth(), p.getHeight());
+         plbl->setGeometry(p->getRect());
          QPixmap playerPic(":/images/player.png");
          plbl->setPixmap(playerPic);
          plbl->setScaledContents(true);
+         p->setBuddy(plbl);
          plbl->show();
+
+         Exit* e = model.getCurrentLevel()->getExit();
+         QLabel* elbl = new QLabel(this);
+         elbl->setGeometry(e->getRect());
+         QPixmap exitPic(":/images/exit.png");
+         elbl->setPixmap(exitPic);
+         elbl->setScaledContents(true);
+         e->setBuddy(elbl);
+         elbl->show();
+
+         QTimer *timer = new QTimer(this);
+         timer->setInterval(1000 / fps);
+         connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
+         timer->start();
     }
 
     menu.show();
 
+}
+
+void GameWindow::timerHit() {
+    model.update();
 }
 
 GameWindow::~GameWindow()
