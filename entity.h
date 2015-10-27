@@ -3,12 +3,17 @@
 
 #include <QRect>
 
+class Level;
+
 class Entity
 {
+protected:
+    Level* level;
     QRect rect;
 
 public:
-    Entity();
+    Entity(Level* initLevel) : level(initLevel), rect(0, 0, SIZE, SIZE) { }
+    Entity(Level* initLevel, int initX, int initY) : level(initLevel), rect(initX, initY, SIZE, SIZE) { }
 
     bool isCollidingWith(Entity& otherEntity);
 
@@ -28,6 +33,8 @@ public:
     void setY(int newY) { rect.setY(newY); }
     void setWidth(int newWidth) { rect.setWidth(newWidth); }
     void setHeight(int newHeight) { rect.setHeight(newHeight); }
+
+    static int SIZE;
 };
 
 #endif // ENTITY_H
