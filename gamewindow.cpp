@@ -1,3 +1,9 @@
+//**********************************************************
+// File: gamewindow.cpp
+// Desc: The main window of the entire game - for the actual
+//          graphics and such of the game
+//**********************************************************
+
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
 #include <QLabel>
@@ -6,7 +12,10 @@
 
 #include <QKeyEvent>
 
+//The default width of the game
 int GameWindow::WIDTH = 1024;
+
+//The default height
 int GameWindow::HEIGHT = 768;
 
 GameWindow::GameWindow(QWidget *parent) :
@@ -22,44 +31,29 @@ GameWindow::GameWindow(QWidget *parent) :
     QObject::connect(&menu, SIGNAL(exitGame()), this, SLOT(exit()));
 
 
+    blockImg.load(":/images/block.png");
+    playerImg.load(":/images/player.png");
+    exitImg.load(":/images/exit.png");
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
-        deleteLater();
+        exit();
     } else {
-         QPixmap blockPic(":/images/block.png");
          auto blocks = model.getCurrentLevel()->getBlocks();
          for(int y = 0; y < blocks.size(); y++) {
              for(int x = 0; x < blocks[y].size(); x++) {
                  if(blocks[y][x] != nullptr) {
                        Block* b = blocks[y][x];
-                       QLabel* lbl = new QLabel(this);
-                       lbl->setGeometry(b->getX(), b->getY(), b->getWidth(), b->getHeight());
-                       lbl->setPixmap(blockPic);
-                       lbl->setScaledContents(true);
-                       b->setBuddy(lbl);
-                       lbl->show();
+                       makeLabel(b, blockImg);
                  }
              }
          }
 
          Player* p = model.getCurrentLevel()->getPlayer();
-         QLabel* plbl = new QLabel(this);
-         plbl->setGeometry(p->getRect());
-         QPixmap playerPic(":/images/player.png");
-         plbl->setPixmap(playerPic);
-         plbl->setScaledContents(true);
-         p->setBuddy(plbl);
-         plbl->show();
+         makeLabel(p, playerImg);
 
          Exit* e = model.getCurrentLevel()->getExit();
-         QLabel* elbl = new QLabel(this);
-         elbl->setGeometry(e->getRect());
-         QPixmap exitPic(":/images/exit.png");
-         elbl->setPixmap(exitPic);
-         elbl->setScaledContents(true);
-         e->setBuddy(elbl);
-         elbl->show();
+         makeLabel(e, exitImg);
 
          QTimer *timer = new QTimer(this);
          timer->setInterval(1000 / fps);
@@ -69,6 +63,15 @@ GameWindow::GameWindow(QWidget *parent) :
 
     menu.show();
 
+}
+
+void GameWindow::makeLabel(Entity* e, QPixmap image) {
+    QLabel* lbl = new QLabel(this);
+    lbl->setGeometry(e->getRect());
+    lbl->setPixmap(image);
+    lbl->setScaledContents(true);
+    e->setBuddy(lbl);
+    lbl->show();
 }
 
 void GameWindow::timerHit() {

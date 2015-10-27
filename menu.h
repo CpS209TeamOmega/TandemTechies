@@ -1,3 +1,9 @@
+//**********************************************************
+// File: menu.h
+// Desc: This class is the implementation of the game menu.
+//          It contains buttons for operations on the game
+//**********************************************************
+
 #ifndef MENU_H
 #define MENU_H
 

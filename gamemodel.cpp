@@ -1,3 +1,8 @@
+//**********************************************************
+// File: gamemodel.cpp
+// Desc: The implementation of the class that manages the game
+//**********************************************************
+
 #include "gamemodel.h"
 #include <QFile>
 #include <QDebug>
@@ -14,30 +19,30 @@ void GameModel::update() {
 }
 
 bool GameModel::loadLevels() {
-    QFile loadFile(levelDataFile);
-    if(!loadFile.open(QIODevice::ReadOnly)) {
+    QFile loadFile(levelDataFile); //Locates and opens the level data file
+    if(!loadFile.open(QIODevice::ReadOnly)) { //Makes sure it opened
         return false;
     }
 
-    QList<QString> levelData;
-    int numberBlocks;
-    QString levelName;
+    QList<QString> levelData;   //The strings of data for the level
+    int numberBlocks;           //Number of moveable blocks
+    QString levelName;          //The name of the level
 
-    QTextStream in(&loadFile);
-    while(!in.atEnd()) {
+    QTextStream in(&loadFile);  //To read the text in the file
+    while(!in.atEnd()) {        //Read until end of file
         QString line = in.readLine();
 
-        if(line.startsWith("level")) {
+        if(line.startsWith("level")) { //Start a new level and get the level's name
             levelName = line.mid(6);
-        } else if(line.startsWith("blocks")) {
+        } else if(line.startsWith("blocks")) { //How many moveable blocks are in the file
             numberBlocks = line.mid(7).toInt();
-        } else if(line.startsWith("endlevel")) {
+        } else if(line.startsWith("endlevel")) { //Creates the level
             Level* level = new Level(levelData);
             level->setNumBlocks(numberBlocks);
             level->setName(levelName);
-            levels << level;
+            levels << level;                     //Store the level in the gamemodel's list
 
-            levelData.clear();
+            levelData.clear();                   //Get ready for reading another level
         } else if(!line.isEmpty()) {
             levelData << line;
         }
