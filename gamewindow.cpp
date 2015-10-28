@@ -26,10 +26,10 @@ GameWindow::GameWindow(QWidget *parent) :
 
     setFixedSize(WIDTH, HEIGHT);
 
+    //Connect slots with signal from Menu
     QObject::connect(&menu, SIGNAL(startGame()), this, SLOT(start()));
     QObject::connect(&menu, SIGNAL(loadGame()), this, SLOT(load()));
     QObject::connect(&menu, SIGNAL(exitGame()), this, SLOT(exit()));
-
 
     blockImg.load(":/images/block.png");
     playerImg.load(":/images/player.png");
@@ -83,21 +83,24 @@ GameWindow::~GameWindow()
     delete ui;
 }
 
+//Menu Signal Receiver
 void GameWindow::start(){
-    qDebug() << "start signal recieved";
+    qDebug() << "start signal received";
     this->show();
 }
 
 void GameWindow::load(){
-    qDebug() << "load signal recieved";
+    qDebug() << "load signal received";
     this->show();
 }
 
 void GameWindow::exit(){
-    qDebug() << "exit signal recieved";
+    qDebug() << "exit signal received";
     this->close();
 }
 
+//Key Event
+//<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
     model.playerInputP(k->key());
 }

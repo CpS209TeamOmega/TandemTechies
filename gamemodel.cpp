@@ -57,7 +57,7 @@ GameModel::~GameModel() {
     }
 }
 
-void GameModel::playerInputP(int p){
+void GameModel::playerInputP(int p){//Press Event Handler
     switch (p){
     case Qt::Key_Up:
         qDebug() << "U key pressed";
@@ -78,7 +78,7 @@ void GameModel::playerInputP(int p){
 }
 
 
-void GameModel::playerInputR(int r){
+void GameModel::playerInputR(int r){//Release Event Handler
     switch (r){
     case Qt::Key_Up:
         qDebug() << "U key released";
