@@ -55,6 +55,7 @@ public:
     //Setters
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
+    void setFinished(bool newFinished) { finished = newFinished; }
 
     //Getters
     Player* getPlayer() { return player; }
@@ -62,6 +63,7 @@ public:
     QList<QList<Block*>>& getBlocks() { return blocks; }
     int getXOffs() { return xOffs; }
     int getYOffs() { return yOffs; }
+    bool isFinished() { return finished; }
 
 };
 

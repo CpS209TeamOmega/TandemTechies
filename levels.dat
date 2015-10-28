@@ -13,9 +13,9 @@ level First steps
 blocks 4
 bbbbbbbbbbbb
 b          b
-b         xb
-b       bbbb
 b          b
+b       bbbb
+b         xb
 bp         b
 bbbbbbbbbbbb
 endlevel

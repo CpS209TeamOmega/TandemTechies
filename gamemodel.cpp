@@ -11,12 +11,30 @@
 GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
-    currentLevel = 1;
+    currentLevel = 0;
 }
 
 void GameModel::update()
 {
     levels[currentLevel]->update();
+
+    if(levels[currentLevel]->isFinished()) {
+        levels[currentLevel]->setFinished(false);
+        currentLevel++;
+        if(currentLevel >= levels.size()) {
+            currentLevel = 0;
+            resetGame();
+        }
+        updateGUI = true;
+    }
+}
+
+void GameModel::resetGame() {
+    for(int i = 0; i < levels.size(); i++) {
+        delete levels[i];
+    }
+    levels.clear();
+    loadLevels();
 }
 
 bool GameModel::loadLevels() {

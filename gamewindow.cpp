@@ -9,7 +9,7 @@
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
-
+#include <QObjectList>
 #include <QKeyEvent>
 
 //The default width of the game
@@ -39,30 +39,13 @@ GameWindow::GameWindow(QWidget *parent) :
         qDebug() << "Couldn't load the levels!";
         exit();
     } else {
-         auto blocks = model.getCurrentLevel()->getBlocks();
-         for(int y = 0; y < blocks.size(); y++) {
-             for(int x = 0; x < blocks[y].size(); x++) {
-                 if(blocks[y][x] != nullptr) {
-                       Block* b = blocks[y][x];
-                       makeLabel(b, blockImg);
-                 }
-             }
-         }
-
-         Player* p = model.getCurrentLevel()->getPlayer();
-         makeLabel(p, playerImg);
-
-         Exit* e = model.getCurrentLevel()->getExit();
-         makeLabel(e, exitImg);
+         updateGUI();
 
          QTimer *timer = new QTimer(this);
          timer->setInterval(1000 / fps);
          connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
          timer->start();
     }
-
-
-
 }
 
 void GameWindow::makeLabel(Entity* e, QPixmap image) {
@@ -74,8 +57,40 @@ void GameWindow::makeLabel(Entity* e, QPixmap image) {
     lbl->show();
 }
 
+void GameWindow::updateGUI() {
+    QObjectList objects = children();
+    for(QObject* object : objects) {
+        QLabel* lbl = dynamic_cast<QLabel*>(object);
+        if(lbl != nullptr) {
+            lbl->deleteLater();
+        }
+    }
+
+    Level* lvl = model.getCurrentLevel();
+
+    auto blocks = lvl->getBlocks();
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            if(blocks[y][x] != nullptr) {
+                  Block* b = blocks[y][x];
+                  makeLabel(b, blockImg);
+            }
+        }
+    }
+
+    Player* p = lvl->getPlayer();
+    makeLabel(p, playerImg);
+
+    Exit* e = lvl->getExit();
+    makeLabel(e, exitImg);
+}
+
 void GameWindow::timerHit() {
     model.update();
+    if(model.mustUpdateGUI()) {
+        updateGUI();
+        model.setUpdateGUI(false);
+    }
 }
 
 GameWindow::~GameWindow()
