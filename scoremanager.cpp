@@ -1,7 +1,14 @@
+//**********************************************************
+// File: scoremanager.cpp
+// Desc: The implementation of the score manager
+//**********************************************************
+
 #include "scoremanager.h"
+
 #include <QtSql/QSqlDatabase>
 #include <QFile>
 #include <QDebug>
+
 
 ScoreManager::ScoreManager()
 {

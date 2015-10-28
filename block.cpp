@@ -1,21 +1,14 @@
+//**********************************************************
+// File: block.cpp
+// Desc: The implementation of the block class
+//**********************************************************
+
+#include "level.h"
 #include "block.h"
 
-Block::Block()
-{
-    placeable = false;
-}
-
-int Block::toBeAdded()
-{
-    if(placeable == true)
-    {
-        scorePlus = 100;
-    }
-}
-
-void Block::update()
-{
-
+void Block::update() {
+    buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
+>>>>>>> upstream/master
 }
 
 void Block::savePosition()

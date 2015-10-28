@@ -1,3 +1,10 @@
+//**********************************************************
+// File: gamemodel.h
+// Desc: This is the model of the entire game. It includes
+//          all of the game levels, the current level, and
+//          methods to update and edit the game data.
+//**********************************************************
+
 #ifndef GAMEMODEL_H
 #define GAMEMODEL_H
 
@@ -6,28 +13,25 @@
 #include "level.h"
 #include "scoremanager.h"
 
+//The class containing all the data and methods
+//for the entire game.
 class GameModel
 {
-    //All of the current levels loaded into memory
-    QList<Level*> levels;
-
     //The current level you are on in the levels QList
     int currentLevel;
 
-    enum Mode {CHEAT, NORMAL, HARD};
-    Mode gameMode;
+    QList<Level*> levels; //All of the current levels loaded into memory
+    int currentLevel;     //The current level you are on in the levels QList
+    QString levelDataFile;
+    ScoreManager sm;      //The Score Manager
 
-    //current mode
-    bool curMode;
-
-    //difficulty levels
-    //if xMode == true.... apply things....
-    bool cheatMode;
-    bool normalMode;
-    bool hardMode;
+    //Game State  <---------Add more to here
+    bool isFinished;
+    bool isStarted;
 
 public:
     GameModel();
+    ~GameModel();
 
     //This method is called on every frame refresh.
     void update();
@@ -41,6 +45,7 @@ public:
     //Load game state
     void load();
 
+<<<<<<< HEAD
     //getters
     int getLevel() { return currentLevel; }
     bool getCheatMode() { return cheatMode; }
@@ -49,6 +54,18 @@ public:
 
     //setters
     void setMode(bool newCurMode) { curMode = newCurMode; }
+=======
+    //Keyboard Press/Release Event
+    void playerInputP(int p);
+    void playerInputR(int r);
+
+
+    //Loads the levels into the game so we can actually play
+    bool loadLevels();
+
+    //Returns the level the user is currently in.
+    Level* getCurrentLevel() { return levels[currentLevel]; }
+>>>>>>> upstream/master
 
 };
 

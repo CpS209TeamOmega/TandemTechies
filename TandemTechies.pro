@@ -20,7 +20,13 @@ SOURCES += main.cpp\
         scoremanager.cpp \
     level.cpp \
     block.cpp \
+<<<<<<< HEAD
     collectibles.cpp
+=======
+    inputhandler.cpp \
+    menu.cpp \
+    exit.cpp
+>>>>>>> upstream/master
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -29,8 +35,19 @@ HEADERS  += gamewindow.h\
         scoremanager.h \
     level.h \
     block.h \
+<<<<<<< HEAD
     collectibles.h
+=======
+    inputhandler.h \
+    menu.h \
+    exit.h
+>>>>>>> upstream/master
 
-FORMS    += gamewindow.ui
+
+FORMS    += gamewindow.ui \
+    menu.ui
 
 QMAKE_CXXFLAGS += -std=c++11
+
+RESOURCES += \
+    resources.qrc

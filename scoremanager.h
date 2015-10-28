@@ -1,3 +1,9 @@
+//**********************************************************
+// File: scoremanager.h
+// Desc: This class does all of the score management -
+//          saving high scores, and updating the current score
+//**********************************************************
+
 #ifndef SCOREMANAGER_H
 #define SCOREMANAGER_H
 
@@ -24,8 +30,11 @@ private:
 public:
     ScoreManager();
 
-    //return the highest score ever
+    //Return the highest score ever
     int getHiScore();
+
+    //Return the records of scores and players
+    QHash<QString, int> getAllScores();
 
     //Saves the scores to the file
     void saveScores();
@@ -33,15 +42,16 @@ public:
     //Loads all of the scores from file
     void loadScores();
 
-    //Adds a score to the list of high scores
-    bool addScore(QString player, int score);
-
     //getters
     int getCurScore() { return curScore; }
-    QHash<QString, int> getScores() { return dashBoard; }
 
     //setters
     void setScore(int newScore) { curScore = newScore; }
+
+    //<player> The player's name
+    //<score> The score the player got
+    bool addScore(QString player, int score);//Add to scoreTable and update dashBoard
+
 };
 
 #endif // SCOREMANAGER_H
