@@ -11,7 +11,7 @@
 GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
-    currentLevel = 0;
+    currentLevel = 1;
 }
 
 void GameModel::update() {
