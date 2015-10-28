@@ -39,7 +39,7 @@ public:
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
-    void setJumping(bool newJumpig) { if(newJumpig){ jumping = true; fallingVelocity = -10; } else { jumping = false; } }
+    void setJumping(bool newJumpig) { if(newJumpig){ jumping = true; } else { jumping = false; } }
 };
 
 #endif // PLAYER_H
