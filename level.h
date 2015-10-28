@@ -12,6 +12,8 @@
 
 #include "entity.h"
 #include "block.h"
+#include "player.h"
+#include "exit.h"
 
 //Forward declaration of the entity class, since level
 //refers to entity and entity refers to level.

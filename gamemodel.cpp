@@ -99,5 +99,4 @@ void GameModel::playerInputR(int r){//Release Event Handler
 
         break;
     }
->>>>>>> upstream/master
 }

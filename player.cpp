@@ -10,7 +10,6 @@
 void Player::update() {
     addX(5);
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
->>>>>>> upstream/master
 }
 
 void Player::savePosition()

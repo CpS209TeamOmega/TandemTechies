@@ -16,8 +16,6 @@ class Level;
 
 class Entity
 {
-private:
-    QRect rect;
 protected:
     Level* level;   //The level the entity is inside
     QRect rect;     //The entity's boudaries

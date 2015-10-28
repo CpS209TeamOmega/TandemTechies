@@ -37,27 +37,38 @@ int ScoreManager::getHiScore()
 void ScoreManager::saveScores()
 {
     //create file to save information to
-    QFile saveFile(filename);
+    QFile saveFile(fileName);
     if(!saveFile.open(QIODevice::WriteOnly))
     {
-        qDebug() << "Could not save high scores!";
+        qDebug() << "Could not save scores!";
         return;
     }
 
     //loops through all the current scores and stores them in the file
     QHash<QString, int>::const_iterator i = dashBoard.constBegin();
+    QTextStream out(&saveFile);
     while (i != dashBoard.constEnd())
     {
-        saveFile << i.key() << ": " << i.value();
+        out << i.key() << ": " << i.value();
     }
 }
 
 void ScoreManager::loadScores()
 {
-    QHash<QString, int>::const_iterator i = dashBoard.constBegin();
-    while (i != dashBoard.constEnd())
+    QFile saveFile(fileName);
+    if(!saveFile.open(QIODevice::WriteOnly))
     {
-        //output junk
+        qDebug() << "Could not load scores!";
+        return;
+    }
+    else
+    {
+        QTextStream in(&saveFile);
+        QString line = in.readLine();
+        while(!line.isNull())
+        {
+            line = in.readLine();
+        }
     }
 }
 

@@ -23,10 +23,6 @@ Level::~Level() {
     delete exit;
 }
 
-<<<<<<< HEAD
-void Level::update()
-{
-=======
 void Level::update() {
     //Update all objects in the game
     for(int y = 0; y < blocks.size(); y++) {
@@ -43,7 +39,6 @@ void Level::update() {
     xOffs = player->getX() - (GameWindow::WIDTH / 2);
     yOffs = player->getY() - (GameWindow::HEIGHT / 2);
 }
->>>>>>> upstream/master
 
 void Level::load(QList<QString> data) {
     for(int y = 0; y < data.size(); y++) {
