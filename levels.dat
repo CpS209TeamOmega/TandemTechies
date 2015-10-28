@@ -9,30 +9,63 @@ bp        xb
 bbbbbbbbbbbb
 endlevel
 
-level First steps
-blocks 4
+<<<<<<< HEAD
+level First Steps
+blocks 5
 bbbbbbbbbbbb
 b          b
 b          b
-b       bbbb
 b         xb
+b      bbbbb
 bp         b
 bbbbbbbbbbbb
 endlevel
 
-level Awesomeness
-blocks 5
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-b                              b
-b          bbbbbbb             b
-b             bbbbbbb   x      b
-b    bbbb                      b
-b        bbbb                  b
-b            bbbb              b
-b                bbbb          b
-b                              b
-b                     bb       b
-b                            bbb
-bp                             b
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+level Up and Down
+blocks 8
+bbbbbbbbb
+b       b
+b       b
+b  bbb  b
+b   b   b
+b   b   b
+b  pbx  b
+bbbbbbbbb
+endlevel
+
+level Down and Up
+blocks 8
+bbbbbbbbb
+b  pbx  b
+b  bbb  b
+b   b   b
+b   b   b
+b   b   b
+b       b
+bbbbbbbbb
+endlevel
+
+level ZigZag
+blocks 0
+bbbbbbbbbbbbb
+bp          b
+bbbbbbbbbbb b
+b           b
+b bbbbbbbbbbb
+b           b
+bbbbbbbbbbb b
+bx          b
+bbbbbbbbbbbbb
+endlevel
+
+level Endian
+blocks 1
+bbbbbbbbbbbbb
+b           b
+bp         xb
+bbbbb  bbbbbb
+b           b
+b           b
+b           b
+bbbbbbbbbbbbb
 endlevel
