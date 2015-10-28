@@ -61,15 +61,19 @@ void GameModel::playerInputP(int p){//Press Event Handler
     switch (p){
     case Qt::Key_Up:
         qDebug() << "U key pressed";
+        this->levels.at(currentLevel)->getPlayer()->addY(-10);
         break;
     case Qt::Key_Down:
         qDebug() << "D key pressed";
+        this->levels.at(currentLevel)->getPlayer()->addY(10);
         break;
     case Qt::Key_Left:
         qDebug() << "L key pressed";
+        this->levels.at(currentLevel)->getPlayer()->addX(-10);
         break;
     case Qt::Key_Right:
         qDebug() << "R key pressed";
+        this->levels.at(currentLevel)->getPlayer()->addX(10);
         break;
     default:
 
