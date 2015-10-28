@@ -20,9 +20,9 @@ void Player::update() {
     fallingVelocity += 1;
     addY(fallingVelocity);
     if(!(right && left)) {
-        if(right) {
+        if(right && !level->testCollision(getX() + getWidth(), getY())) {
             addX(velocity);
-        } else if(left) {
+        } else if(left && !level->testCollision(getX(), getY())) {
             addX(-velocity);
         }
     }

@@ -8,3 +8,14 @@ b          b
 bp        xb
 bbbbbbbbbbbb
 endlevel
+
+level First steps
+blocks 4
+bbbbbbbbbbbb
+b          b
+b         xb
+b       bbbb
+b          b
+bp         b
+bbbbbbbbbbbb
+endlevel

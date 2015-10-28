@@ -48,6 +48,9 @@ public:
     //Loads the level with the data
     void load(QList<QString> data);
 
+    //Tests if there is a block at a certain point
+    bool testCollision(int testX, int testY);
+
     //Setters
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
