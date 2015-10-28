@@ -29,9 +29,8 @@ class Level
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
 
-    //Level State <---------------Add More
-    bool isStarted;
-    bool havePassed;
+    //Level State
+    bool finished;
 
 
 public:
@@ -45,9 +44,6 @@ public:
 
     //Updates all of the entities inside the level
     void update();
-
-    //Moves the player on key press
-    void playerMvmnt();
 
     //Loads the level with the data
     void load(QList<QString> data);

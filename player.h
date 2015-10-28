@@ -12,8 +12,9 @@
 
 class Player : public Entity {
     bool jumping, falling; //Whether or not the player is jumping or falling
+    bool left, right;      //Whether or not the left or right key is pressed
     int velocity;          //The player's velocity
-
+    int fallingVelocity;
 
 public:
     //Creates the player using the default entity constructor
@@ -24,7 +25,7 @@ public:
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit
     //<initY> The starting y position of the exit
-    Player(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
+    Player(Level* initLevel, int initX, int initY);
 
     //Destructor for player
     ~Player() { }
@@ -34,6 +35,11 @@ public:
 
     //save the status of the player entity
     void savePosition();
+
+    //Setters
+    void setRight(bool newRight) { right = newRight; }
+    void setLeft(bool newLeft) { left = newLeft; }
+    void setJumping(bool newJumpig) { if(newJumpig){ jumping = true; fallingVelocity = -10; } else { jumping = false; } }
 };
 
 #endif // PLAYER_H

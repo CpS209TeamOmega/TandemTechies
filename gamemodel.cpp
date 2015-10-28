@@ -60,20 +60,13 @@ GameModel::~GameModel() {
 void GameModel::playerInputP(int p){//Press Event Handler
     switch (p){
     case Qt::Key_Up:
-        qDebug() << "U key pressed";
-        this->levels.at(currentLevel)->getPlayer()->addY(-10);
-        break;
-    case Qt::Key_Down:
-        qDebug() << "D key pressed";
-        this->levels.at(currentLevel)->getPlayer()->addY(10);
+        getCurrentLevel()->getPlayer()->setJumping(true);
         break;
     case Qt::Key_Left:
-        qDebug() << "L key pressed";
-        this->levels.at(currentLevel)->getPlayer()->addX(-10);
+        getCurrentLevel()->getPlayer()->setLeft(true);
         break;
     case Qt::Key_Right:
-        qDebug() << "R key pressed";
-        this->levels.at(currentLevel)->getPlayer()->addX(10);
+        getCurrentLevel()->getPlayer()->setRight(true);
         break;
     default:
 
@@ -85,18 +78,13 @@ void GameModel::playerInputP(int p){//Press Event Handler
 void GameModel::playerInputR(int r){//Release Event Handler
     switch (r){
     case Qt::Key_Up:
-        qDebug() << "U key released";
-        break;
-    case Qt::Key_Down:
-        qDebug() << "D key released";
+        getCurrentLevel()->getPlayer()->setJumping(false);
         break;
     case Qt::Key_Left:
-        qDebug() << "L key released";
-        //levels.at(currentLevel)->getPlayer().setX(levels.at(currentLevel)->getPlayer().getX()-1);
-
+        getCurrentLevel()->getPlayer()->setLeft(false);
         break;
     case Qt::Key_Right:
-        qDebug() << "R key released";
+        getCurrentLevel()->getPlayer()->setRight(false);
         break;
     default:
 

@@ -61,7 +61,7 @@ GameWindow::GameWindow(QWidget *parent) :
          timer->start();
     }
 
-    menu.show();
+
 
 }
 
