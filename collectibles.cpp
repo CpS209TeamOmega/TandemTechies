@@ -9,7 +9,7 @@ void Collectibles::deleteCollectible()
 {
     if(isCollidingWith() == true)
     {
-        collected == true;
+        collected = true;
         //delete that Collectible instance
     }
 }

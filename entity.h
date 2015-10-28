@@ -5,6 +5,7 @@
 
 class Entity
 {
+private:
     QRect rect;
 
 public:

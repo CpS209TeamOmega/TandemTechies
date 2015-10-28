@@ -22,15 +22,15 @@ public:
     void deleteCollectible();
 
     //getters
-    bool getCollect();
-    int getX() { return rect.x(); }
-    int getY() { return rect.y(); }
+    bool getCollect() { return collected; }
+    int getX() { return getRect().x(); }
+    int getY() { return getRect().y(); }
     int getScorePlus() { return scorePlus; }
 
     //setters
-    void setCollect(bool newBool) { collected = newbool; }
-    void setX(int newX) { x = newX; }
-    void setY(int newY) { y = newY; }
+    void setCollect(bool newBool) { collected = newBool; }
+//    void setX(int newX) { getX() = newX; }
+//    void setY(int newY) { getY() = newY; }
 };
 
 #endif // COLLECTIBLES_H

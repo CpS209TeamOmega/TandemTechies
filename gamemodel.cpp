@@ -5,6 +5,7 @@ GameModel::GameModel()
     currentLevel = 0;
     Level* level = new Level();
     levels << level;
+    gameMode = NORMAL;
 }
 
 void GameModel::update()

@@ -12,7 +12,6 @@ private:
     //whether or not a block is a stationary block
     bool prePlaced;
     //whether or not an inventory block has been placed
-    bool placeable;
     bool placed;
 
 public:
@@ -26,11 +25,10 @@ public:
 
     //getters
     int getScorePlus() { return scorePlus; }
-    bool getPlaceable() { return placeable; }
     bool getPreplaced() { return prePlaced; }
 
     //setters
-    void setPlaceable(bool newPlace) { placeable = newPlace; }
+    void setPlaceable(bool newPlace) { prePlaced = newPlace; }
 };
 
 #endif // BLOCK_H

@@ -10,7 +10,7 @@ class Player : public Entity
     int velocity;
 
     //these have the possiblity of adding points
-    QList<Block *> blockInventory;
+//    QList<Block *> blockInventory;
 
 public:
     Player();

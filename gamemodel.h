@@ -14,6 +14,9 @@ class GameModel
     //The current level you are on in the levels QList
     int currentLevel;
 
+    enum Mode {CHEAT, NORMAL, HARD};
+    Mode gameMode;
+
     //current mode
     bool curMode;
 

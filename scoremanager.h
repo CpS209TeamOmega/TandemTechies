@@ -20,8 +20,6 @@ private:
 
     //The current score in-game
     int curScore;
-    //The highest score
-    int highScore;
 
 public:
     ScoreManager();
