@@ -25,6 +25,7 @@ class GameModel
     //Game State  <---------Add more to here
     bool isFinished;
     bool isStarted;
+    bool updateGUI;
 
 public:
     GameModel();
@@ -52,6 +53,9 @@ public:
     //Returns the level the user is currently in.
     Level* getCurrentLevel() { return levels[currentLevel]; }
 
+    bool mustUpdateGUI() { return updateGUI; }
+
+    void setUpdateGUI(bool newValue) { updateGUI = newValue; }
 
 };
 

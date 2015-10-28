@@ -12,10 +12,13 @@
 #include "block.h"
 
 class Player : public Entity {
+    bool jumpKeyPressed;
     bool jumping, falling; //Whether or not the player is jumping or falling
     bool left, right;      //Whether or not the left or right key is pressed
-    int velocity;          //The player's velocity
-    int fallingVelocity;
+    int hSpeed;            //The player's velocity
+    int vSpeed;            //The player's vertical speed
+    int jumpHeight, maxVSpeed;    //Maximum jump height and vertical speed
+    int jumpDistance;
 
     //these have the possiblity of adding points
 //    QList<Block *> blockInventory;
@@ -23,7 +26,7 @@ class Player : public Entity {
 public:
     //Creates the player using the default entity constructor
     //<initLevel> The level that the entity is inside
-    Player(Level* initLevel) : Entity(initLevel) { }
+    Player(Level* initLevel);
 
     //Creates the player at a certain position
     //<initLevel> The level that the entity is inside
@@ -43,7 +46,7 @@ public:
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
-    void setJumping(bool newJumpig) { if(newJumpig){ jumping = true; } else { jumping = false; } }
+    void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
 };
 
 #endif // PLAYER_H

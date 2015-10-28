@@ -9,7 +9,7 @@
 void Exit::update() {
     //See if the player has finished the level
     if(isCollidingWith(level->getPlayer())) {
-        qDebug() << "Level finished!";
+        level->setFinished(true);
     }
 
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());

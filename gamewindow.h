@@ -28,7 +28,7 @@ class GameWindow : public QMainWindow
     QPixmap playerImg;
     QPixmap exitImg;
 
-    int fps = 20;
+    int fps;
 
 
 public:
@@ -37,6 +37,7 @@ public:
 
     //Creates a label with the given entity and image
     void makeLabel(Entity* e, QPixmap image);
+    void updateGUI();
 
     static int WIDTH;       //The width of the window
     static int HEIGHT;      //The height of the window
