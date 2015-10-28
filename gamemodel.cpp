@@ -61,6 +61,7 @@ GameModel::~GameModel() {
 void GameModel::playerInputP(int p){//Press Event Handler
     switch (p){
     case Qt::Key_Up:
+        getCurrentLevel()->getPlayer()->setJumping(true);
         break;
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(true);
@@ -78,7 +79,7 @@ void GameModel::playerInputP(int p){//Press Event Handler
 void GameModel::playerInputR(int r){//Release Event Handler
     switch (r){
     case Qt::Key_Up:
-        qDebug() << "U key released";
+        getCurrentLevel()->getPlayer()->setJumping(false);
         break;
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(false);

@@ -15,7 +15,7 @@ class Player : public Entity {
     bool jumping, falling; //Whether or not the player is jumping or falling
     bool left, right;      //Whether or not the left or right key is pressed
     int velocity;          //The player's velocity
-
+    int fallingVelocity;
 
     //these have the possiblity of adding points
 //    QList<Block *> blockInventory;
@@ -43,6 +43,7 @@ public:
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
+    void setJumping(bool newJumpig) { if(newJumpig){ jumping = true; } else { jumping = false; } }
 };
 
 #endif // PLAYER_H

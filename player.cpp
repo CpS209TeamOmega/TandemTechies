@@ -12,11 +12,17 @@ Player::Player(Level *initLevel, int initX, int initY)
     velocity = 10;
     right = false;
     left = false;
+    fallingVelocity = 0;
+    jumping = false;
 }
 
 void Player::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
+    fallingVelocity += 1;
+    if((level->testCollision(getX(), getY() + getHeight()))||(level->testCollision(getX() + getWidth(), getY() + getHeight())))fallingVelocity = 0;
 
+    if (jumping) fallingVelocity = -10;
+    addY(fallingVelocity);
     if(!(right && left)) {
         if(right && !level->testCollision(getX() + getWidth(), getY())) {
             addX(velocity);

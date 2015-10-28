@@ -61,7 +61,7 @@ GameWindow::GameWindow(QWidget *parent) :
          timer->start();
     }
 
-    menu.show();
+
 
 }
 
@@ -102,6 +102,7 @@ void GameWindow::exit(){
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
+    if (k->key() == Qt::Key_Escape) this->close();
     model.playerInputP(k->key());
 }
 
