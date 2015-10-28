@@ -25,6 +25,7 @@ GameWindow::GameWindow(QWidget *parent) :
     ui->setupUi(this);
 
     setFixedSize(WIDTH, HEIGHT);
+    fps = 60;
 
     //Connect slots with signal from Menu
     QObject::connect(&menu, SIGNAL(startGame()), this, SLOT(start()));

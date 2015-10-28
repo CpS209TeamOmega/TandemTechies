@@ -19,11 +19,11 @@ Player::Player(Level *initLevel) : Entity(initLevel) {
 
 Player::Player(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
-    hSpeed = 4;
+    hSpeed = 8;
     vSpeed = 0;
     right = left = jumping = falling = false;
     jumpDistance = 0;
-    jumpHeight = 96;
+    jumpHeight = 128;
     maxVSpeed = 16;
     jumpKeyPressed = false;
 }
@@ -32,8 +32,8 @@ void Player::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
     if(!jumping) {
-        if(level->testCollision(getX() + 10, getY() + getHeight())
-                || level->testCollision(getX() + getWidth() - 10, getY() + getHeight())) {
+        if(level->testCollision(getX() + 20, getY() + getHeight())
+                || level->testCollision(getX() + getWidth() - 20, getY() + getHeight())) {
             vSpeed = 0;
             if(getY() % Entity::SIZE != 0) addY(-1);
             if(jumpKeyPressed) jumping = true;
@@ -42,8 +42,8 @@ void Player::update() {
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }
     } else {
-        if(level->testCollision(getX() + 10, getY())
-                || level->testCollision(getX() + getWidth() - 10, getY())) {
+        if(level->testCollision(getX() + 20, getY())
+                || level->testCollision(getX() + getWidth() - 20, getY())) {
             vSpeed = 0;
             jumping = false;
             jumpDistance = 0;

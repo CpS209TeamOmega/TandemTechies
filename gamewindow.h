@@ -28,7 +28,7 @@ class GameWindow : public QMainWindow
     QPixmap playerImg;
     QPixmap exitImg;
 
-    int fps = 30;
+    int fps;
 
 
 public:

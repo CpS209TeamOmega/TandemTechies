@@ -19,3 +19,20 @@ b         xb
 bp         b
 bbbbbbbbbbbb
 endlevel
+
+level Awesomeness
+blocks 5
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                              b
+b          bbbbbbb             b
+b             bbbbbbb   x      b
+b    bbbb                      b
+b        bbbb                  b
+b            bbbb              b
+b                bbbb          b
+b                              b
+b                     bb       b
+b                            bbb
+bp                             b
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+endlevel
