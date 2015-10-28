@@ -40,6 +40,17 @@ void Level::update() {
     yOffs = player->getY() - (GameWindow::HEIGHT / 2);
 }
 
+bool Level::testCollision(int testX, int testY) {
+    testX /= Entity::SIZE;
+    testY /= Entity::SIZE;
+
+    if(testX < 0 || testX > blocks[0].size()) return false;
+    if(testY < 0 || testY > blocks.size()) return false;
+
+    qDebug() << testX << "   " << testY;
+    return blocks[testY][testX] != nullptr;
+}
+
 void Level::load(QList<QString> data) {
     for(int y = 0; y < data.size(); y++) {
         QList<Block*> list;
@@ -48,8 +59,10 @@ void Level::load(QList<QString> data) {
             if(type == 'b') {
                 list << new Block(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == 'p') {
+                list << nullptr;
                 player = new Player(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == 'x') {
+                list << nullptr;
                 exit = new Exit(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == ' ') {
                 list << nullptr;
