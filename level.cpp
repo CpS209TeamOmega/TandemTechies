@@ -11,6 +11,7 @@
 Level::Level(QList<QString> data)
 {
     load(data);
+    finished = false;
 }
 
 Level::~Level() {
@@ -41,13 +42,14 @@ void Level::update() {
 }
 
 bool Level::testCollision(int testX, int testY) {
+    if(testX < 0 || testY < 0) return false;
+
     testX /= Entity::SIZE;
     testY /= Entity::SIZE;
 
-    if(testX < 0 || testX > blocks[0].size()) return false;
-    if(testY < 0 || testY > blocks.size()) return false;
+    if(testX >= blocks[0].size()) return false;
+    if(testY >= blocks.size()) return false;
 
-    qDebug() << testX << "   " << testY;
     return blocks[testY][testX] != nullptr;
 }
 

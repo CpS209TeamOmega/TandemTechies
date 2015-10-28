@@ -19,10 +19,10 @@
   <widget class="QPushButton" name="btnStart">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>390</y>
-     <width>381</width>
-     <height>81</height>
+     <x>10</x>
+     <y>10</y>
+     <width>171</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -35,10 +35,10 @@
   <widget class="QPushButton" name="btnLoad">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>490</y>
-     <width>381</width>
-     <height>81</height>
+     <x>180</x>
+     <y>100</y>
+     <width>171</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="palette">
@@ -139,10 +139,10 @@
   <widget class="QPushButton" name="btnExit">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>590</y>
-     <width>381</width>
-     <height>91</height>
+     <x>10</x>
+     <y>190</y>
+     <width>171</width>
+     <height>101</height>
     </rect>
    </property>
    <property name="cursor">
