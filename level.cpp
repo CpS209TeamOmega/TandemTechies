@@ -37,8 +37,8 @@ void Level::update() {
     exit->update();
 
     //Update the x and y offsets relative to the player
-    xOffs = player->getX() - (GameWindow::WIDTH / 2);
-    yOffs = player->getY() - (GameWindow::HEIGHT / 2);
+    xOffs = player->getX() + (player->getWidth() / 2) - (GameWindow::WIDTH / 2);
+    yOffs = player->getY() + (player->getHeight() / 2) - (GameWindow::HEIGHT / 2);
 }
 
 bool Level::testCollision(int testX, int testY) {
