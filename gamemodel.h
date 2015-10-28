@@ -26,7 +26,6 @@ class GameModel
     bool isFinished;
     bool isStarted;
 
-
 public:
     GameModel();
     ~GameModel();
@@ -47,12 +46,12 @@ public:
     void playerInputP(int p);
     void playerInputR(int r);
 
-
     //Loads the levels into the game so we can actually play
     bool loadLevels();
 
     //Returns the level the user is currently in.
     Level* getCurrentLevel() { return levels[currentLevel]; }
+
 
 };
 

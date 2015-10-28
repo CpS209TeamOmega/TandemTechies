@@ -12,6 +12,15 @@
 //The block or default entity in the game
 class Block : public Entity
 {
+private:
+    //score that a block adds to total score (if it is placeable)
+    int scorePlus;
+
+    //whether or not a block is a stationary block
+    bool prePlaced;
+    //whether or not an inventory block has been placed
+    bool placed;
+
 public:
     //Creates the block using the default entity constructor
     //<initLevel> The level that the entity is inside
@@ -32,6 +41,16 @@ public:
 
     //Saves the block's position to the save file
     void savePosition();
+
+    //returns an amount to be added
+    int toBeAdded();
+
+    //getters
+    int getScorePlus() { return scorePlus; }
+    bool getPreplaced() { return prePlaced; }
+
+    //setters
+    void setPlaceable(bool newPlace) { prePlaced = newPlace; }
 };
 
 #endif // BLOCK_H

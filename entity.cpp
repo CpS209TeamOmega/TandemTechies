@@ -9,6 +9,7 @@
 //The default entity size
 int Entity::SIZE = 64;
 
-bool Entity::isCollidingWith(Entity *otherEntity) {
+bool Entity::isCollidingWith(Entity *otherEntity)
+{
     return rect.intersects(otherEntity->getRect());
 }

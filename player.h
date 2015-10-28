@@ -9,12 +9,16 @@
 #define PLAYER_H
 
 #include "entity.h"
+#include "block.h"
 
 class Player : public Entity {
     bool jumping, falling; //Whether or not the player is jumping or falling
     bool left, right;      //Whether or not the left or right key is pressed
     int velocity;          //The player's velocity
     int fallingVelocity;
+
+    //these have the possiblity of adding points
+//    QList<Block *> blockInventory;
 
 public:
     //Creates the player using the default entity constructor

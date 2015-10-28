@@ -35,7 +35,6 @@ HEADERS  += gamewindow.h\
     menu.h \
     exit.h
 
-
 FORMS    += gamewindow.ui \
     menu.ui
 
