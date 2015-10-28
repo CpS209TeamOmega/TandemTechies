@@ -22,12 +22,16 @@ class Entity;
 class Level
 {
     Player* player;             //The player
-    Exit* exit;                 //The level'ss exit
+    Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
     int numBlocks;              //The number of placeable blocks
     QString name;               //The level's name
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
+
+    //Level State
+    bool finished;
+
 
 public:
     //Creates a level with the map data, parsing
@@ -40,9 +44,6 @@ public:
 
     //Updates all of the entities inside the level
     void update();
-
-    //Moves the player on key press
-    void playerMvmnt();
 
     //Loads the level with the data
     void load(QList<QString> data);

@@ -48,11 +48,11 @@ public:
 
     //Adds a certain amount to the x position of the entity
     //<amt> The amount to add to the x position
-    void addX(int amt) { rect.setX(rect.x() + amt); }
+    void addX(int amt) { rect.moveTo(getX() + amt, getY()); }
 
     //Adds a certain amount to the y position of the entity
     //<amt> The amount to add to the y position
-    void addY(int amt) { rect.setY(rect.y() + amt); }
+    void addY(int amt) { rect.moveTo(getX(), getY() + amt); }
 
     //Getters
     int getX() { return rect.x(); }
