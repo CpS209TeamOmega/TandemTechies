@@ -8,11 +8,12 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "player.h"
-#include "block.h"
-#include "exit.h"
-#include <QString>
 #include <QList>
+
+#include "entity.h"
+#include "block.h"
+#include "player.h"
+#include "exit.h"
 
 //Forward declaration of the entity class, since level
 //refers to entity and entity refers to level.
@@ -21,6 +22,7 @@ class Entity;
 //The main class for level manipulation
 class Level
 {
+private:
     Player* player;             //The player
     Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
@@ -31,7 +33,6 @@ class Level
 
     //Level State
     bool finished;
-
 
 public:
     //Creates a level with the map data, parsing
@@ -47,6 +48,9 @@ public:
 
     //Loads the level with the data
     void load(QList<QString> data);
+
+    //Tests if there is a block at a certain point
+    bool testCollision(int testX, int testY);
 
     //Setters
     void setName(QString newName) { name = newName; }

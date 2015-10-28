@@ -18,14 +18,15 @@ void Player::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
     if(!(right && left)) {
-        if(right) {
+        if(right && !level->testCollision(getX() + getWidth(), getY())) {
             addX(velocity);
-        } else if(left) {
+        } else if(left && !level->testCollision(getX(), getY())) {
             addX(-velocity);
         }
     }
 }
 
-void Player::savePosition() {
+void Player::savePosition()
+{
 
 }

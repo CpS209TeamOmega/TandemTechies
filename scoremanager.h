@@ -7,16 +7,25 @@
 #ifndef SCOREMANAGER_H
 #define SCOREMANAGER_H
 
+//I don't know how to use QHash things.....
 #include <QHash>
 #include <QDebug>
 #include <QString>
 
+#include "block.h"
+#include "collectibles.h"
+
 class ScoreManager
 {
 private:
-    QString fileName = "scores.dat"; //The file to save the scores to
-    QHash<QString, int> dashBoard;   //The virtual score "dashboard"
-    int currentScore;                //The current score in-game
+    //The file to save the scores to
+    QString fileName;
+
+    //The virtual score "dashboard"
+    QHash<QString, int> dashBoard;
+
+    //The current score in-game
+    int curScore;
 
 public:
     ScoreManager();
@@ -33,10 +42,16 @@ public:
     //Loads all of the scores from file
     void loadScores();
 
-    //Adds a score to the list of high scores
+    //getters
+    int getCurScore() { return curScore; }
+
+    //setters
+    void setScore(int newScore) { curScore = newScore; }
+
     //<player> The player's name
     //<score> The score the player got
     bool addScore(QString player, int score);//Add to scoreTable and update dashBoard
+
 };
 
 #endif // SCOREMANAGER_H
