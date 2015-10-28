@@ -26,6 +26,7 @@ void Player::update() {
     }
 }
 
-void Player::savePosition() {
+void Player::savePosition()
+{
 
 }

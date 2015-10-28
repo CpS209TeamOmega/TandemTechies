@@ -12,7 +12,8 @@
 #include "entity.h"
 #include "menu.h"
 
-namespace Ui {
+namespace Ui
+{
 class GameWindow;
 }
 

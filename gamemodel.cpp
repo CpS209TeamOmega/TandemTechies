@@ -14,7 +14,8 @@ GameModel::GameModel()
     currentLevel = 1;
 }
 
-void GameModel::update() {
+void GameModel::update()
+{
     levels[currentLevel]->update();
 }
 
