@@ -1,3 +1,8 @@
+//**********************************************************
+// File: main.cpp
+// Desc: The entry point to the entire program
+//**********************************************************
+
 #include "gamewindow.h"
 #include <QApplication>
 
