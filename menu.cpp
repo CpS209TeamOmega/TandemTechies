@@ -13,6 +13,8 @@ Menu::Menu(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(Qt::WindowStaysOnTopHint);
     setWindowModality(Qt::ApplicationModal);
+    setWindowTitle(QString::fromStdString("TandemTechies"));
+    setWindowState(Qt::WindowFullScreen);
 }
 
 Menu::~Menu()
