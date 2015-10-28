@@ -18,7 +18,7 @@ class Player : public Entity {
     int hSpeed;            //The player's velocity
     int vSpeed;            //The player's vertical speed
     int jumpHeight, maxVSpeed;    //Maximum jump height and vertical speed
-    int jumpDistance;
+    int jumpDistance, jumpSpeed;
 
     //these have the possiblity of adding points
 //    QList<Block *> blockInventory;

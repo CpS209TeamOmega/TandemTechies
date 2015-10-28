@@ -8,6 +8,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QPixmap>
 #include "gamemodel.h"
 #include "entity.h"
 #include "menu.h"
