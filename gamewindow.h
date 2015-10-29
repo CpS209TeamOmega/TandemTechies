@@ -28,6 +28,7 @@ class GameWindow : public QMainWindow
     QPixmap blockImg;
     QPixmap playerImg;
     QPixmap exitImg;
+	QPixmap backgroundImg;
 
     int fps;
 
@@ -38,7 +39,15 @@ public:
 
     //Creates a label with the given entity and image
     void makeLabel(Entity* e, QPixmap image);
+
+	//Updates the GUI to reflect the state of the level.
+	//This method is called when the level is changed, e.g.
+	//evel 1 to level 2
     void updateGUI();
+
+	//Performs unit tests to make sure the game is working,
+	//and exits the program if any of them fail.
+	void unitTests();
 
     static int WIDTH;       //The width of the window
     static int HEIGHT;      //The height of the window
@@ -55,7 +64,6 @@ private slots:
     void exit();
     void keyPressEvent(QKeyEvent *k);
     void keyReleaseEvent(QKeyEvent *k);
-
 };
 
 #endif // GAMEWINDOW_H

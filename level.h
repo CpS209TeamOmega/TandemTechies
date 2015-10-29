@@ -64,6 +64,8 @@ public:
     int getXOffs() { return xOffs; }
     int getYOffs() { return yOffs; }
     bool isFinished() { return finished; }
+	QString getName() { return name; }
+	int getNumBlocks() { return numBlocks; }
 
 };
 
