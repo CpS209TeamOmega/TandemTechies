@@ -39,5 +39,6 @@ Makefile*
 *.suo
 *.vcxproj
 *.vcxproj.*
+*.sln
 debug/
 x64/
