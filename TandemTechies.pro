@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     block.cpp \
     inputhandler.cpp \
     menu.cpp \
-    exit.cpp
+    exit.cpp \
+    collectible.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -33,7 +34,8 @@ HEADERS  += gamewindow.h\
     block.h \
     inputhandler.h \
     menu.h \
-    exit.h
+    exit.h \
+    collectible.h
 
 FORMS    += gamewindow.ui \
     menu.ui

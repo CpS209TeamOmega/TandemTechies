@@ -23,7 +23,7 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
     GameModel model;
-    Menu menu;
+    Menu* menu;
 
     QPixmap blockImg;
     QPixmap playerImg;

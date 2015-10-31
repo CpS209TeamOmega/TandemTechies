@@ -13,7 +13,7 @@
 #include <QString>
 
 #include "block.h"
-#include "collectibles.h"
+#include "collectible.h"
 
 class ScoreManager
 {

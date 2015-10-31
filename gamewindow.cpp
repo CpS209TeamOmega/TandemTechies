@@ -12,6 +12,7 @@
 #include <QObjectList>
 #include <QKeyEvent>
 #include <QtGlobal>
+#include <QIcon>
 
 //The default width of the game
 int GameWindow::WIDTH = 1024;
@@ -25,26 +26,32 @@ GameWindow::GameWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QIcon windowIcon(":/images/player.png");
+    setWindowIcon(windowIcon);
     setFixedSize(WIDTH, HEIGHT);
+    setWindowTitle("Tandem Techies");
     fps = 60;
 
+    menu = new Menu();
+    menu->show();
+
     //Connect slots with signal from Menu
-    QObject::connect(&menu, SIGNAL(startGame()), this, SLOT(start()));
-    QObject::connect(&menu, SIGNAL(loadGame()), this, SLOT(load()));
-    QObject::connect(&menu, SIGNAL(exitGame()), this, SLOT(exit()));
+    QObject::connect(menu, SIGNAL(startGame()), this, SLOT(start()));
+    QObject::connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
+    QObject::connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
 
     blockImg.load(":/images/block.png");
     playerImg.load(":/images/player.png");
     exitImg.load(":/images/exit.png");
-	backgroundImg.load(":/images/bg.png");
+    backgroundImg.load(":/images/bg.png");
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
         exit();
 	}
 	else {
-		updateGUI();
 		unitTests();
+        updateGUI();
 
 		QTimer *timer = new QTimer(this);
 		timer->setInterval(1000 / fps);
@@ -106,6 +113,11 @@ void GameWindow::updateGUI() {
 	//Get the current level
     Level* lvl = model.getCurrentLevel();
 
+    auto entities = lvl->getEntities();
+    for(int i = 0; i < entities.size(); i++) {
+        makeLabel(entities[i], backgroundImg);
+    }
+
 	//Create the labels for the blocks in the level
     auto blocks = lvl->getBlocks();
     for(int y = 0; y < blocks.size(); y++) {
@@ -141,7 +153,6 @@ GameWindow::~GameWindow()
 
 //Menu Signal Receiver
 void GameWindow::start(){
-    qDebug() << "start signal received";
     this->show();
 }
 
@@ -158,10 +169,21 @@ void GameWindow::exit(){
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
-    if (k->key() == Qt::Key_Escape) this->close();
+    if (k->key() == Qt::Key_Escape) {
+        menu->show();
+    }
+
     model.playerInputP(k->key());
 }
 
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
-    model.playerInputR(k->key());
+    if(k->key() == Qt::Key_Space) {
+        Block* newBlock = model.placeBlock();
+        if(newBlock != nullptr) {
+            qDebug() << "HERE";
+            makeLabel(newBlock, blockImg);
+        }
+    } else {
+        model.playerInputR(k->key());
+    }
 }

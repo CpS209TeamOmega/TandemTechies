@@ -20,6 +20,7 @@ class Player : public Entity {
     int jumpHeight, maxVSpeed;    //Maximum jump height and vertical speed
     int jumpDistance;			  //The current distance the player has jumped
 	int jumpSpeed;				  //The speed of a jump
+    bool faceLeft;
 
 public:
     //Creates the player using the default entity constructor
@@ -44,7 +45,10 @@ public:
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
+    void setFace(bool left){faceLeft = left;}
     void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
+
+    bool isLeft(){return faceLeft;}
 };
 
 #endif // PLAYER_H
