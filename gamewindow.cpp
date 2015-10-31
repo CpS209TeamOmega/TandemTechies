@@ -32,6 +32,7 @@ GameWindow::GameWindow(QWidget *parent) :
     setWindowTitle("Tandem Techies");
     fps = 60;
 
+    setWindowOpacity(0);
     menu = new Menu();
     menu->show();
 
@@ -57,7 +58,7 @@ GameWindow::GameWindow(QWidget *parent) :
 		timer->setInterval(1000 / fps);
 		connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
 		timer->start();
-	}
+    }
 }
 
 void GameWindow::unitTests() {
@@ -89,6 +90,7 @@ void GameWindow::makeLabel(Entity* e, QPixmap image) {
     lbl->setGeometry(e->getRect());			//Sets the geometry to reflect the entity
     lbl->setPixmap(image);					//Sets the picture of the label
     lbl->setScaledContents(true);			//Makes the picture scale to the label's size
+    lbl->setAttribute(Qt::WA_TranslucentBackground);
     e->setBuddy(lbl);						//Sets the Entity's corresponding label
 	lbl->show();
 }
@@ -152,17 +154,17 @@ GameWindow::~GameWindow()
 }
 
 //Menu Signal Receiver
-void GameWindow::start(){
-    this->show();
+void GameWindow::start() {
+    show();
+    setWindowOpacity(1);
 }
 
 void GameWindow::load(){
-    qDebug() << "load signal received";
-    this->show();
+    show();
+    setWindowOpacity(1);
 }
 
 void GameWindow::exit(){
-    qDebug() << "exit signal received";
     this->close();
 }
 
