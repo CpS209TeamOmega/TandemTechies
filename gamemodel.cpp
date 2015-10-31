@@ -16,11 +16,15 @@ GameModel::GameModel()
 
 void GameModel::update()
 {
+	//Update the level that the user is currently playing
     levels[currentLevel]->update();
 
+	//Test to see if the user has gotten to the exit
     if(levels[currentLevel]->isFinished()) {
         levels[currentLevel]->setFinished(false);
-        currentLevel++;
+
+		//Go the the next level and make sure the currentLevel is not the last level
+        currentLevel++;		
         if(currentLevel >= levels.size()) {
             currentLevel = 0;
             resetGame();
@@ -44,7 +48,7 @@ bool GameModel::loadLevels() {
     }
 
     QList<QString> levelData;   //The strings of data for the level
-    int numberBlocks;           //Number of moveable blocks
+    int numberBlocks = 0;       //Number of moveable blocks
     QString levelName;          //The name of the level
 
     QTextStream in(&loadFile);  //To read the text in the file
