@@ -81,12 +81,7 @@ GameModel::~GameModel() {
 }
 
 Block* GameModel::placeBlock() {
-    if(getCurrentLevel()->getPlayer()->isLeft()){
-        return getCurrentLevel()->placeBlock(getCurrentLevel()->getPlayer()->getX() - Entity::SIZE, getCurrentLevel()->getPlayer()->getY());
-    } else {
-        return getCurrentLevel()->placeBlock(getCurrentLevel()->getPlayer()->getX() + Entity::SIZE * 2, getCurrentLevel()->getPlayer()->getY());
-    }
-    return nullptr;
+    return getCurrentLevel()->placeBlock();
 }
 
 void GameModel::playerInputP(int p){//Press Event Handler

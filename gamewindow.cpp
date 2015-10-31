@@ -41,10 +41,11 @@ GameWindow::GameWindow(QWidget *parent) :
     QObject::connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
     QObject::connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
 
-    blockImg.load(":/images/block.png");
-    playerImg.load(":/images/player.png");
-    exitImg.load(":/images/exit.png");
-    backgroundImg.load(":/images/bg.png");
+    Q_ASSERT(blockImg.load(":/images/block.png"));
+    Q_ASSERT(playerImg.load(":/images/player.png"));
+    Q_ASSERT(exitImg.load(":/images/exit.png"));
+    Q_ASSERT(backgroundImg.load(":/images/bg.png"));
+    Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -117,7 +118,10 @@ void GameWindow::updateGUI() {
 
     auto entities = lvl->getEntities();
     for(int i = 0; i < entities.size(); i++) {
-        makeLabel(entities[i], backgroundImg);
+        Collectible* c = dynamic_cast<Collectible*>(entities[i]);
+        if(c) {
+            makeLabel(entities[i], collectibleImg);
+        }
     }
 
 	//Create the labels for the blocks in the level
@@ -182,8 +186,8 @@ void GameWindow::keyReleaseEvent(QKeyEvent *k){
     if(k->key() == Qt::Key_Space) {
         Block* newBlock = model.placeBlock();
         if(newBlock != nullptr) {
-            qDebug() << "HERE";
             makeLabel(newBlock, blockImg);
+            newBlock->update();
         }
     } else {
         model.playerInputR(k->key());

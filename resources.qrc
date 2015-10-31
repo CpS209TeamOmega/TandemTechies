@@ -4,9 +4,8 @@
         <file>images/block.png</file>
         <file>levels.dat</file>
         <file>images/exit.png</file>
-        <file>images/Menu_1.jpg</file>
-        <file>images/Menu_2.jpg</file>
         <file>images/bg.png</file>
         <file>images/logo.png</file>
+        <file>images/collectible.png</file>
     </qresource>
 </RCC>

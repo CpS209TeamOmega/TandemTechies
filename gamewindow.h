@@ -30,6 +30,7 @@ class GameWindow : public QMainWindow
 
     QPixmap blockImg;
     QPixmap playerImg;
+    QPixmap collectibleImg;
     QPixmap exitImg;
 	QPixmap backgroundImg;
 

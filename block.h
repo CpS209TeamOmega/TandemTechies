@@ -16,10 +16,8 @@ private:
     //score that a block adds to total score (if it is placeable)
     int scorePlus;
 
-    //whether or not a block is a stationary block
-    bool prePlaced;
     //whether or not an inventory block has been placed
-    bool placed;
+    bool placeable;
 
 public:
     //Creates the block using the default entity constructor
@@ -47,10 +45,10 @@ public:
 
     //getters
     int getScorePlus() { return scorePlus; }
-    bool getPreplaced() { return prePlaced; }
+    bool isPlaceable() { return placeable; }
 
     //setters
-    void setPlaceable(bool newPlace) { prePlaced = newPlace; }
+    void setPlaceable(bool isPlaceable) { placeable = isPlaceable; }
 };
 
 #endif // BLOCK_H

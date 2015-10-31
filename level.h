@@ -57,7 +57,7 @@ public:
     void removeEntity(Entity* e);
 
     //Place block in certain position
-    Block* placeBlock (int x, int y);
+    Block* placeBlock ();
 
 
     //Setters

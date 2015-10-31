@@ -85,7 +85,16 @@ void Level::load(QList<QString> data) {
     }
 }
 
-Block* Level::placeBlock(int x, int y){
+Block* Level::placeBlock(){
+    int x = 0, y = 0;
+    if(player->isLeft()){
+        x = player->getX() - Entity::SIZE + 1;
+        y = player->getY();
+    } else {
+        x = player->getX() + Entity::SIZE * 2 - 1;
+        y = player->getY();
+    }
+
     if(x < 0 || y < 0) return nullptr;
 
     x /= Entity::SIZE;					 //Make the x position the array x position
@@ -94,9 +103,21 @@ Block* Level::placeBlock(int x, int y){
     if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
     if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
 
-    if(blocks[y][x] != nullptr) {
-        blocks[y][x] = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
+    if(blocks[y][x] == nullptr) {
+        Block* newBlock = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
+        newBlock->setPlaceable(true);
+        blocks[y][x] = newBlock;
+        numBlocks--;
         return blocks[y][x];
+    } else {
+        Block* testBlock = blocks[y][x];
+        if(testBlock->isPlaceable()) {
+            testBlock->getBuddy()->deleteLater();
+            delete testBlock;
+            blocks[y][x] = nullptr;
+            numBlocks++;
+        }
     }
+
     return nullptr;
 }
