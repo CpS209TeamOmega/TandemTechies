@@ -84,3 +84,19 @@ void Level::load(QList<QString> data) {
         blocks << list;								//Store the current row of blocks into the block list
     }
 }
+
+Block* Level::placeBlock(int x, int y){
+    if(x < 0 || y < 0) return nullptr;
+
+    x /= Entity::SIZE;					 //Make the x position the array x position
+    y /= Entity::SIZE;					 //Make the y position the array y position
+
+    if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
+    if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
+
+    if(blocks[y][x] != nullptr) {
+        blocks[y][x] = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
+        return blocks[y][x];
+    }
+    return nullptr;
+}

@@ -43,9 +43,12 @@ public:
     //Load game state
     void load();
 
+    Block* placeBlock();
+
     //Keyboard Press/Release Event
     void playerInputP(int p);
     void playerInputR(int r);
+    void playerInputS(int s);
 
     //Loads the levels into the game so we can actually play
     bool loadLevels();

@@ -56,6 +56,10 @@ public:
     //Removes an entity from the QList of entities
     void removeEntity(Entity* e);
 
+    //Place block in certain position
+    Block* placeBlock (int x, int y);
+
+
     //Setters
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
