@@ -87,11 +87,11 @@ void Level::load(QList<QString> data) {
 
 Block* Level::placeBlock(){
     int x = 0, y = 0;
-    if(player->isLeft()){
-        x = player->getX() - Entity::SIZE + 1;
+    if(player->getDir() == -1){
+        x = player->getX() - Entity::SIZE + 2;
         y = player->getY();
-    } else {
-        x = player->getX() + Entity::SIZE * 2 - 1;
+    } else if(player->getDir() == 1){
+        x = player->getX() + Entity::SIZE * 2 - 2;
         y = player->getY();
     }
 

@@ -10,17 +10,21 @@
 
 #include "entity.h"
 #include "block.h"
+#include <QPixmap>
 
 class Player : public Entity {
     bool jumpKeyPressed;		  //Whether or not the up/w key is pressed
-    bool jumping, falling;		  //Whether or not the player is jumping or falling
+	bool jumping;				  //Whether or not the player is jumping or falling
     bool left, right;			  //Whether or not the left or right key is pressed
     int hSpeed;					  //The player's velocity
     int vSpeed;					  //The player's vertical speed
     int jumpHeight, maxVSpeed;    //Maximum jump height and vertical speed
     int jumpDistance;			  //The current distance the player has jumped
 	int jumpSpeed;				  //The speed of a jump
-    bool faceLeft;
+    int dir;					  //The direction the player is currently facing
+
+	QPixmap pLeft;
+	QPixmap pRight;
 
 public:
     //Creates the player using the default entity constructor
@@ -45,10 +49,11 @@ public:
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
-    void setFace(bool left){faceLeft = left;}
     void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
+	void setDir(int newDir) { dir = newDir; }
 
-    bool isLeft(){return faceLeft;}
+	//Getters
+	int getDir() { return dir; }
 };
 
 #endif // PLAYER_H

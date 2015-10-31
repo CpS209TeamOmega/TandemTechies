@@ -22,13 +22,13 @@ private:
 public:
     //Creates the block using the default entity constructor
     //<initLevel> The level that the entity is inside
-    Block(Level* initLevel) : Entity(initLevel) { }
+    Block(Level* initLevel) : Entity(initLevel), placeable(false) { }
 
     //Creates the block at a certain position
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit
     //<initY> The starting y position of the exit
-    Block(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY) { }
+    Block(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY), placeable(false) { }
 
     //Destructor for block
     ~Block() { }

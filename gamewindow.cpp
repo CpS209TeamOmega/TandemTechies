@@ -42,16 +42,15 @@ GameWindow::GameWindow(QWidget *parent) :
     QObject::connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
 
     Q_ASSERT(blockImg.load(":/images/block.png"));
-    Q_ASSERT(playerImg.load(":/images/player.png"));
     Q_ASSERT(exitImg.load(":/images/exit.png"));
     Q_ASSERT(backgroundImg.load(":/images/bg.png"));
     Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
+	Q_ASSERT(placeableImg.load(":/images/placeable.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
         exit();
-	}
-	else {
+	} else {
 		unitTests();
         updateGUI();
 
@@ -130,14 +129,18 @@ void GameWindow::updateGUI() {
         for(int x = 0; x < blocks[y].size(); x++) {
             if(blocks[y][x] != nullptr) {
                   Block* b = blocks[y][x];
-                  makeLabel(b, blockImg);
+				  if (b->isPlaceable()) {
+					  makeLabel(b, placeableImg);
+				  } else {
+					  makeLabel(b, blockImg);
+				  }
             }
         }
     }
 
 	//Create the player's label
     Player* p = lvl->getPlayer();
-    makeLabel(p, playerImg);
+    makeLabel(p, QPixmap());
 
 	//Create the exit's label
     Exit* e = lvl->getExit();
@@ -186,7 +189,7 @@ void GameWindow::keyReleaseEvent(QKeyEvent *k){
     if(k->key() == Qt::Key_Space) {
         Block* newBlock = model.placeBlock();
         if(newBlock != nullptr) {
-            makeLabel(newBlock, blockImg);
+            makeLabel(newBlock, placeableImg);
             newBlock->update();
         }
     } else {

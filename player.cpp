@@ -10,22 +10,28 @@
 Player::Player(Level *initLevel) : Entity(initLevel) {
     hSpeed = 12;
     vSpeed = 0;
-    right = left = jumping = falling = jumpKeyPressed = false;
+    right = left = jumping = jumpKeyPressed = false;
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;
 	jumpSpeed = -16;
+	dir = 1;
+	pLeft.load(":/images/p_left.png");
+	pRight.load(":/images/p_right.png");
 }
 
 Player::Player(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
     hSpeed = 8;
     vSpeed = 0;
-    right = left = jumping = falling = jumpKeyPressed = false;
+    right = left = jumping = jumpKeyPressed = false;
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;
+	dir = 1;
 	jumpSpeed = -16;
+	pLeft.load(":/images/p_left.png");
+	pRight.load(":/images/p_right.png");
 }
 
 void Player::update() {
@@ -68,10 +74,18 @@ void Player::update() {
     if(!(right && left)) {	//Make sure the user isn't pressing right and left (why?....)
         if(right && !level->testCollision(getX() + getWidth(), getY()) && !level->testCollision(getX() + getWidth(), getY() + getHeight() - 2)) {
             addX(hSpeed);	//Move right
-        } else if(left && !level->testCollision(getX(), getY()) && !level->testCollision(getX(), getY() + getHeight() - 2)) {
+			dir = 1;
+        } else if(left && !level->testCollision(getX() - hSpeed, getY()) && !level->testCollision(getX(), getY() + getHeight() - 2)) {
             addX(-hSpeed);  //Move left
+			dir = -1;
         }
     }
+
+	if (dir == -1) {
+		buddy->setPixmap(pLeft);
+	} else {
+		buddy->setPixmap(pRight);
+	}
 }
 
 void Player::savePosition()

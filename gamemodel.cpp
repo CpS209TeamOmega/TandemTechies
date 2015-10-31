@@ -91,11 +91,11 @@ void GameModel::playerInputP(int p){//Press Event Handler
         break;
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(true);
-        getCurrentLevel()->getPlayer()->setFace(true);
+		getCurrentLevel()->getPlayer()->setDir(-1);
         break;
     case Qt::Key_Right:
         getCurrentLevel()->getPlayer()->setRight(true);
-        getCurrentLevel()->getPlayer()->setFace(false);
+		getCurrentLevel()->getPlayer()->setDir(1);
         break;
     default:
 

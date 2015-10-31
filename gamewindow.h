@@ -29,10 +29,10 @@ class GameWindow : public QMainWindow
     double fadeDir = 1;
 
     QPixmap blockImg;
-    QPixmap playerImg;
     QPixmap collectibleImg;
     QPixmap exitImg;
 	QPixmap backgroundImg;
+	QPixmap placeableImg;
 
     int fps;
 
