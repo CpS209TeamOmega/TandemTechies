@@ -179,5 +179,13 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
 }
 
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
-    model.playerInputR(k->key());
+    if(k->key() == Qt::Key_Space) {
+        Block* newBlock = model.placeBlock();
+        if(newBlock != nullptr) {
+            qDebug() << "HERE";
+            makeLabel(newBlock, blockImg);
+        }
+    } else {
+        model.playerInputR(k->key());
+    }
 }
