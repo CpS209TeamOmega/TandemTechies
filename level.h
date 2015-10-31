@@ -26,6 +26,7 @@ private:
     Player* player;             //The player
     Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
+    QList<Entity*> entities;    //All of the entities in the game
     int numBlocks;              //The number of placeable blocks
     QString name;               //The level's name
     int xOffs;                  //The x offset of the player (side-scrolling)
@@ -52,6 +53,9 @@ public:
     //Tests if there is a block at a certain point
     bool testCollision(int testX, int testY);
 
+    //Removes an entity from the QList of entities
+    void removeEntity(Entity* e);
+
     //Setters
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
@@ -61,6 +65,7 @@ public:
     Player* getPlayer() { return player; }
     Exit* getExit() { return exit; }
     QList<QList<Block*>>& getBlocks() { return blocks; }
+    QList<Entity*>& getEntities() { return entities; }
     int getXOffs() { return xOffs; }
     int getYOffs() { return yOffs; }
     bool isFinished() { return finished; }

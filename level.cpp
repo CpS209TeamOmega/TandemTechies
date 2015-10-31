@@ -4,6 +4,7 @@
 //**********************************************************
 
 #include "entity.h"
+#include "collectible.h"
 #include "level.h"
 #include "gamewindow.h"
 #include <QDebug>
@@ -33,6 +34,9 @@ void Level::update() {
             }
         }
     }
+    for(int i = 0; i < entities.size(); i++) {
+        entities[i]->update();
+    }
     player->update();
     exit->update();
 
@@ -53,6 +57,10 @@ bool Level::testCollision(int testX, int testY) {
     return blocks[testY][testX] != nullptr;     //Return true if a block exists in that position
 }
 
+void Level::removeEntity(Entity *e) {
+    entities.removeOne(e);
+}
+
 void Level::load(QList<QString> data) {
     for(int y = 0; y < data.size(); y++) {
         QList<Block*> list;							//The blocks in the current row
@@ -66,6 +74,9 @@ void Level::load(QList<QString> data) {
             } else if(type == 'x') {
                 list << nullptr;					//If the character is an exit
                 exit = new Exit(this, x * Entity::SIZE, y * Entity::SIZE);
+            } else if(type == 'c') {
+                list << nullptr;
+                entities << new Collectible(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == ' ') {				//If it is an empty space
                 list << nullptr;
             }

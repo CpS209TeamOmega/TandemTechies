@@ -1,11 +1,11 @@
 level Beginning your journey
 blocks 3
 bbbbbbbbbbbb
-b          b
-b          b
+b   cccc   b
+b   cccc   b
 b   bbb    b
-b          b
-bp        xb
+b  bcccc   b
+bp  cccc  xb
 bbbbbbbbbbbb
 endlevel
 
@@ -37,9 +37,9 @@ blocks 8
 bbbbbbbbb
 b  pbx  b
 b  bbb  b
+b   b b b
 b   b   b
-b   b   b
-b   b   b
+b   b  bb
 b       b
 bbbbbbbbb
 endlevel

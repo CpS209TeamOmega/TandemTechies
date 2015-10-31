@@ -12,7 +12,7 @@ Player::Player(Level *initLevel) : Entity(initLevel) {
     vSpeed = 0;
     right = left = jumping = falling = jumpKeyPressed = false;
     jumpDistance = 0;
-    jumpHeight = 64;
+    jumpHeight = 192;
     maxVSpeed = 32;
 	jumpSpeed = -16;
 }
@@ -23,7 +23,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     vSpeed = 0;
     right = left = jumping = falling = jumpKeyPressed = false;
     jumpDistance = 0;
-    jumpHeight = 96;
+    jumpHeight = 192;
     maxVSpeed = 32;
 	jumpSpeed = -16;
 }
@@ -32,8 +32,8 @@ void Player::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
     if(!jumping) {		//If the player is not currently jumping
-        if(level->testCollision(getX() + 20, getY() + getHeight())    //Test to see if there is a block underneath
-                || level->testCollision(getX() + getWidth() - 20, getY() + getHeight())) {
+        if(level->testCollision(getX() + hSpeed + 1, getY() + getHeight())    //Test to see if there is a block underneath
+                || level->testCollision(getX() + getWidth() - hSpeed - 1, getY() + getHeight())) {
             vSpeed = 0;
             while(getY() % Entity::SIZE != 0) addY(-2);
             if(jumpKeyPressed) jumping = true;		//If player is on a block and trying to jump, jump
@@ -41,9 +41,9 @@ void Player::update() {
             vSpeed += 2;							//Make the player fall with the illusion of gravity
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }
-    } else {
-        if(level->testCollision(getX() + 20, getY() + jumpSpeed)		//If the player hits his head
-                || level->testCollision(getX() + getWidth() - 20, getY() + jumpSpeed)) {
+    } else if(jumpKeyPressed) {
+        if(level->testCollision(getX() + hSpeed + 1, getY() + jumpSpeed)		//If the player hits his head
+                || level->testCollision(getX() + getWidth() - hSpeed - 1, getY() + jumpSpeed)) {
             while(getY() % Entity::SIZE != 0) addY(2);
             vSpeed = 0;
             jumping = false;
@@ -53,9 +53,14 @@ void Player::update() {
             jumpDistance -= vSpeed;
             if(jumpDistance >= jumpHeight) {
                 jumpDistance = 0;
+                vSpeed = 0;
                 jumping = false;
             }
         }
+    } else {
+        jumping = false;
+        jumpDistance = 0;
+        vSpeed = 0;
     }
 
     addY(vSpeed);		//Actually perform the vertical movement
