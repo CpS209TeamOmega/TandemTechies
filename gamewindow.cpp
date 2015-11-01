@@ -119,6 +119,10 @@ void GameWindow::updateGUI() {
     lbl->setScaledContents(true);
     lbl->show();
 
+    //Create the player's label
+    Player* p = lvl->getPlayer();
+    makeLabel(p, QPixmap());
+
     auto entities = lvl->getEntities();
     for(int i = 0; i < entities.size(); i++) {
         Collectible* c = dynamic_cast<Collectible*>(entities[i]);
@@ -133,8 +137,11 @@ void GameWindow::updateGUI() {
         for(int x = 0; x < blocks[y].size(); x++) {
             if(blocks[y][x] != nullptr) {
                   Block* b = blocks[y][x];
-                  if (b->isPlaceable()) {
+
+                  PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(b);
+                  if(test != nullptr) {
                       makeLabel(b, placeableImg);
+                      b->getBuddy()->setGeometry(b->getX(), b->getY(), 0, 0);
                   } else {
                       makeLabel(b, blockImg);
                   }
@@ -142,13 +149,11 @@ void GameWindow::updateGUI() {
         }
     }
 
-    //Create the player's label
-    Player* p = lvl->getPlayer();
-    makeLabel(p, QPixmap());
-
     //Create the exit's label
     Exit* e = lvl->getExit();
     makeLabel(e, exitImg);
+
+    lvl->update();
 
     ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     ui->lblName->setText(model.getCurrentLevel()->getName());
@@ -186,7 +191,14 @@ void GameWindow::exit(){
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
-    if (k->key() == Qt::Key_Escape) {
+    if(k->key() == Qt::Key_Space) {
+        PlaceableBlock* newBlock = model.placeBlock();
+        if(newBlock != nullptr) {
+            makeLabel(newBlock, placeableImg);
+            newBlock->update();
+        }
+        ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    }else if (k->key() == Qt::Key_Escape) {
         menu->show();
     }
 
@@ -202,14 +214,7 @@ void GameWindow::leaveEvent(QEvent *) {
 }
 
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
-    if(k->key() == Qt::Key_Space) {
-        Block* newBlock = model.placeBlock();
-        if(newBlock != nullptr) {
-            makeLabel(newBlock, placeableImg);
-            newBlock->update();
-        }
-        ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
-    } else if(k->key() == Qt::Key_R) {
+    if(k->key() == Qt::Key_R) {
         model.resetCurrentLevel();
         updateGUI();
     } else {

@@ -94,19 +94,22 @@ GameModel::~GameModel() {
     }
 }
 
-Block* GameModel::placeBlock() {
+PlaceableBlock* GameModel::placeBlock() {
     return getCurrentLevel()->placeBlock();
 }
 
 void GameModel::playerInputP(int p){//Press Event Handler
     switch (p){
+    case Qt::Key_W:
     case Qt::Key_Up:
         getCurrentLevel()->getPlayer()->setJumping(true);
         break;
+    case Qt::Key_A:
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(true);
 		getCurrentLevel()->getPlayer()->setDir(-1);
         break;
+    case Qt::Key_D:
     case Qt::Key_Right:
         getCurrentLevel()->getPlayer()->setRight(true);
 		getCurrentLevel()->getPlayer()->setDir(1);
@@ -119,12 +122,15 @@ void GameModel::playerInputP(int p){//Press Event Handler
 
 void GameModel::playerInputR(int r){//Release Event Handler
     switch (r){
+    case Qt::Key_W:
     case Qt::Key_Up:
         getCurrentLevel()->getPlayer()->setJumping(false);
         break;
+    case Qt::Key_A:
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(false);
         break;
+    case Qt::Key_D:
     case Qt::Key_Right:
         getCurrentLevel()->getPlayer()->setRight(false);
         break;

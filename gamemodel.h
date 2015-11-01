@@ -39,7 +39,7 @@ public:
     //Load game state
     void load();
 
-    Block* placeBlock();
+    PlaceableBlock* placeBlock();
 
     //Keyboard Press/Release Event
     void playerInputP(int p);

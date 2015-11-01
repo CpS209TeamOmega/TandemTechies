@@ -33,7 +33,13 @@ Menu::Menu(QWidget *parent) :
     background->lower();
     background->show();
 
+    //Make the logo's background transparent
     ui->lblLogo->setAttribute(Qt::WA_TranslucentBackground);
+
+    //Make the menu border invisible
+    setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
+    setWindowFlags(Qt::CustomizeWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
 }
 
 Menu::~Menu()

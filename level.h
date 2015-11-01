@@ -58,8 +58,10 @@ public:
     //Removes an entity from the QList of entities
     void removeEntity(Entity* e);
 
+    void removeBlock(int x, int y);
+
     //Place block in certain position
-    Block* placeBlock ();
+    PlaceableBlock* placeBlock ();
 
 
     //Setters

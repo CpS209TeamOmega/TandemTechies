@@ -68,6 +68,11 @@ void Level::removeEntity(Entity *e) {
     delete e;
 }
 
+void Level::removeBlock(int x, int y) {
+    delete blocks[y][x];
+    blocks[y][x] = nullptr;
+}
+
 void Level::load(QList<QString> initData) {
     data = QList<QString>(initData);
 
@@ -88,8 +93,7 @@ void Level::load(QList<QString> initData) {
                 Collectible* c = new Collectible(this, x * Entity::SIZE, y * Entity::SIZE);
                 entities << c;
             } else if(type == 'm') {
-                Block* b = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
-                b->setPlaceable(true);
+                PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
                 list << b;
             } else if(type == ' ') {				//If it is an empty space
                 list << nullptr;
@@ -99,7 +103,7 @@ void Level::load(QList<QString> initData) {
     }
 }
 
-Block* Level::placeBlock(){
+PlaceableBlock* Level::placeBlock(){
     int x = 0, y = 0;
     if(player->getDir() == -1){
         x = player->getX() - Entity::SIZE + 2;
@@ -119,7 +123,7 @@ Block* Level::placeBlock(){
 
     if(blocks[y][x] == nullptr) {
         if(numBlocks) {
-            Block* b = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
+            PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
             for(int i = 0; i < entities.size(); i++) {
                 if(entities[i]->isCollidingWith(b)) {
                     delete b;
@@ -131,21 +135,18 @@ Block* Level::placeBlock(){
                 return nullptr;
             }
             if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
-                b->setPlaceable(true);
                 blocks[y][x] = b;
                 numBlocks--;
-                return blocks[y][x];
+                return b;
             } else {
                 delete b;
                 return nullptr;
             }
         }
     } else {
-        Block* testBlock = blocks[y][x];
-        if(testBlock->isPlaceable()) {
-            testBlock->getBuddy()->deleteLater();
-            delete testBlock;
-            blocks[y][x] = nullptr;
+        PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
+        if(test != nullptr && !test->isDeleting()) {
+            test->setDeleting(true);
             numBlocks++;
         }
     }
