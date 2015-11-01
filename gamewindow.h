@@ -68,6 +68,8 @@ private slots:
     void exit();
     void keyPressEvent(QKeyEvent *k);
     void keyReleaseEvent(QKeyEvent *k);
+    void focusOutEvent(QFocusEvent*);
+    void leaveEvent(QEvent*);
 };
 
 #endif // GAMEWINDOW_H

@@ -1,60 +1,90 @@
-level Beginning your journey
+level Beginning Your Journey
 blocks 3
 bbbbbbbbbbbb
-b   cccc   b
-b   cccc   b
+b          b
+b   ccc    b
 b   bbb    b
-b  bcccc   b
-bp  cccc  xb
+b  b   b   b
+bp        xb
 bbbbbbbbbbbb
-endlevel
-
-level First Steps
-blocks 5
-bbbbbbbbbbbb
-b          b
-b          b
-b         xb
-b      bbbbb
-bp         b
-bbbbbbbbbbbb
-endlevel
-
-level Up and Down
-blocks 8
-bbbbbbbbb
-b       b
-b       b
-b  bbb  b
-b   b   b
-bb  b   b
-b  pbx  b
-bbbbbbbbb
-endlevel
-
-level Down and Up
-blocks 8
-bbbbbbbbb
-b  pbx  b
-b  bbb  b
-b   b b b
-b   b   b
-b   b  bb
-b       b
-bbbbbbbbb
 endlevel
 
 level ZigZag
 blocks 0
 bbbbbbbbbbbbb
-bp          b
+bp    m     b
 bbbbbbbbbbb b
-b           b
+b     m     b
 b bbbbbbbbbbb
-b           b
+b     m     b
 bbbbbbbbbbb b
-bx          b
+bx    m     b
 bbbbbbbbbbbbb
+endlevel
+
+level First Steps
+blocks 2
+bbbbbbbbbbbb
+b         xb
+b        bbb
+b     bbb  b
+b          b
+bp         b
+bbbbbbbbbbbb
+endlevel
+
+level Money Pit
+blocks 0
+bbbbbbbbbbbbb
+b           b
+b           b
+b           b
+b   bcccb   b
+bm  bcccb   b
+bm pbcccb  xb
+bbbbbbbbbbbbb
+endlevel
+
+level Up and Down
+blocks 2
+bbbbbbbbb
+b       b
+b       b
+b  bbb  b
+b   b   b
+b   b   b
+b  pbx  b
+bbbbbbbbb
+endlevel
+
+level Down and Up
+blocks 2
+bbbbbbbbb
+b  pbx  b
+b  bbb  b
+b   b   b
+b   b   b
+b   b   b
+b       b
+bbbbbbbbb
+endlevel
+
+level Platformer
+blocks 2
+bbbbbbbbbbb
+b        xb
+b         b
+b      b  b
+b         b
+b    b    b
+b         b
+b  b      b
+bp        b
+bb        b
+bb        b
+bb        b
+bb        b
+bbbbbbbbbbb
 endlevel
 
 level Endian
@@ -62,14 +92,14 @@ blocks 2
 bbbbbbbbbbbbb
 b           b
 bp         xb
-bbbbb  bbbbbb
+bbbbb    bbbb
 b           b
 b           b
 b           b
 bbbbbbbbbbbbb
 endlevel
 
-level tower
+level Tower
 blocks 6
 bbbbbbbbbbbbb
 bx          b
@@ -86,4 +116,40 @@ b           b
 b           b
 bp          b
 bbbbbbbbbbbbb
+endlevel
+
+level Fun
+blocks 0
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                             b
+b                             b
+b                             b
+b        bb   bb              b
+b        bb   bb              b
+b                             b
+b      b         b            b
+b       bbp    bb             b
+b        bbbbbbb              b
+b                            xb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+endlevel
+
+level Impossible
+blocks 0
+bbbbbbbbbbbbbbbbbbbbbbbbb
+bp                     xb
+b                      bb
+b                     bbb
+bm                      b
+b bb                    b
+b b                     b
+b b  b                  b
+b b                     b
+b bb                    b
+b b                     b
+b b  b                  b
+b b                     b
+b bb                    b
+b b     m     m     m   b
+bbbbbbbbbbbbbbbbbbbbbbbbb
 endlevel

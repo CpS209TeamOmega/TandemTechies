@@ -11,8 +11,11 @@
 
 Level::Level(QList<QString> data)
 {
+    name = "";
     load(data);
     finished = false;
+    xOffs = 0;
+    yOffs = 0;
 }
 
 Level::~Level() {
@@ -20,6 +23,9 @@ Level::~Level() {
         for(int x = 0; x < blocks[y].size(); x++) {
             delete blocks[y][x];
         }
+    }
+    for(int i = 0; i < entities.size(); i++) {
+        delete entities[i];
     }
     delete player;
     delete exit;
@@ -59,13 +65,16 @@ bool Level::testCollision(int testX, int testY) {
 
 void Level::removeEntity(Entity *e) {
     entities.removeOne(e);
+    delete e;
 }
 
-void Level::load(QList<QString> data) {
-    for(int y = 0; y < data.size(); y++) {
+void Level::load(QList<QString> initData) {
+    data = QList<QString>(initData);
+
+    for(int y = 0; y < initData.size(); y++) {
         QList<Block*> list;							//The blocks in the current row
-        for(int x = 0; x < data[y].length(); x++) {
-            QChar type = data[y].at(x);
+        for(int x = 0; x < initData[y].length(); x++) {
+            QChar type = initData[y].at(x);
             if(type == 'b') {						//If the character represents a block
                 list << new Block(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == 'p') {				//If the character represents the player
@@ -76,7 +85,8 @@ void Level::load(QList<QString> data) {
                 exit = new Exit(this, x * Entity::SIZE, y * Entity::SIZE);
             } else if(type == 'c') {
                 list << nullptr;
-                entities << new Collectible(this, x * Entity::SIZE, y * Entity::SIZE);
+                Collectible* c = new Collectible(this, x * Entity::SIZE, y * Entity::SIZE);
+                entities << c;
             } else if(type == 'm') {
                 Block* b = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
                 b->setPlaceable(true);
@@ -111,15 +121,24 @@ Block* Level::placeBlock(){
         if(numBlocks) {
             Block* b = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
             for(int i = 0; i < entities.size(); i++) {
-                if(entities[i]->isCollidingWith(b)) return nullptr;
+                if(entities[i]->isCollidingWith(b)) {
+                    delete b;
+                    return nullptr;
+                }
             }
-            if(exit->isCollidingWith(b)) return nullptr;
+            if(exit->isCollidingWith(b)) {
+                delete b;
+                return nullptr;
+            }
             if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
                 b->setPlaceable(true);
                 blocks[y][x] = b;
                 numBlocks--;
                 return blocks[y][x];
-            } else return nullptr;
+            } else {
+                delete b;
+                return nullptr;
+            }
         }
     } else {
         Block* testBlock = blocks[y][x];

@@ -12,6 +12,7 @@ GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
+    updateGUI = false;
 }
 
 void GameModel::update()
@@ -74,6 +75,19 @@ bool GameModel::loadLevels() {
     return true;
 }
 
+void GameModel::resetCurrentLevel() {
+    Level* level = getCurrentLevel();
+    int numBlocks = level->getStartNumBlocks();
+    QString name = level->getName();
+    QList<QString> data = level->getData();
+    Level* newLevel = new Level(data);
+    newLevel->setName(name);
+    newLevel->setNumBlocks(numBlocks);
+    levels.removeOne(level);
+    delete level;
+    levels.insert(currentLevel, newLevel);
+}
+
 GameModel::~GameModel() {
     for(int i = 0; i < levels.size(); i++) {
         delete levels[i];
@@ -98,7 +112,6 @@ void GameModel::playerInputP(int p){//Press Event Handler
 		getCurrentLevel()->getPlayer()->setDir(1);
         break;
     default:
-
         break;
     }
 }
@@ -116,7 +129,6 @@ void GameModel::playerInputR(int r){//Release Event Handler
         getCurrentLevel()->getPlayer()->setRight(false);
         break;
     default:
-
         break;
     }
 }

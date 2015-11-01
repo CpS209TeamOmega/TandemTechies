@@ -66,27 +66,27 @@ GameWindow::GameWindow(QWidget *parent) :
 }
 
 void GameWindow::unitTests() {
-	Level* level = model.getCurrentLevel();
+    Level* level = model.getCurrentLevel();
 
-	//Make sure the level's name is as it shows in levels.dat
-	Q_ASSERT(level->getName() == "Beginning your journey");
+    //Make sure the level's name is as it shows in levels.dat
+    Q_ASSERT(level->getName() == "Beginning Your Journey");
 
-	//Make sure the number of placeable blocks reflects levels.dat
-	Q_ASSERT(level->getNumBlocks() == 3);
+    //Make sure the number of placeable blocks reflects levels.dat
+    Q_ASSERT(level->getNumBlocks() == 3);
 
-	//Make sure the level loaded correctly - level height == 7
-	Q_ASSERT(level->getBlocks().size() == 7);
+    //Make sure the level loaded correctly - level height == 7
+    Q_ASSERT(level->getBlocks().size() == 7);
 
-	//Make sure the level loaded correctly - level width == 12
-	Q_ASSERT(level->getBlocks()[0].size() == 12);
+    //Make sure the level loaded correctly - level width == 12
+    Q_ASSERT(level->getBlocks()[0].size() == 12);
 
-	//Make sure the player's x position in the level is 64
-	Q_ASSERT(level->getPlayer()->getX() == 64);
+    //Make sure the player's x position in the level is 64
+    Q_ASSERT(level->getPlayer()->getX() == 64);
 
-	//Make sure the player's y position in the level is 320
-	Q_ASSERT(level->getPlayer()->getY() == 320);
+    //Make sure the player's y position in the level is 320
+    Q_ASSERT(level->getPlayer()->getY() == 320);
 
-	//All unit tests passed! Now on to play this amazing game!
+    //All unit tests passed! Now on to play this amazing game!
 }
 
 void GameWindow::makeLabel(Entity* e, QPixmap image) {
@@ -193,6 +193,14 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
     model.playerInputP(k->key());
 }
 
+void GameWindow::focusOutEvent(QFocusEvent *) {
+    model.getCurrentLevel()->getPlayer()->clearFlags();
+}
+
+void GameWindow::leaveEvent(QEvent *) {
+    model.getCurrentLevel()->getPlayer()->clearFlags();
+}
+
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
     if(k->key() == Qt::Key_Space) {
         Block* newBlock = model.placeBlock();
@@ -201,6 +209,9 @@ void GameWindow::keyReleaseEvent(QKeyEvent *k){
             newBlock->update();
         }
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    } else if(k->key() == Qt::Key_R) {
+        model.resetCurrentLevel();
+        updateGUI();
     } else {
         model.playerInputR(k->key());
     }

@@ -88,6 +88,12 @@ void Player::update() {
 	}
 }
 
+void Player::clearFlags() {
+    jumpKeyPressed = false;
+    right = false;
+    left = false;
+}
+
 void Player::savePosition()
 {
 

@@ -46,6 +46,10 @@ public:
     //save the status of the player entity
     void savePosition();
 
+    //Clears the input flags of the user, such as
+    //left, right, and jumpKeyPressed
+    void clearFlags();
+
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
