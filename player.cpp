@@ -29,7 +29,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     jumpHeight = 192;
     maxVSpeed = 32;
 	dir = 1;
-	jumpSpeed = -16;
+    jumpSpeed = -12;
 	pLeft.load(":/images/p_left.png");
 	pRight.load(":/images/p_right.png");
 }
@@ -38,19 +38,19 @@ void Player::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
     if(!jumping) {		//If the player is not currently jumping
-        if(level->testCollision(getX() + hSpeed + 1, getY() + getHeight())    //Test to see if there is a block underneath
-                || level->testCollision(getX() + getWidth() - hSpeed - 1, getY() + getHeight())) {
+        if(level->testCollision(getX(), getY() + getHeight() + vSpeed)    //Test to see if there is a block underneath
+                || level->testCollision(getX() + getWidth() - hSpeed, getY() + getHeight() + vSpeed)) {
+            while(getY() % Entity::SIZE != 0) addY(1);
             vSpeed = 0;
-            while(getY() % Entity::SIZE != 0) addY(-2);
             if(jumpKeyPressed) jumping = true;		//If player is on a block and trying to jump, jump
         } else {
-            vSpeed += 2;							//Make the player fall with the illusion of gravity
+            vSpeed += 1;							//Make the player fall with the illusion of gravity
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }
     } else if(jumpKeyPressed) {
-        if(level->testCollision(getX() + hSpeed + 1, getY() + jumpSpeed)		//If the player hits his head
-                || level->testCollision(getX() + getWidth() - hSpeed - 1, getY() + jumpSpeed)) {
-            while(getY() % Entity::SIZE != 0) addY(2);
+        if(level->testCollision(getX(), getY() + jumpSpeed)		//If the player hits his head
+                || level->testCollision(getX() + getWidth() - hSpeed, getY() + jumpSpeed)) {
+            while(getY() % Entity::SIZE != 0) addY(-1);
             vSpeed = 0;
             jumping = false;
             jumpDistance = 0;
@@ -72,10 +72,10 @@ void Player::update() {
     addY(vSpeed);		//Actually perform the vertical movement
 
     if(!(right && left)) {	//Make sure the user isn't pressing right and left (why?....)
-        if(right && !level->testCollision(getX() + getWidth(), getY()) && !level->testCollision(getX() + getWidth(), getY() + getHeight() - 2)) {
+        if(right && !level->testCollision(getX() + getWidth(), getY()) && !level->testCollision(getX() + getWidth(), getY() + getHeight() - 1)) {
             addX(hSpeed);	//Move right
 			dir = 1;
-        } else if(left && !level->testCollision(getX() - hSpeed, getY()) && !level->testCollision(getX(), getY() + getHeight() - 2)) {
+        } else if(left && !level->testCollision(getX() - hSpeed, getY()) && !level->testCollision(getX() - hSpeed, getY() + getHeight() - 1)) {
             addX(-hSpeed);  //Move left
 			dir = -1;
         }

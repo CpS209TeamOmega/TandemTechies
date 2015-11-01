@@ -58,7 +58,7 @@ bbbbbbbbbbbbb
 endlevel
 
 level Endian
-blocks 1
+blocks 2
 bbbbbbbbbbbbb
 b           b
 bp         xb
@@ -66,5 +66,24 @@ bbbbb  bbbbbb
 b           b
 b           b
 b           b
+bbbbbbbbbbbbb
+endlevel
+
+level tower
+blocks 6
+bbbbbbbbbbbbb
+bx          b
+bbbbbb      b
+b           b
+b           b
+b           b
+b           b
+b           b
+b           b
+b           b
+b           b
+b           b
+b           b
+bp          b
 bbbbbbbbbbbbb
 endlevel

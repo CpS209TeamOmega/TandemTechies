@@ -59,6 +59,10 @@ GameWindow::GameWindow(QWidget *parent) :
 		connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
 		timer->start();
     }
+
+    ui->statusBar->hide();
+    ui->mainToolBar->hide();
+    ui->wgStatusBar->setParent(this);
 }
 
 void GameWindow::unitTests() {
@@ -96,7 +100,7 @@ void GameWindow::makeLabel(Entity* e, QPixmap image) {
 }
 
 void GameWindow::updateGUI() {
-	//Clear all of the current labels from the window
+    //Clear all of the current labels from the window
     QObjectList objects = children();
     for(QObject* object : objects) {
         QLabel* lbl = dynamic_cast<QLabel*>(object);
@@ -105,15 +109,15 @@ void GameWindow::updateGUI() {
         }
     }
 
-	//Load up the background image
-	QLabel* lbl = new QLabel(this);
-	lbl->setGeometry(0, 0, WIDTH, HEIGHT);
-	lbl->setPixmap(backgroundImg);
-	lbl->setScaledContents(true);
-	lbl->show();
-
-	//Get the current level
+    //Get the current level
     Level* lvl = model.getCurrentLevel();
+
+    //Load up the background image
+    QLabel* lbl = new QLabel(this);
+    lbl->setGeometry(0, 0, geometry().width(), geometry().height());
+    lbl->setPixmap(backgroundImg);
+    lbl->setScaledContents(true);
+    lbl->show();
 
     auto entities = lvl->getEntities();
     for(int i = 0; i < entities.size(); i++) {
@@ -123,28 +127,32 @@ void GameWindow::updateGUI() {
         }
     }
 
-	//Create the labels for the blocks in the level
+    //Create the labels for the blocks in the level
     auto blocks = lvl->getBlocks();
     for(int y = 0; y < blocks.size(); y++) {
         for(int x = 0; x < blocks[y].size(); x++) {
             if(blocks[y][x] != nullptr) {
                   Block* b = blocks[y][x];
-				  if (b->isPlaceable()) {
-					  makeLabel(b, placeableImg);
-				  } else {
-					  makeLabel(b, blockImg);
-				  }
+                  if (b->isPlaceable()) {
+                      makeLabel(b, placeableImg);
+                  } else {
+                      makeLabel(b, blockImg);
+                  }
             }
         }
     }
 
-	//Create the player's label
+    //Create the player's label
     Player* p = lvl->getPlayer();
     makeLabel(p, QPixmap());
 
-	//Create the exit's label
+    //Create the exit's label
     Exit* e = lvl->getExit();
     makeLabel(e, exitImg);
+
+    ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    ui->lblName->setText(model.getCurrentLevel()->getName());
+    ui->wgStatusBar->raise();
 }
 
 void GameWindow::timerHit() {
@@ -192,6 +200,7 @@ void GameWindow::keyReleaseEvent(QKeyEvent *k){
             makeLabel(newBlock, placeableImg);
             newBlock->update();
         }
+        ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     } else {
         model.playerInputR(k->key());
     }

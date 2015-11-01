@@ -77,6 +77,10 @@ void Level::load(QList<QString> data) {
             } else if(type == 'c') {
                 list << nullptr;
                 entities << new Collectible(this, x * Entity::SIZE, y * Entity::SIZE);
+            } else if(type == 'm') {
+                Block* b = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
+                b->setPlaceable(true);
+                list << b;
             } else if(type == ' ') {				//If it is an empty space
                 list << nullptr;
             }
@@ -104,11 +108,19 @@ Block* Level::placeBlock(){
     if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
 
     if(blocks[y][x] == nullptr) {
-        Block* newBlock = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
-        newBlock->setPlaceable(true);
-        blocks[y][x] = newBlock;
-        numBlocks--;
-        return blocks[y][x];
+        if(numBlocks) {
+            Block* b = new Block(this, x * Entity::SIZE, y * Entity::SIZE);
+            for(int i = 0; i < entities.size(); i++) {
+                if(entities[i]->isCollidingWith(b)) return nullptr;
+            }
+            if(exit->isCollidingWith(b)) return nullptr;
+            if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
+                b->setPlaceable(true);
+                blocks[y][x] = b;
+                numBlocks--;
+                return blocks[y][x];
+            } else return nullptr;
+        }
     } else {
         Block* testBlock = blocks[y][x];
         if(testBlock->isPlaceable()) {
