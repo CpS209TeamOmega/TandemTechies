@@ -5,6 +5,7 @@ void Collectible::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
     if(isCollidingWith(level->getPlayer())) {
+        ScoreManager::instance().addToScore(pointPlus);
         deleteCollectible();
     }
 }

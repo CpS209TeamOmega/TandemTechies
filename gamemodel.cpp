@@ -21,6 +21,7 @@ void GameModel::update()
 
 	//Test to see if the user has gotten to the exit
     if(levels[currentLevel]->isFinished()) {
+        ScoreManager::instance().addToScore(levels[currentLevel]->getPoints());
         levels[currentLevel]->setFinished(false);
 
 		//Go the the next level and make sure the currentLevel is not the last level

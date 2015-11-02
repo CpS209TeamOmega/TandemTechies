@@ -29,6 +29,7 @@ private:
     QList<Entity*> entities;    //All of the entities in the game
     int numBlocks;              //The number of placeable blocks
     QString name;               //The level's name
+    int pointPlus;              //points added at level completion
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
 
@@ -70,6 +71,7 @@ public:
     Exit* getExit() { return exit; }
     QList<QList<Block*>>& getBlocks() { return blocks; }
     QList<Entity*>& getEntities() { return entities; }
+    int getPoints() { return pointPlus; }
     int getXOffs() { return xOffs; }
     int getYOffs() { return yOffs; }
     bool isFinished() { return finished; }

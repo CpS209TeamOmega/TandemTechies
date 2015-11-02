@@ -20,7 +20,6 @@ class GameModel
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;
-    ScoreManager sm;      //The Score Manager
 
     //Game State  <---------Add more to here
     bool isFinished;

@@ -45,43 +45,53 @@ GameWindow::GameWindow(QWidget *parent) :
     exitImg.load(":/images/exit.png");
     backgroundImg.load(":/images/bg.png");
 
+    wgScore = new QWidget(this);
+    wgScore->setGeometry(WIDTH - 200, 50, 500, 50);
+    QLabel *lblScore = new QLabel(wgScore);
+    lblScore->setGeometry(0, 0, 500, 50); //set in reference to wgScore
+    lblScore->setText("0");
+    lblScore->setStyleSheet("color:white; font:30pt Arial");
+    lblScore->setScaledContents(true);
+    ScoreManager::instance().setBuddy(lblScore);
+    wgScore->show();
+
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
         exit();
-	}
-	else {
-		unitTests();
+    }
+    else {
+        unitTests();
         updateGUI();
 
-		QTimer *timer = new QTimer(this);
-		timer->setInterval(1000 / fps);
-		connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
-		timer->start();
-	}
+        QTimer *timer = new QTimer(this);
+        timer->setInterval(1000 / fps);
+        connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
+        timer->start();
+    }
 }
 
 void GameWindow::unitTests() {
-	Level* level = model.getCurrentLevel();
+    Level* level = model.getCurrentLevel();
 
-	//Make sure the level's name is as it shows in levels.dat
-	Q_ASSERT(level->getName() == "Beginning your journey");
+    //Make sure the level's name is as it shows in levels.dat
+    Q_ASSERT(level->getName() == "Beginning your journey");
 
-	//Make sure the number of placeable blocks reflects levels.dat
-	Q_ASSERT(level->getNumBlocks() == 3);
+    //Make sure the number of placeable blocks reflects levels.dat
+    Q_ASSERT(level->getNumBlocks() == 3);
 
-	//Make sure the level loaded correctly - level height == 7
-	Q_ASSERT(level->getBlocks().size() == 7);
+    //Make sure the level loaded correctly - level height == 7
+    Q_ASSERT(level->getBlocks().size() == 7);
 
-	//Make sure the level loaded correctly - level width == 12
-	Q_ASSERT(level->getBlocks()[0].size() == 12);
+    //Make sure the level loaded correctly - level width == 12
+    Q_ASSERT(level->getBlocks()[0].size() == 12);
 
-	//Make sure the player's x position in the level is 64
-	Q_ASSERT(level->getPlayer()->getX() == 64);
+    //Make sure the player's x position in the level is 64
+    Q_ASSERT(level->getPlayer()->getX() == 64);
 
-	//Make sure the player's y position in the level is 320
-	Q_ASSERT(level->getPlayer()->getY() == 320);
+    //Make sure the player's y position in the level is 320
+    Q_ASSERT(level->getPlayer()->getY() == 320);
 
-	//All unit tests passed! Now on to play this amazing game!
+    //All unit tests passed! Now on to play this amazing game!
 }
 
 void GameWindow::makeLabel(Entity* e, QPixmap image) {
@@ -90,11 +100,11 @@ void GameWindow::makeLabel(Entity* e, QPixmap image) {
     lbl->setPixmap(image);					//Sets the picture of the label
     lbl->setScaledContents(true);			//Makes the picture scale to the label's size
     e->setBuddy(lbl);						//Sets the Entity's corresponding label
-	lbl->show();
+    lbl->show();
 }
 
 void GameWindow::updateGUI() {
-	//Clear all of the current labels from the window
+    //Clear all of the current labels from the window
     QObjectList objects = children();
     for(QObject* object : objects) {
         QLabel* lbl = dynamic_cast<QLabel*>(object);
@@ -103,14 +113,14 @@ void GameWindow::updateGUI() {
         }
     }
 
-	//Load up the background image
-	QLabel* lbl = new QLabel(this);
-	lbl->setGeometry(0, 0, WIDTH, HEIGHT);
-	lbl->setPixmap(backgroundImg);
-	lbl->setScaledContents(true);
-	lbl->show();
+    //Load up the background image
+    QLabel* lbl = new QLabel(this);
+    lbl->setGeometry(0, 0, WIDTH, HEIGHT);
+    lbl->setPixmap(backgroundImg);
+    lbl->setScaledContents(true);
+    lbl->show();
 
-	//Get the current level
+    //Get the current level
     Level* lvl = model.getCurrentLevel();
 
     auto entities = lvl->getEntities();
@@ -118,7 +128,7 @@ void GameWindow::updateGUI() {
         makeLabel(entities[i], backgroundImg);
     }
 
-	//Create the labels for the blocks in the level
+    //Create the labels for the blocks in the level
     auto blocks = lvl->getBlocks();
     for(int y = 0; y < blocks.size(); y++) {
         for(int x = 0; x < blocks[y].size(); x++) {
@@ -129,13 +139,15 @@ void GameWindow::updateGUI() {
         }
     }
 
-	//Create the player's label
+    //Create the player's label
     Player* p = lvl->getPlayer();
     makeLabel(p, playerImg);
 
-	//Create the exit's label
+    //Create the exit's label
     Exit* e = lvl->getExit();
     makeLabel(e, exitImg);
+
+    wgScore->raise();
 }
 
 void GameWindow::timerHit() {

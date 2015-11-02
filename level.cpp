@@ -13,6 +13,7 @@ Level::Level(QList<QString> data)
 {
     load(data);
     finished = false;
+    pointPlus = 1000;
 }
 
 Level::~Level() {
