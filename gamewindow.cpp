@@ -119,13 +119,6 @@ void GameWindow::updateGUI() {
         }
     }
 
-    //Load up the background image
-    QLabel* lbl = new QLabel(this);
-    lbl->setGeometry(0, 0, WIDTH, HEIGHT);
-    lbl->setPixmap(backgroundImg);
-    lbl->setScaledContents(true);
-    lbl->show();
-
     //Get the current level
     Level* lvl = model.getCurrentLevel();
 
@@ -165,9 +158,6 @@ void GameWindow::updateGUI() {
             }
         }
     }
-    //Create the player's label
-    Player* p = lvl->getPlayer();
-    makeLabel(p, playerImg);
 
     //Create the exit's label
     Exit* e = lvl->getExit();
@@ -178,6 +168,7 @@ void GameWindow::updateGUI() {
 
     ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     ui->lblName->setText(model.getCurrentLevel()->getName());
+    ui->wgStatusBar->raise();
 }
 
 void GameWindow::timerHit() {
