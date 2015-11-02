@@ -20,7 +20,6 @@ SOURCES += main.cpp\
         scoremanager.cpp \
     level.cpp \
     block.cpp \
-    inputhandler.cpp \
     menu.cpp \
     exit.cpp \
     collectible.cpp
@@ -32,7 +31,6 @@ HEADERS  += gamewindow.h\
         scoremanager.h \
     level.h \
     block.h \
-    inputhandler.h \
     menu.h \
     exit.h \
     collectible.h

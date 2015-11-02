@@ -12,6 +12,7 @@ GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
+    updateGUI = false;
 }
 
 void GameModel::update()
@@ -74,36 +75,46 @@ bool GameModel::loadLevels() {
     return true;
 }
 
+void GameModel::resetCurrentLevel() {
+    Level* level = getCurrentLevel();
+    int numBlocks = level->getStartNumBlocks();
+    QString name = level->getName();
+    QList<QString> data = level->getData();
+    Level* newLevel = new Level(data);
+    newLevel->setName(name);
+    newLevel->setNumBlocks(numBlocks);
+    levels.removeOne(level);
+    delete level;
+    levels.insert(currentLevel, newLevel);
+}
+
 GameModel::~GameModel() {
     for(int i = 0; i < levels.size(); i++) {
         delete levels[i];
     }
 }
 
-Block* GameModel::placeBlock() {
-    if(getCurrentLevel()->getPlayer()->isLeft()){
-        return getCurrentLevel()->placeBlock(getCurrentLevel()->getPlayer()->getX() - Entity::SIZE, getCurrentLevel()->getPlayer()->getY());
-    } else {
-        return getCurrentLevel()->placeBlock(getCurrentLevel()->getPlayer()->getX() + Entity::SIZE * 2, getCurrentLevel()->getPlayer()->getY());
-    }
-    return nullptr;
+PlaceableBlock* GameModel::placeBlock() {
+    return getCurrentLevel()->placeBlock();
 }
 
 void GameModel::playerInputP(int p){//Press Event Handler
     switch (p){
+    case Qt::Key_W:
     case Qt::Key_Up:
         getCurrentLevel()->getPlayer()->setJumping(true);
         break;
+    case Qt::Key_A:
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(true);
-        getCurrentLevel()->getPlayer()->setFace(true);
+		getCurrentLevel()->getPlayer()->setDir(-1);
         break;
+    case Qt::Key_D:
     case Qt::Key_Right:
         getCurrentLevel()->getPlayer()->setRight(true);
-        getCurrentLevel()->getPlayer()->setFace(false);
+		getCurrentLevel()->getPlayer()->setDir(1);
         break;
     default:
-
         break;
     }
 }
@@ -111,17 +122,19 @@ void GameModel::playerInputP(int p){//Press Event Handler
 
 void GameModel::playerInputR(int r){//Release Event Handler
     switch (r){
+    case Qt::Key_W:
     case Qt::Key_Up:
         getCurrentLevel()->getPlayer()->setJumping(false);
         break;
+    case Qt::Key_A:
     case Qt::Key_Left:
         getCurrentLevel()->getPlayer()->setLeft(false);
         break;
+    case Qt::Key_D:
     case Qt::Key_Right:
         getCurrentLevel()->getPlayer()->setRight(false);
         break;
     default:
-
         break;
     }
 }
