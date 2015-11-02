@@ -14,6 +14,7 @@ Level::Level(QList<QString> data)
     name = "";
     load(data);
     finished = false;
+    pointPlus = 1000;
     xOffs = 0;
     yOffs = 0;
 }

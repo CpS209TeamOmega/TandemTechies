@@ -9,12 +9,6 @@
 #include <QFile>
 #include <QDebug>
 
-
-ScoreManager::ScoreManager()
-{
-    curScore = 0;
-}
-
 int ScoreManager::getHiScore()
 {
     int highScore = 0;
@@ -32,6 +26,20 @@ int ScoreManager::getHiScore()
         }
     }
     return highScore;
+}
+
+int ScoreManager::addToScore(int plusScore)
+{
+    curScore += plusScore;
+    buddy->setText(QString::number(curScore));
+    return curScore;
+}
+
+bool ScoreManager::addHighScore(QString player, int score)
+{
+    //after game has ended.....
+    dashBoard.insert(player, score);
+    return 0;
 }
 
 void ScoreManager::saveScores()
@@ -72,9 +80,14 @@ void ScoreManager::loadScores()
     }
 }
 
-bool ScoreManager::addScore(QString player, int score)
+//singleton
+ScoreManager* ScoreManager::instance_ = nullptr;
+
+ScoreManager& ScoreManager::instance()
 {
-    //after game has ended.....
-    dashBoard.insert(player, score);
-    return 0;
+    if(instance_ == nullptr)
+    {
+        instance_ = new ScoreManager();
+    }
+    return *instance_;
 }

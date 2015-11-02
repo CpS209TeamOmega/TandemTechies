@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QPixmap>
+#include <QWidget>
 #include "gamemodel.h"
 #include "entity.h"
 #include "menu.h"
@@ -24,6 +25,7 @@ class GameWindow : public QMainWindow
 
     GameModel model;
     Menu* menu;
+    QWidget* wgScore;
 
     double fadeInAmt = 0;
     double fadeDir = 1;

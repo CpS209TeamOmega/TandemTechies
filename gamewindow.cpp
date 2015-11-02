@@ -47,6 +47,16 @@ GameWindow::GameWindow(QWidget *parent) :
     Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
 	Q_ASSERT(placeableImg.load(":/images/placeable.png"));
 
+    wgScore = new QWidget(this);
+    wgScore->setGeometry(WIDTH - 200, 50, 500, 50);
+    QLabel *lblScore = new QLabel(wgScore);
+    lblScore->setGeometry(0, 0, 500, 50); //set in reference to wgScore
+    lblScore->setText("0");
+    lblScore->setStyleSheet("color:white; font:30pt Arial");
+    lblScore->setScaledContents(true);
+    ScoreManager::instance().setBuddy(lblScore);
+    wgScore->show();
+
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
         exit();
@@ -96,7 +106,7 @@ void GameWindow::makeLabel(Entity* e, QPixmap image) {
     lbl->setScaledContents(true);			//Makes the picture scale to the label's size
     lbl->setAttribute(Qt::WA_TranslucentBackground);
     e->setBuddy(lbl);						//Sets the Entity's corresponding label
-	lbl->show();
+    lbl->show();
 }
 
 void GameWindow::updateGUI() {
@@ -153,6 +163,7 @@ void GameWindow::updateGUI() {
     Exit* e = lvl->getExit();
     makeLabel(e, exitImg);
 
+    wgScore->raise();
     lvl->update();
 
     ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));

@@ -20,7 +20,6 @@ class GameModel
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;//The level's data file name
-    ScoreManager sm;      //The Score Manager
     bool updateGUI;       //When the GUI must be updated to reflect model state
 
 public:

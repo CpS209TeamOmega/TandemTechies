@@ -11,6 +11,7 @@
 #include <QHash>
 #include <QDebug>
 #include <QString>
+#include <QLabel>
 
 #include "block.h"
 #include "collectible.h"
@@ -24,14 +25,27 @@ private:
     //The virtual score "dashboard"
     QHash<QString, int> dashBoard;
 
-    //The current score in-game
+    QLabel *buddy;
+
+    //the start score
+    int startScore;
+
+    //the in-game score
     int curScore;
 
-public:
-    ScoreManager();
+    //private constructor
+    ScoreManager() : startScore{0}, curScore{0} { }
 
+public:
     //Return the highest score ever
     int getHiScore();
+
+    //add points to the current score
+    int addToScore(int plusScore);
+
+    //<player> The player's name
+    //<score> The score the player got
+    bool addHighScore(QString player, int score);//Add to scoreTable and update dashBoard
 
     //Return the records of scores and players
     QHash<QString, int> getAllScores();
@@ -44,13 +58,17 @@ public:
 
     //getters
     int getCurScore() { return curScore; }
+    QLabel* getBuddy() { return buddy; }
 
     //setters
     void setScore(int newScore) { curScore = newScore; }
+    void setBuddy(QLabel *newBuddy) {buddy = newBuddy; }
 
-    //<player> The player's name
-    //<score> The score the player got
-    bool addScore(QString player, int score);//Add to scoreTable and update dashBoard
+private:
+    static ScoreManager *instance_;
+
+public:
+    static ScoreManager& instance();
 
 };
 
