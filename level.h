@@ -23,10 +23,12 @@ class Entity;
 class Level
 {
 private:
+    QList<QString> data;         //The level's data (for resetting and loading)
     Player* player;             //The player
     Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
     QList<Entity*> entities;    //All of the entities in the game
+    int startNumBlocks;         //The number of placeable blocks at the start of the level
     int numBlocks;              //The number of placeable blocks
     QString name;               //The level's name
     int pointPlus;              //points added at level completion
@@ -40,7 +42,7 @@ public:
     //Creates a level with the map data, parsing
     //in the data and making objects
     //<data> The map data, stored in levels.dat
-    Level(QList<QString> data);
+    Level(QList<QString> initData);
 
     //Deletes the level and pointers inside of it
     ~Level();
@@ -57,13 +59,15 @@ public:
     //Removes an entity from the QList of entities
     void removeEntity(Entity* e);
 
+    void removeBlock(int x, int y);
+
     //Place block in certain position
-    Block* placeBlock (int x, int y);
+    PlaceableBlock* placeBlock ();
 
 
     //Setters
     void setName(QString newName) { name = newName; }
-    void setNumBlocks(int newNum) { numBlocks = newNum; }
+    void setNumBlocks(int newNum) { numBlocks = newNum; startNumBlocks = newNum; }
     void setFinished(bool newFinished) { finished = newFinished; }
 
     //Getters
@@ -77,6 +81,8 @@ public:
     bool isFinished() { return finished; }
 	QString getName() { return name; }
 	int getNumBlocks() { return numBlocks; }
+    int getStartNumBlocks() { return startNumBlocks; }
+    QList<QString>& getData() { return data; }
 
 };
 

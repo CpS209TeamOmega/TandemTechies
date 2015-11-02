@@ -1,11 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/player.png</file>
         <file>images/block.png</file>
         <file>levels.dat</file>
         <file>images/exit.png</file>
-        <file>images/Menu_1.jpg</file>
-        <file>images/Menu_2.jpg</file>
         <file>images/bg.png</file>
+        <file>images/logo.png</file>
+        <file>images/collectible.png</file>
+        <file>images/p_left.png</file>
+        <file>images/p_right.png</file>
+        <file>images/player.png</file>
+        <file>images/placeable.png</file>
     </qresource>
 </RCC>

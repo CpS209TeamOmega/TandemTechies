@@ -27,10 +27,14 @@ class GameWindow : public QMainWindow
     Menu* menu;
     QWidget* wgScore;
 
+    double fadeInAmt = 0;
+    double fadeDir = 1;
+
     QPixmap blockImg;
-    QPixmap playerImg;
+    QPixmap collectibleImg;
     QPixmap exitImg;
 	QPixmap backgroundImg;
+	QPixmap placeableImg;
 
     int fps;
 
@@ -49,7 +53,7 @@ public:
 
 	//Performs unit tests to make sure the game is working,
 	//and exits the program if any of them fail.
-	void unitTests();
+    void unitTests();
 
     static int WIDTH;       //The width of the window
     static int HEIGHT;      //The height of the window
@@ -66,6 +70,8 @@ private slots:
     void exit();
     void keyPressEvent(QKeyEvent *k);
     void keyReleaseEvent(QKeyEvent *k);
+    void focusOutEvent(QFocusEvent*);
+    void leaveEvent(QEvent*);
 };
 
 #endif // GAMEWINDOW_H

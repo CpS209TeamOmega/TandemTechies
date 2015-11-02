@@ -16,11 +16,6 @@ private:
     //score that a block adds to total score (if it is placeable)
     int scorePlus;
 
-    //whether or not a block is a stationary block
-    bool prePlaced;
-    //whether or not an inventory block has been placed
-    bool placed;
-
 public:
     //Creates the block using the default entity constructor
     //<initLevel> The level that the entity is inside
@@ -47,10 +42,34 @@ public:
 
     //getters
     int getScorePlus() { return scorePlus; }
-    bool getPreplaced() { return prePlaced; }
+};
 
-    //setters
-    void setPlaceable(bool newPlace) { prePlaced = newPlace; }
+class PlaceableBlock : public Block
+{
+private:
+    int curSize;
+    bool deleting;
+
+public:
+    //Creates the placeable block using the default entity constructor
+    //<initLevel> The level that the entity is inside
+    PlaceableBlock(Level* initLevel) : Block(initLevel), curSize(0), deleting(false) { }
+
+    //Creates the placeable block at a certain position
+    //<initLevel> The level that the entity is inside
+    //<initX> The starting x position of the exit
+    //<initY> The starting y position of the exit
+    PlaceableBlock(Level* initLevel, int initX, int initY) : Block(initLevel, initX, initY), curSize(0), deleting(false) { }
+
+    //Updates the block. The animation is updated also
+    void update();
+
+    //Saves the block's position to the save file
+    void savePosition();
+
+    void setDeleting(bool isDeleting) { deleting = isDeleting; }
+
+    bool isDeleting() { return deleting; }
 };
 
 #endif // BLOCK_H

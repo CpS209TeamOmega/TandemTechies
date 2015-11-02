@@ -19,12 +19,9 @@ class GameModel
 {
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
-    QString levelDataFile;
-
-    //Game State  <---------Add more to here
-    bool isFinished;
-    bool isStarted;
-    bool updateGUI;
+    QString levelDataFile;//The level's data file name
+    ScoreManager sm;      //The Score Manager
+    bool updateGUI;       //When the GUI must be updated to reflect model state
 
 public:
     GameModel();
@@ -42,7 +39,7 @@ public:
     //Load game state
     void load();
 
-    Block* placeBlock();
+    PlaceableBlock* placeBlock();
 
     //Keyboard Press/Release Event
     void playerInputP(int p);
@@ -58,6 +55,8 @@ public:
     bool mustUpdateGUI() { return updateGUI; }
 
     void setUpdateGUI(bool newValue) { updateGUI = newValue; }
+
+    void resetCurrentLevel();
 
 };
 

@@ -8,6 +8,7 @@
 #define MENU_H
 
 #include <QWidget>
+#include <QCloseEvent>
 
 namespace Ui {
 class Menu;
@@ -16,6 +17,8 @@ class Menu;
 class Menu : public QWidget
 {
     Q_OBJECT
+
+    int iconPos = 0;
 
 public:
     explicit Menu(QWidget *parent = 0);
@@ -27,6 +30,8 @@ private slots:
     void on_btnLoad_clicked();
 
     void on_btnExit_clicked();
+
+    void closeEvent(QCloseEvent*);
 
 private:
     Ui::Menu *ui;

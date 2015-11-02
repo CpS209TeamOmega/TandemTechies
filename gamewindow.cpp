@@ -32,6 +32,7 @@ GameWindow::GameWindow(QWidget *parent) :
     setWindowTitle("Tandem Techies");
     fps = 60;
 
+    setWindowOpacity(0);
     menu = new Menu();
     menu->show();
 
@@ -40,10 +41,11 @@ GameWindow::GameWindow(QWidget *parent) :
     QObject::connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
     QObject::connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
 
-    blockImg.load(":/images/block.png");
-    playerImg.load(":/images/player.png");
-    exitImg.load(":/images/exit.png");
-    backgroundImg.load(":/images/bg.png");
+    Q_ASSERT(blockImg.load(":/images/block.png"));
+    Q_ASSERT(exitImg.load(":/images/exit.png"));
+    Q_ASSERT(backgroundImg.load(":/images/bg.png"));
+    Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
+	Q_ASSERT(placeableImg.load(":/images/placeable.png"));
 
     wgScore = new QWidget(this);
     wgScore->setGeometry(WIDTH - 200, 50, 500, 50);
@@ -58,23 +60,26 @@ GameWindow::GameWindow(QWidget *parent) :
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
         exit();
-    }
-    else {
-        unitTests();
+	} else {
+		unitTests();
         updateGUI();
 
-        QTimer *timer = new QTimer(this);
-        timer->setInterval(1000 / fps);
-        connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
-        timer->start();
+		QTimer *timer = new QTimer(this);
+		timer->setInterval(1000 / fps);
+		connect(timer, SIGNAL(timeout()), this, SLOT(timerHit()));
+		timer->start();
     }
+
+    ui->statusBar->hide();
+    ui->mainToolBar->hide();
+    ui->wgStatusBar->setParent(this);
 }
 
 void GameWindow::unitTests() {
     Level* level = model.getCurrentLevel();
 
     //Make sure the level's name is as it shows in levels.dat
-    Q_ASSERT(level->getName() == "Beginning your journey");
+    Q_ASSERT(level->getName() == "Beginning Your Journey");
 
     //Make sure the number of placeable blocks reflects levels.dat
     Q_ASSERT(level->getNumBlocks() == 3);
@@ -99,6 +104,7 @@ void GameWindow::makeLabel(Entity* e, QPixmap image) {
     lbl->setGeometry(e->getRect());			//Sets the geometry to reflect the entity
     lbl->setPixmap(image);					//Sets the picture of the label
     lbl->setScaledContents(true);			//Makes the picture scale to the label's size
+    lbl->setAttribute(Qt::WA_TranslucentBackground);
     e->setBuddy(lbl);						//Sets the Entity's corresponding label
     lbl->show();
 }
@@ -123,9 +129,23 @@ void GameWindow::updateGUI() {
     //Get the current level
     Level* lvl = model.getCurrentLevel();
 
+    //Load up the background image
+    QLabel* lbl = new QLabel(this);
+    lbl->setGeometry(0, 0, geometry().width(), geometry().height());
+    lbl->setPixmap(backgroundImg);
+    lbl->setScaledContents(true);
+    lbl->show();
+
+    //Create the player's label
+    Player* p = lvl->getPlayer();
+    makeLabel(p, QPixmap());
+
     auto entities = lvl->getEntities();
     for(int i = 0; i < entities.size(); i++) {
-        makeLabel(entities[i], backgroundImg);
+        Collectible* c = dynamic_cast<Collectible*>(entities[i]);
+        if(c) {
+            makeLabel(entities[i], collectibleImg);
+        }
     }
 
     //Create the labels for the blocks in the level
@@ -134,11 +154,17 @@ void GameWindow::updateGUI() {
         for(int x = 0; x < blocks[y].size(); x++) {
             if(blocks[y][x] != nullptr) {
                   Block* b = blocks[y][x];
-                  makeLabel(b, blockImg);
+
+                  PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(b);
+                  if(test != nullptr) {
+                      makeLabel(b, placeableImg);
+                      b->getBuddy()->setGeometry(b->getX(), b->getY(), 0, 0);
+                  } else {
+                      makeLabel(b, blockImg);
+                  }
             }
         }
     }
-
     //Create the player's label
     Player* p = lvl->getPlayer();
     makeLabel(p, playerImg);
@@ -148,6 +174,10 @@ void GameWindow::updateGUI() {
     makeLabel(e, exitImg);
 
     wgScore->raise();
+    lvl->update();
+
+    ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    ui->lblName->setText(model.getCurrentLevel()->getName());
 }
 
 void GameWindow::timerHit() {
@@ -164,37 +194,49 @@ GameWindow::~GameWindow()
 }
 
 //Menu Signal Receiver
-void GameWindow::start(){
-    this->show();
+void GameWindow::start() {
+    show();
+    setWindowOpacity(1);
 }
 
 void GameWindow::load(){
-    qDebug() << "load signal received";
-    this->show();
+    show();
+    setWindowOpacity(1);
 }
 
 void GameWindow::exit(){
-    qDebug() << "exit signal received";
     this->close();
 }
 
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
-    if (k->key() == Qt::Key_Escape) {
+    if(k->key() == Qt::Key_Space) {
+        PlaceableBlock* newBlock = model.placeBlock();
+        if(newBlock != nullptr) {
+            makeLabel(newBlock, placeableImg);
+            newBlock->update();
+        }
+        ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    }else if (k->key() == Qt::Key_Escape) {
         menu->show();
     }
 
     model.playerInputP(k->key());
 }
 
+void GameWindow::focusOutEvent(QFocusEvent *) {
+    model.getCurrentLevel()->getPlayer()->clearFlags();
+}
+
+void GameWindow::leaveEvent(QEvent *) {
+    model.getCurrentLevel()->getPlayer()->clearFlags();
+}
+
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
-    if(k->key() == Qt::Key_Space) {
-        Block* newBlock = model.placeBlock();
-        if(newBlock != nullptr) {
-            qDebug() << "HERE";
-            makeLabel(newBlock, blockImg);
-        }
+    if(k->key() == Qt::Key_R) {
+        model.resetCurrentLevel();
+        updateGUI();
     } else {
         model.playerInputR(k->key());
     }
