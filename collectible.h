@@ -14,10 +14,6 @@ class Collectible : public Entity {
     int pointPlus; //Score that this entity adds to the total score
 
 public:
-    //Creates the collectible using the default entity constructor
-    //<initLevel> The level that the entity is inside
-    Collectible(Level* initLevel) : Entity(initLevel) { }
-
     //Creates the exit at a certain position
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit

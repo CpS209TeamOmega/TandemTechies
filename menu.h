@@ -18,8 +18,6 @@ class Menu : public QWidget
 {
     Q_OBJECT
 
-    int iconPos = 0;
-
 public:
     explicit Menu(QWidget *parent = 0);
     ~Menu();

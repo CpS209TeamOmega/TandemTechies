@@ -23,14 +23,10 @@ class Player : public Entity {
 	int jumpSpeed;				  //The speed of a jump
     int dir;					  //The direction the player is currently facing
 
-	QPixmap pLeft;
-	QPixmap pRight;
+    QPixmap pLeft;                //The image for facing left
+    QPixmap pRight;               //The image for facing right
 
 public:
-    //Creates the player using the default entity constructor
-    //<initLevel> The level that the entity is inside
-    Player(Level* initLevel);
-
     //Creates the player at a certain position
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit

@@ -22,10 +22,6 @@ protected:
     QLabel* buddy;  //The QLabel that the entity corresponds to
 
 public:
-    //Creates the entity with a given level
-    //<initLevel> The level the entity is inside
-    Entity(Level* initLevel) : level(initLevel), rect(0, 0, SIZE, SIZE), buddy(nullptr) { }
-
     //Creates the entity with a starting x and y position
     //<initLevel> The level the entity is inside
     //<initX> The starting x position

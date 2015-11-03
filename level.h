@@ -28,21 +28,20 @@ private:
     Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
     QList<Entity*> entities;    //All of the entities in the game
-    int startNumBlocks;         //The number of placeable blocks at the start of the level
     int numBlocks;              //The number of placeable blocks
     QString name;               //The level's name
     int pointPlus;              //points added at level completion
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
+    int scoreBeforeLevel;
 
-    //Level State
-    bool finished;
+    bool finished;              //If the level is finished
 
 public:
     //Creates a level with the map data, parsing
     //in the data and making objects
     //<data> The map data, stored in levels.dat
-    Level(QList<QString> initData);
+    Level(QList<QString> &initData);
 
     //Deletes the level and pointers inside of it
     ~Level();
@@ -51,7 +50,7 @@ public:
     void update();
 
     //Loads the level with the data
-    void load(QList<QString> data);
+    void load();
 
     //Tests if there is a block at a certain point
     bool testCollision(int testX, int testY);
@@ -59,6 +58,7 @@ public:
     //Removes an entity from the QList of entities
     void removeEntity(Entity* e);
 
+    //Removes the block at the position given
     void removeBlock(int x, int y);
 
     //Place block in certain position
@@ -67,7 +67,7 @@ public:
 
     //Setters
     void setName(QString newName) { name = newName; }
-    void setNumBlocks(int newNum) { numBlocks = newNum; startNumBlocks = newNum; }
+    void setNumBlocks(int newNum) { numBlocks = newNum; }
     void setFinished(bool newFinished) { finished = newFinished; }
 
     //Getters
@@ -80,9 +80,9 @@ public:
     int getYOffs() { return yOffs; }
     bool isFinished() { return finished; }
 	QString getName() { return name; }
-	int getNumBlocks() { return numBlocks; }
-    int getStartNumBlocks() { return startNumBlocks; }
+    int getNumBlocks() { return numBlocks; }
     QList<QString>& getData() { return data; }
+    int getScoreBeforeLevel() { return scoreBeforeLevel; }
 
 };
 
