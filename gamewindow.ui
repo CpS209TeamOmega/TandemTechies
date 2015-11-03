@@ -22,14 +22,17 @@
   <property name="windowTitle">
    <string>GameWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="wgStatusBar" native="true">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>640</y>
-      <width>361</width>
-      <height>91</height>
+      <y>580</y>
+      <width>451</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -39,7 +42,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>90</y>
        <width>32</width>
        <height>32</height>
       </rect>
@@ -61,15 +64,15 @@
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>50</y>
+       <y>90</y>
        <width>131</width>
        <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 32pt &quot;Arial&quot;;
-color:white;
-background-color: rgba(0,0,0,0);</string>
+      <string notr="true">background-color:rgba(0,0,0,0);
+font: 20pt &quot;Sans&quot;;
+color: white;</string>
      </property>
      <property name="text">
       <string>0</string>
@@ -78,19 +81,73 @@ background-color: rgba(0,0,0,0);</string>
     <widget class="QLabel" name="lblName">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>130</x>
        <y>10</y>
-       <width>341</width>
+       <width>311</width>
        <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color:rgba(0,0,0,0);
-color:white;
-font-size:20pt;</string>
+font: 20pt &quot;Sans&quot;;
+color:white;</string>
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblScore">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>50</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgba(0,0,0,0);
+font: 20pt &quot;Sans&quot;;
+color:white;</string>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblScore_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgba(0,0,0,0);
+font: 20pt &quot;Sans&quot;;
+color: rgb(200, 200, 50);</string>
+     </property>
+     <property name="text">
+      <string>Score:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblLvl">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgba(0,0,0,0);
+font: 20pt &quot;Sans&quot;;
+color: rgb(200, 200, 50);</string>
+     </property>
+     <property name="text">
+      <string>Level 1:</string>
      </property>
     </widget>
    </widget>

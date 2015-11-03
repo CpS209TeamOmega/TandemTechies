@@ -18,12 +18,11 @@ GameModel::GameModel()
 void GameModel::update()
 {
 	//Update the level that the user is currently playing
-    levels[currentLevel]->update();
+    getCurrentLevel()->update();
 
 	//Test to see if the user has gotten to the exit
-    if(levels[currentLevel]->isFinished()) {
-        ScoreManager::instance().addToScore(levels[currentLevel]->getPoints());
-        levels[currentLevel]->setFinished(false);
+    if(getCurrentLevel()->isFinished()) {
+        ScoreManager::instance().addToScore(getCurrentLevel()->getPoints());
 
 		//Go the the next level and make sure the currentLevel is not the last level
         currentLevel++;		
@@ -31,6 +30,7 @@ void GameModel::update()
             currentLevel = 0;
             resetGame();
         }
+        getCurrentLevel()->load();
         updateGUI = true;
     }
 }
@@ -50,43 +50,33 @@ bool GameModel::loadLevels() {
     }
 
     QList<QString> levelData;   //The strings of data for the level
-    int numberBlocks = 0;       //Number of moveable blocks
-    QString levelName;          //The name of the level
-
     QTextStream in(&loadFile);  //To read the text in the file
+
     while(!in.atEnd()) {        //Read until end of file
         QString line = in.readLine();
-
-        if(line.startsWith("level")) { //Start a new level and get the level's name
-            levelName = line.mid(6);
-        } else if(line.startsWith("blocks")) { //How many moveable blocks are in the file
-            numberBlocks = line.mid(7).toInt();
-        } else if(line.startsWith("endlevel")) { //Creates the level
-            Level* level = new Level(levelData);
-            level->setNumBlocks(numberBlocks);
-            level->setName(levelName);
-            levels << level;                     //Store the level in the gamemodel's list
-
-            levelData.clear();                   //Get ready for reading another level
+        if(line.startsWith("endlevel")) {
+            levels << new Level(levelData);
+            levelData.clear();
         } else if(!line.isEmpty()) {
             levelData << line;
         }
     }
+
+    getCurrentLevel()->load();
 
     return true;
 }
 
 void GameModel::resetCurrentLevel() {
     Level* level = getCurrentLevel();
-    int numBlocks = level->getStartNumBlocks();
-    QString name = level->getName();
+    ScoreManager::instance().setScore(level->getScoreBeforeLevel());
+    ScoreManager::instance().update();
     QList<QString> data = level->getData();
     Level* newLevel = new Level(data);
-    newLevel->setName(name);
-    newLevel->setNumBlocks(numBlocks);
     levels.removeOne(level);
     delete level;
     levels.insert(currentLevel, newLevel);
+    newLevel->load();
 }
 
 GameModel::~GameModel() {

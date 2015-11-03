@@ -1,5 +1,6 @@
 level Beginning Your Journey
 blocks 3
+points 1000
 bbbbbbbbbbbb
 b          b
 b   ccc    b
@@ -11,6 +12,7 @@ endlevel
 
 level ZigZag
 blocks 0
+points 1000
 bbbbbbbbbbbbb
 bp    m     b
 bbbbbbbbbbb b
@@ -24,6 +26,7 @@ endlevel
 
 level First Steps
 blocks 2
+points 1000
 bbbbbbbbbbbb
 b         xb
 b        bbb
@@ -35,6 +38,7 @@ endlevel
 
 level Money Pit
 blocks 0
+points 1000
 bbbbbbbbbbbbb
 b           b
 b           b
@@ -47,6 +51,7 @@ endlevel
 
 level Up and Down
 blocks 2
+points 1000
 bbbbbbbbb
 b       b
 b       b
@@ -59,6 +64,7 @@ endlevel
 
 level Down and Up
 blocks 2
+points 1000
 bbbbbbbbb
 b  pbx  b
 b  bbb  b
@@ -71,6 +77,7 @@ endlevel
 
 level Platformer
 blocks 2
+points 1000
 bbbbbbbbbbb
 b        xb
 b         b
@@ -89,6 +96,7 @@ endlevel
 
 level Endian
 blocks 2
+points 1000
 bbbbbbbbbbbbb
 b           b
 bp         xb
@@ -101,6 +109,7 @@ endlevel
 
 level Tower
 blocks 6
+points 1000
 bbbbbbbbbbbbb
 bx          b
 bbbbbb      b
@@ -120,6 +129,7 @@ endlevel
 
 level Fun
 blocks 0
+points 1000
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 b                             b
 b                             b
@@ -136,6 +146,7 @@ endlevel
 
 level Impossible
 blocks 0
+points 10000
 bbbbbbbbbbbbbbbbbbbbbbbbb
 bp                     xb
 b                      bb

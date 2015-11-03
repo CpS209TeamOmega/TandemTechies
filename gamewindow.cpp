@@ -20,10 +20,7 @@ int GameWindow::WIDTH = 1024;
 //The default height
 int GameWindow::HEIGHT = 768;
 
-GameWindow::GameWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::GameWindow)
-{
+GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWindow) {
     ui->setupUi(this);
 
     QIcon windowIcon(":/images/player.png");
@@ -45,17 +42,7 @@ GameWindow::GameWindow(QWidget *parent) :
     Q_ASSERT(exitImg.load(":/images/exit.png"));
     Q_ASSERT(backgroundImg.load(":/images/bg.png"));
     Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
-	Q_ASSERT(placeableImg.load(":/images/placeable.png"));
-
-    wgScore = new QWidget(this);
-    wgScore->setGeometry(WIDTH - 200, 50, 500, 50);
-    QLabel *lblScore = new QLabel(wgScore);
-    lblScore->setGeometry(0, 0, 500, 50); //set in reference to wgScore
-    lblScore->setText("0");
-    lblScore->setStyleSheet("color:white; font:30pt Arial");
-    lblScore->setScaledContents(true);
-    ScoreManager::instance().setBuddy(lblScore);
-    wgScore->show();
+    Q_ASSERT(placeableImg.load(":/images/placeable.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -70,9 +57,11 @@ GameWindow::GameWindow(QWidget *parent) :
 		timer->start();
     }
 
+    ScoreManager::instance().setBuddy(ui->lblScore);
     ui->statusBar->hide();
     ui->mainToolBar->hide();
     ui->wgStatusBar->setParent(this);
+    ui->wgStatusBar->move(20, HEIGHT - 20 - ui->wgStatusBar->geometry().height());
 }
 
 void GameWindow::unitTests() {
@@ -114,9 +103,7 @@ void GameWindow::updateGUI() {
     QObjectList objects = children();
     for(QObject* object : objects) {
         QLabel* lbl = dynamic_cast<QLabel*>(object);
-        if(lbl != nullptr) {
-            lbl->deleteLater();
-        }
+        if(lbl) { lbl->deleteLater(); }
     }
 
     //Get the current level
@@ -145,11 +132,11 @@ void GameWindow::updateGUI() {
     auto blocks = lvl->getBlocks();
     for(int y = 0; y < blocks.size(); y++) {
         for(int x = 0; x < blocks[y].size(); x++) {
-            if(blocks[y][x] != nullptr) {
+            if(blocks[y][x]) {
                   Block* b = blocks[y][x];
 
                   PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(b);
-                  if(test != nullptr) {
+                  if(test) {
                       makeLabel(b, placeableImg);
                       b->getBuddy()->setGeometry(b->getX(), b->getY(), 0, 0);
                   } else {
@@ -163,20 +150,20 @@ void GameWindow::updateGUI() {
     Exit* e = lvl->getExit();
     makeLabel(e, exitImg);
 
-    wgScore->raise();
     lvl->update();
 
     ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    ui->lblLvl->setText("Level " + QString::number(model.getLevelNumber()) + ":");
     ui->lblName->setText(model.getCurrentLevel()->getName());
     ui->wgStatusBar->raise();
 }
 
 void GameWindow::timerHit() {
-    model.update();
     if(model.mustUpdateGUI()) {
         updateGUI();
         model.setUpdateGUI(false);
     }
+    model.update();
 }
 
 GameWindow::~GameWindow()
@@ -196,7 +183,7 @@ void GameWindow::load(){
 }
 
 void GameWindow::exit(){
-    this->close();
+    close();
 }
 
 //Key Event
@@ -209,11 +196,11 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
             newBlock->update();
         }
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
-    }else if (k->key() == Qt::Key_Escape) {
+    } else if (k->key() == Qt::Key_Escape) {
         menu->show();
+    } else {
+         model.playerInputP(k->key());
     }
-
-    model.playerInputP(k->key());
 }
 
 void GameWindow::focusOutEvent(QFocusEvent *) {

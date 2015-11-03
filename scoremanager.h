@@ -7,7 +7,6 @@
 #ifndef SCOREMANAGER_H
 #define SCOREMANAGER_H
 
-//I don't know how to use QHash things.....
 #include <QHash>
 #include <QDebug>
 #include <QString>
@@ -55,6 +54,9 @@ public:
 
     //Loads all of the scores from file
     void loadScores();
+
+    //Updates the label on the screen
+    void update();
 
     //getters
     int getCurScore() { return curScore; }
