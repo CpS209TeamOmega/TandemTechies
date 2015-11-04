@@ -11,7 +11,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
     hSpeed = 8;
     vSpeed = 0;
-    right = left = jumping = jumpKeyPressed = false;
+    right = left = jumping = jumpKeyPressed = dead = false;
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;

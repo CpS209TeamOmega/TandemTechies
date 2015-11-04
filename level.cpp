@@ -8,6 +8,7 @@
 #include "level.h"
 #include "gamewindow.h"
 #include "scoremanager.h"
+#include "enemy.h"
 #include <QDebug>
 
 Level::Level(QList<QString> &initData)
@@ -101,6 +102,10 @@ void Level::load() {
             } else if(type == 'm') {
                 PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
                 list << b;
+            } else if(type == 'e') {
+                list << nullptr;
+                Enemy* e = new Enemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                entities << e;
             } else if(type == ' ') {				//If it is an empty space
                 list << nullptr;
             }

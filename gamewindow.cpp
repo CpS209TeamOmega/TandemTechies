@@ -6,6 +6,7 @@
 
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
+#include "enemy.h"
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
@@ -58,8 +59,6 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     }
 
     ScoreManager::instance().setBuddy(ui->lblScore);
-    ui->statusBar->hide();
-    ui->mainToolBar->hide();
     ui->wgStatusBar->setParent(this);
     ui->wgStatusBar->move(20, HEIGHT - 20 - ui->wgStatusBar->geometry().height());
 }
@@ -71,19 +70,19 @@ void GameWindow::unitTests() {
     Q_ASSERT(level->getName() == "Beginning Your Journey");
 
     //Make sure the number of placeable blocks reflects levels.dat
-    Q_ASSERT(level->getNumBlocks() == 3);
+    Q_ASSERT(level->getNumBlocks() == 0);
 
-    //Make sure the level loaded correctly - level height == 7
-    Q_ASSERT(level->getBlocks().size() == 7);
+    //Make sure the level loaded correctly - level height == 5
+    Q_ASSERT(level->getBlocks().size() == 5);
 
-    //Make sure the level loaded correctly - level width == 12
-    Q_ASSERT(level->getBlocks()[0].size() == 12);
+    //Make sure the level loaded correctly - level width == 8
+    Q_ASSERT(level->getBlocks()[0].size() == 8);
 
     //Make sure the player's x position in the level is 64
     Q_ASSERT(level->getPlayer()->getX() == 64);
 
     //Make sure the player's y position in the level is 320
-    Q_ASSERT(level->getPlayer()->getY() == 320);
+    Q_ASSERT(level->getPlayer()->getY() == 192);
 
     //All unit tests passed! Now on to play this amazing game!
 }
@@ -123,9 +122,10 @@ void GameWindow::updateGUI() {
     auto entities = lvl->getEntities();
     for(int i = 0; i < entities.size(); i++) {
         Collectible* c = dynamic_cast<Collectible*>(entities[i]);
-        if(c) {
-            makeLabel(entities[i], collectibleImg);
-        }
+        if(c) { makeLabel(entities[i], collectibleImg); continue; }
+
+        Enemy* e = dynamic_cast<Enemy*>(entities[i]);
+        if(e) { makeLabel(entities[i], QPixmap()); continue; }
     }
 
     //Create the labels for the blocks in the level

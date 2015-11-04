@@ -4,6 +4,7 @@
 //**********************************************************
 
 #include "gamemodel.h"
+#include "enemy.h"
 #include <QFile>
 #include <QDebug>
 #include <QList>
@@ -13,12 +14,21 @@ GameModel::GameModel()
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
     updateGUI = false;
+    lives = 8;
 }
 
 void GameModel::update()
 {
 	//Update the level that the user is currently playing
     getCurrentLevel()->update();
+
+    //If the player is dead, then reset the level and decrement the lives
+    if(getCurrentLevel()->getPlayer()->isDead()) {
+        getCurrentLevel()->getPlayer()->setDead(false);
+        resetCurrentLevel();
+        updateGUI = true;
+        lives--;
+    }
 
 	//Test to see if the user has gotten to the exit
     if(getCurrentLevel()->isFinished()) {
