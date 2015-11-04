@@ -27,7 +27,7 @@ b               b
 b            c  b
 b               b
 b        cc     b
-b               b
+b              b
 b   b      bb   b
 b   b      b    b
 bp  bb     bcccxb
@@ -54,13 +54,13 @@ bbbbbbbbbbbbbb
 bp b         b
 b  b         b
 b  bcccccccccb
-b  m         b
+b  m  e      b
 bbbbb b b b bb
 bxcccccccccccb
 b            b
 b            b
 b            b
-b            b
+b  e    e    b
 bbbbbbbbbbbbbb
 endlevel
 

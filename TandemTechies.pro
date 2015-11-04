@@ -23,7 +23,7 @@ SOURCES += main.cpp\
     menu.cpp \
     exit.cpp \
     collectible.cpp \
-    soundmanager.cpp
+    enemy.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -35,7 +35,7 @@ HEADERS  += gamewindow.h\
     menu.h \
     exit.h \
     collectible.h \
-    soundmanager.h
+    enemy.h
 
 FORMS    += gamewindow.ui \
     menu.ui
@@ -44,3 +44,5 @@ QMAKE_CXXFLAGS += -std=c++11
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES +=

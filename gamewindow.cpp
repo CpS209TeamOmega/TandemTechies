@@ -6,7 +6,7 @@
 
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
-#include "soundmanager.h"
+#include "enemy.h"
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
@@ -14,7 +14,6 @@
 #include <QKeyEvent>
 #include <QtGlobal>
 #include <QIcon>
-#include <QMediaPlayer>
 
 //The default width of the game
 int GameWindow::WIDTH = 1024;
@@ -59,8 +58,6 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
 		timer->start();
     }
 
-    SoundManager::instance().init();
-    SoundManager::instance().playBackgroundMusic();
     ScoreManager::instance().setBuddy(ui->lblScore);
     ui->statusBar->hide();
     ui->mainToolBar->hide();
@@ -127,9 +124,10 @@ void GameWindow::updateGUI() {
     auto entities = lvl->getEntities();
     for(int i = 0; i < entities.size(); i++) {
         Collectible* c = dynamic_cast<Collectible*>(entities[i]);
-        if(c) {
-            makeLabel(entities[i], collectibleImg);
-        }
+        if(c) { makeLabel(entities[i], collectibleImg); continue; }
+
+        Enemy* e = dynamic_cast<Enemy*>(entities[i]);
+        if(e) { makeLabel(entities[i], QPixmap()); continue; }
     }
 
     //Create the labels for the blocks in the level
