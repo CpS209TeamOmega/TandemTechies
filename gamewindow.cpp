@@ -59,8 +59,6 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     }
 
     ScoreManager::instance().setBuddy(ui->lblScore);
-    ui->statusBar->hide();
-    ui->mainToolBar->hide();
     ui->wgStatusBar->setParent(this);
     ui->wgStatusBar->move(20, HEIGHT - 20 - ui->wgStatusBar->geometry().height());
 }
