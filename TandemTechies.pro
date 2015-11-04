@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     block.cpp \
     menu.cpp \
     exit.cpp \
-    collectible.cpp
+    collectible.cpp \
+    soundmanager.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -33,7 +34,8 @@ HEADERS  += gamewindow.h\
     block.h \
     menu.h \
     exit.h \
-    collectible.h
+    collectible.h \
+    soundmanager.h
 
 FORMS    += gamewindow.ui \
     menu.ui
