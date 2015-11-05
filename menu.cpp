@@ -22,12 +22,6 @@ Menu::Menu(QWidget *parent) :
     QIcon icon(":/images/player.png");
     setWindowIcon(icon);
 
-    QLabel* cover = new QLabel(this);
-    cover->setStyleSheet("background-color:rgba(0,0,0,.8);");
-    cover->setGeometry(0, 0, geometry().width(), geometry().height());
-    cover->lower();
-    cover->show();
-
     QLabel* background = new QLabel(this);
     QPixmap backgroundImg(":/images/bg.png");
     background->setPixmap(backgroundImg);

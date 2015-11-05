@@ -151,6 +151,27 @@ color: rgb(200, 200, 50);</string>
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="lblBack">
+    <property name="geometry">
+     <rect>
+      <x>-100</x>
+      <y>-100</y>
+      <width>1324</width>
+      <height>868</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="resources.qrc">:/images/back.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <zorder>lblBack</zorder>
+   <zorder>wgStatusBar</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

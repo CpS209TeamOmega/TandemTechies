@@ -30,7 +30,6 @@ class GameWindow : public QMainWindow
     QPixmap blockImg;
     QPixmap collectibleImg;
     QPixmap exitImg;
-	QPixmap backgroundImg;
 	QPixmap placeableImg;
 
     int fps;                //The frames per second the game will run at

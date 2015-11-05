@@ -41,7 +41,6 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
 
     Q_ASSERT(blockImg.load(":/images/block.png"));
     Q_ASSERT(exitImg.load(":/images/exit.png"));
-    Q_ASSERT(backgroundImg.load(":/images/bg.png"));
     Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
     Q_ASSERT(placeableImg.load(":/images/placeable.png"));
 
@@ -108,13 +107,6 @@ void GameWindow::updateGUI() {
     //Get the current level
     Level* lvl = model.getCurrentLevel();
 
-    //Load up the background image
-    QLabel* lbl = new QLabel(this);
-    lbl->setGeometry(0, 0, geometry().width(), geometry().height());
-    lbl->setPixmap(backgroundImg);
-    lbl->setScaledContents(true);
-    lbl->show();
-
     //Create the player's label
     Player* p = lvl->getPlayer();
     makeLabel(p, QPixmap());
@@ -152,6 +144,7 @@ void GameWindow::updateGUI() {
 
     lvl->update();
 
+    model.setBackground(ui->lblBack);
     ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     ui->lblLvl->setText("Level " + QString::number(model.getLevelNumber()) + ":");
     ui->lblName->setText(model.getCurrentLevel()->getName());
