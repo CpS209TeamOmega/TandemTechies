@@ -43,6 +43,13 @@ void GameModel::update()
         getCurrentLevel()->load();
         updateGUI = true;
     }
+
+    //Update the background image
+    double width = getCurrentLevel()->getBlocks()[0].size() * Entity::SIZE;
+    double height = getCurrentLevel()->getBlocks().size() * Entity::SIZE;
+    double pX = getCurrentLevel()->getPlayer()->getX();
+    double pY = getCurrentLevel()->getPlayer()->getY();
+    back->move(-(pX / width * 250), -(pY / height) * 25);
 }
 
 void GameModel::resetGame() {

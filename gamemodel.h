@@ -17,6 +17,7 @@
 //for the entire game.
 class GameModel
 {
+    QLabel* back;
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;//The level's data file name
@@ -65,6 +66,9 @@ public:
 
     //Getters
     int getLives() { return lives; }
+
+    //Sets the background label
+    void setBackground(QLabel* newBack) { back = newBack; }
 
 };
 
