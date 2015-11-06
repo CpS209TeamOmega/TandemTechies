@@ -31,6 +31,7 @@ class GameWindow : public QMainWindow
     QPixmap collectibleImg;
     QPixmap exitImg;
 	QPixmap placeableImg;
+    QPixmap heartImg;
 
     int fps;                //The frames per second the game will run at
 
@@ -50,6 +51,10 @@ public:
 	//Performs unit tests to make sure the game is working,
 	//and exits the program if any of them fail.
     void unitTests();
+
+    //Adds the hearts to the status bar label for how
+    //many lives the player has left
+    void showLives();
 
     static int WIDTH;       //The width of the window
     static int HEIGHT;      //The height of the window

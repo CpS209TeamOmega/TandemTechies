@@ -43,6 +43,7 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     Q_ASSERT(exitImg.load(":/images/exit.png"));
     Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
     Q_ASSERT(placeableImg.load(":/images/placeable.png"));
+    Q_ASSERT(heartImg.load(":/images/heart.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -144,11 +145,31 @@ void GameWindow::updateGUI() {
 
     lvl->update();
 
+    showLives();
+
     model.setBackground(ui->lblBack);
     ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     ui->lblLvl->setText("Level " + QString::number(model.getLevelNumber()) + ":");
     ui->lblName->setText(model.getCurrentLevel()->getName());
     ui->wgStatusBar->raise();
+}
+
+void GameWindow::showLives() {
+    QObjectList list = ui->wgLives->children();
+    for(QObject* obj : list) {
+        QLabel* lbl = dynamic_cast<QLabel*>(obj);
+        if(lbl) lbl->deleteLater();
+    }
+
+    int margin = 10;
+    int size = 32;
+    for(int i = 0; i < model.getLives(); i++) {
+        QLabel* life = new QLabel(ui->wgLives);
+        life->setGeometry(margin * (i + 1) + size * i, margin, size, size);
+        life->setPixmap(heartImg);
+        life->setScaledContents(true);
+        life->show();
+    }
 }
 
 void GameWindow::timerHit() {
