@@ -12,19 +12,18 @@
 
 #include "level.h"
 #include "scoremanager.h"
+#include "remoteplayer.h"
+#include "player.h"
 
 //The class containing all the data and methods
 //for the entire game.
 class GameModel
 {
+    QLabel* back;
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
-    QString levelDataFile;
-
-    //Game State  <---------Add more to here
-    bool isFinished;
-    bool isStarted;
-    bool updateGUI;
+    QString levelDataFile;//The level's data file name
+    bool updateGUI;       //When the GUI must be updated to reflect model state
 
 public:
     GameModel();
@@ -42,12 +41,15 @@ public:
     //Load game state
     void load();
 
-    Block* placeBlock();
+    void levelFinished();
+
+    //Places a block in the level
+    PlaceableBlock* placeBlock();
+    PlaceableBlock* placeBlock(int x, int y);
 
     //Keyboard Press/Release Event
     void playerInputP(int p);
     void playerInputR(int r);
-    void playerInputS(int s);
 
     //Loads the levels into the game so we can actually play
     bool loadLevels();
@@ -55,9 +57,20 @@ public:
     //Returns the level the user is currently in.
     Level* getCurrentLevel() { return levels[currentLevel]; }
 
+    //Gets the current level number
+    int getLevelNumber() { return currentLevel + 1; }
+
+    //Whether or not the GUI must be updated
     bool mustUpdateGUI() { return updateGUI; }
 
+    //Says the GUI should be updated
     void setUpdateGUI(bool newValue) { updateGUI = newValue; }
+
+    //Restarts the current level
+    void resetCurrentLevel();
+
+    //Sets the background label
+    void setBackground(QLabel* newBack) { back = newBack; }
 
 };
 

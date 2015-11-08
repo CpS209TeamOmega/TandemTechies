@@ -10,23 +10,25 @@
 
 #include "entity.h"
 #include "block.h"
+#include <QPixmap>
 
 class Player : public Entity {
     bool jumpKeyPressed;		  //Whether or not the up/w key is pressed
-    bool jumping, falling;		  //Whether or not the player is jumping or falling
+	bool jumping;				  //Whether or not the player is jumping or falling
     bool left, right;			  //Whether or not the left or right key is pressed
     int hSpeed;					  //The player's velocity
     int vSpeed;					  //The player's vertical speed
     int jumpHeight, maxVSpeed;    //Maximum jump height and vertical speed
     int jumpDistance;			  //The current distance the player has jumped
 	int jumpSpeed;				  //The speed of a jump
-    bool faceLeft;
+    int dir;					  //The direction the player is currently facing
+    int lives;
+    bool dead;
+
+    QPixmap pLeft;                //The image for facing left
+    QPixmap pRight;               //The image for facing right
 
 public:
-    //Creates the player using the default entity constructor
-    //<initLevel> The level that the entity is inside
-    Player(Level* initLevel);
-
     //Creates the player at a certain position
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit
@@ -42,13 +44,22 @@ public:
     //save the status of the player entity
     void savePosition();
 
+    //Clears the input flags of the user, such as
+    //left, right, and jumpKeyPressed
+    void clearFlags();
+
     //Setters
     void setRight(bool newRight) { right = newRight; }
     void setLeft(bool newLeft) { left = newLeft; }
-    void setFace(bool left){faceLeft = left;}
     void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
+	void setDir(int newDir) { dir = newDir; }
+    void setDead(bool isDead) { dead = isDead; }
+    void setLives(int newLives) { lives = newLives; }
 
-    bool isLeft(){return faceLeft;}
+	//Getters
+	int getDir() { return dir; }
+    bool isDead() { return dead; }
+    int getLives() { return lives; }
 };
 
 #endif // PLAYER_H

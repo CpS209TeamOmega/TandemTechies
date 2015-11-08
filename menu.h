@@ -8,6 +8,7 @@
 #define MENU_H
 
 #include <QWidget>
+#include <QCloseEvent>
 
 namespace Ui {
 class Menu;
@@ -28,11 +29,17 @@ private slots:
 
     void on_btnExit_clicked();
 
+    void closeEvent(QCloseEvent*);
+
+    void on_btnSingle_clicked();
+
+    void on_btnMulti_clicked();
+
 private:
     Ui::Menu *ui;
 
 signals:
-    void startGame();
+    void startGame(QString server);
     void loadGame();
     void exitGame();
 };

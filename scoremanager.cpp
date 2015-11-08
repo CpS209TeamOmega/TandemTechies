@@ -28,6 +28,10 @@ int ScoreManager::getHiScore()
     return highScore;
 }
 
+void ScoreManager::update() {
+    buddy->setText(QString::number(curScore));
+}
+
 int ScoreManager::addToScore(int plusScore)
 {
     curScore += plusScore;

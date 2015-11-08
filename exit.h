@@ -12,10 +12,6 @@
 //The exit entity, which finishes the game on player collision
 class Exit : public Entity {
 public:
-    //Creates the exit using the default entity constructor
-    //<initLevel> The level that the entity is inside
-    Exit(Level* initLevel) : Entity(initLevel) { }
-
     //Creates the exit at a certain position
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit

@@ -11,5 +11,7 @@ int Entity::SIZE = 64;
 
 bool Entity::isCollidingWith(Entity *otherEntity)
 {
-    return rect.intersects(otherEntity->getRect());
+    if(otherEntity)
+        return rect.intersects(otherEntity->getRect());
+    else return false;
 }
