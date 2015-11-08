@@ -5,7 +5,8 @@
 //**********************************************************
 
 #include "level.h"
-#include "player.h"
+#include <QTcpSocket>
+
 
 Player::Player(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
@@ -16,6 +17,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     jumpHeight = 192;
     maxVSpeed = 32;
 	dir = 1;
+    lives = 8;
     jumpSpeed = -12;
 	pLeft.load(":/images/p_left.png");
 	pRight.load(":/images/p_right.png");

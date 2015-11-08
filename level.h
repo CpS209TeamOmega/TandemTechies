@@ -11,13 +11,19 @@
 #include <QList>
 
 #include "entity.h"
+#include "gamemodel.h"
 #include "block.h"
 #include "player.h"
+#include "remoteplayer.h"
 #include "exit.h"
 
 //Forward declaration of the entity class, since level
 //refers to entity and entity refers to level.
 class Entity;
+
+//Forward declaration of the gamemodel class, since
+//level refers to gamemodel and vice versa
+class GameModel;
 
 //The main class for level manipulation
 class Level
@@ -25,6 +31,7 @@ class Level
 private:
     QList<QString> data;         //The level's data (for resetting and loading)
     Player* player;             //The player
+    RemotePlayer* remotePlayer; //The other player
     Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
     QList<Entity*> entities;    //All of the entities in the game
@@ -33,6 +40,7 @@ private:
     int pointPlus;              //points added at level completion
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
+    GameModel* model;
     int scoreBeforeLevel;
 
     bool finished;              //If the level is finished
@@ -41,7 +49,7 @@ public:
     //Creates a level with the map data, parsing
     //in the data and making objects
     //<data> The map data, stored in levels.dat
-    Level(QList<QString> &initData);
+    Level(QList<QString> &initData, GameModel* model);
 
     //Deletes the level and pointers inside of it
     ~Level();
@@ -62,6 +70,7 @@ public:
     void removeBlock(int x, int y);
 
     //Place block in certain position
+    PlaceableBlock* placeBlock(int x, int y);
     PlaceableBlock* placeBlock ();
 
 
@@ -69,9 +78,11 @@ public:
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
     void setFinished(bool newFinished) { finished = newFinished; }
+    void setRemotePlayer(RemotePlayer* rm) { remotePlayer = rm; }
 
     //Getters
     Player* getPlayer() { return player; }
+    RemotePlayer* getRemotePlayer() { return remotePlayer; }
     Exit* getExit() { return exit; }
     QList<QList<Block*>>& getBlocks() { return blocks; }
     QList<Entity*>& getEntities() { return entities; }

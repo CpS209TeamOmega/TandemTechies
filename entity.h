@@ -64,6 +64,7 @@ public:
     void setWidth(int newWidth) { rect.setWidth(newWidth); }
     void setHeight(int newHeight) { rect.setHeight(newHeight); }
     void setBuddy(QLabel* newBuddy) { buddy = newBuddy; }
+    void setLevel(Level* newLevel) { level = newLevel; }
 
     //The default size of any entity
     static int SIZE;

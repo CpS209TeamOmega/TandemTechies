@@ -7,17 +7,19 @@
 #include "collectible.h"
 #include "level.h"
 #include "gamewindow.h"
+#include "network.h"
 #include "scoremanager.h"
 #include "enemy.h"
 #include <QDebug>
 
-Level::Level(QList<QString> &initData)
-{
+Level::Level(QList<QString> &initData, GameModel *initModel)
+    : data(initData), model(initModel) {
     data = initData;
     finished = false;
     xOffs = 0;
     yOffs = 0;
     player = nullptr;
+    remotePlayer = nullptr;
     exit = nullptr;
     scoreBeforeLevel = 0;
 }
@@ -31,7 +33,6 @@ Level::~Level() {
     for(int i = 0; i < entities.size(); i++) {
         delete entities[i];
     }
-    delete player;
     delete exit;
 }
 
@@ -114,6 +115,12 @@ void Level::load() {
     }
 }
 
+PlaceableBlock* Level::placeBlock(int x, int y) {
+    PlaceableBlock* block = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
+    blocks[y][x] = block;
+    return block;
+}
+
 PlaceableBlock* Level::placeBlock(){
     int x = 0, y = 0;
     if(player->getDir() == -1){
@@ -146,7 +153,9 @@ PlaceableBlock* Level::placeBlock(){
                 return nullptr;
             }
             if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
+                Network::instance().send("Block " + QString::number(x) + " " + QString::number(y));
                 blocks[y][x] = b;
+                b->setCreating(true);
                 numBlocks--;
                 return b;
             } else {
@@ -156,7 +165,8 @@ PlaceableBlock* Level::placeBlock(){
         }
     } else {
         PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
-        if(test != nullptr && !test->isDeleting()) {
+        if(test != nullptr && !test->isCreating() && !test->isDeleting()) {
+            Network::instance().send("Remove " + QString::number(x) + " " + QString::number(y));
             test->setDeleting(true);
             numBlocks++;
         }

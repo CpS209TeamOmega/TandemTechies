@@ -7,12 +7,16 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
 #include "enemy.h"
+#include "remoteplayer.h"
+#include "network.h"
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
 #include <QObjectList>
+#include <QMessageBox>
 #include <QKeyEvent>
 #include <QtGlobal>
+#include <QStringList>
 #include <QIcon>
 
 //The default width of the game
@@ -24,31 +28,41 @@ int GameWindow::HEIGHT = 768;
 GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWindow) {
     ui->setupUi(this);
 
+    otherPlayer = nullptr;
+
     QIcon windowIcon(":/images/player.png");
     setWindowIcon(windowIcon);
     setFixedSize(WIDTH, HEIGHT);
     setWindowTitle("Tandem Techies");
     fps = 60;
 
-    setWindowOpacity(0);
     menu = new Menu();
     menu->show();
+    multiPlayer = false;
 
     //Connect slots with signal from Menu
-    QObject::connect(menu, SIGNAL(startGame()), this, SLOT(start()));
-    QObject::connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
-    QObject::connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
+    connect(menu, SIGNAL(startGame(QString)), this, SLOT(start(QString)));
+    connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
+    connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
+
+    //Connect server signals
+    Network::instance();
+    connect(Network::pointer(), SIGNAL(readyRead()), this, SLOT(dataReceived()));
+    connect(Network::pointer(), SIGNAL(connected()), this, SLOT(connectionSucceeded()));
+    connect(Network::pointer(), SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
+    connect(Network::pointer(), SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
 
     Q_ASSERT(blockImg.load(":/images/block.png"));
     Q_ASSERT(exitImg.load(":/images/exit.png"));
     Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
     Q_ASSERT(placeableImg.load(":/images/placeable.png"));
+    Q_ASSERT(heartImg.load(":/images/heart.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
         exit();
 	} else {
-		unitTests();
+        unitTests();
         updateGUI();
 
 		QTimer *timer = new QTimer(this);
@@ -142,13 +156,41 @@ void GameWindow::updateGUI() {
     Exit* e = lvl->getExit();
     makeLabel(e, exitImg);
 
+    if(otherPlayer) {
+        otherPlayer->getBuddy()->deleteLater();
+        delete otherPlayer;
+        otherPlayer = new RemotePlayer(lvl, 0, 0);
+        makeLabel(otherPlayer, QPixmap());
+        lvl->setRemotePlayer(otherPlayer);
+    }
+
     lvl->update();
 
+    showLives();
+
     model.setBackground(ui->lblBack);
-    ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    ui->lblNumBlocks->setText(QString::number(lvl->getNumBlocks()));
     ui->lblLvl->setText("Level " + QString::number(model.getLevelNumber()) + ":");
-    ui->lblName->setText(model.getCurrentLevel()->getName());
+    ui->lblName->setText(lvl->getName());
     ui->wgStatusBar->raise();
+}
+
+void GameWindow::showLives() {
+    QObjectList list = ui->wgLives->children();
+    for(QObject* obj : list) {
+        QLabel* lbl = dynamic_cast<QLabel*>(obj);
+        if(lbl) lbl->deleteLater();
+    }
+
+    int margin = 10;
+    int size = 32;
+    for(int i = 0; i < model.getCurrentLevel()->getPlayer()->getLives(); i++) {
+        QLabel* life = new QLabel(ui->wgLives);
+        life->setGeometry(margin * (i + 1) + size * i, margin, size, size);
+        life->setPixmap(heartImg);
+        life->setScaledContents(true);
+        life->show();
+    }
 }
 
 void GameWindow::timerHit() {
@@ -157,6 +199,7 @@ void GameWindow::timerHit() {
         model.setUpdateGUI(false);
     }
     model.update();
+    if(otherPlayer) otherPlayer->update();
 }
 
 GameWindow::~GameWindow()
@@ -165,14 +208,15 @@ GameWindow::~GameWindow()
 }
 
 //Menu Signal Receiver
-void GameWindow::start() {
-    show();
-    setWindowOpacity(1);
+void GameWindow::start(QString server) {
+    if(server != "") {
+        Network::instance().connectToHost(server, 5000);
+        Network::instance().waitForConnected();
+    }
 }
 
 void GameWindow::load(){
-    show();
-    setWindowOpacity(1);
+
 }
 
 void GameWindow::exit(){
@@ -206,9 +250,85 @@ void GameWindow::leaveEvent(QEvent *) {
 
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
     if(k->key() == Qt::Key_R) {
+        Network::instance().send("Reset");
         model.resetCurrentLevel();
         updateGUI();
     } else {
         model.playerInputR(k->key());
     }
+}
+
+void GameWindow::connectionSucceeded() {
+    multiPlayer = true;
+}
+
+void GameWindow::dataReceived() {
+    //In the format [x] [y] [dir]
+    QTcpSocket *sock = dynamic_cast<QTcpSocket*>(sender());
+    while(sock->canReadLine()) {
+        QString data = sock->readLine();
+        data.chop(1);
+        if(data == "Connect") {
+            otherPlayer = new RemotePlayer(model.getCurrentLevel(), 0, 0);
+            model.getCurrentLevel()->setRemotePlayer(otherPlayer);
+            QTimer* networkTimer = new QTimer(this);
+            networkTimer->setInterval(1000 / 20);
+            connect(networkTimer, SIGNAL(timeout()), this, SLOT(networkTimerHit()));
+            networkTimer->start();
+            updateGUI();
+        } else if(data == "Finished") {
+            model.levelFinished();
+        } else if(data == "Reset") {
+            model.resetCurrentLevel();
+            updateGUI();
+        } else if(data.startsWith("Collectible")) {
+            QStringList list = data.split(" ");
+            int x = list.at(1).toInt();
+            int y = list.at(2).toInt();
+            QList<Entity*> entities = model.getCurrentLevel()->getEntities();
+            for(int i = 0; i < entities.size(); i++) {
+                if(Collectible* c = dynamic_cast<Collectible*>(entities[i])) {
+                    if(c->getX() == x && c->getY() == y) {
+                        ScoreManager::instance().addToScore(c->getPoint());
+                        c->getBuddy()->deleteLater();
+                        model.getCurrentLevel()->removeEntity(c);
+                        break;
+                    }
+                }
+            }
+        } else if(data.startsWith("Remove")) {
+            QStringList list = data.split(" ");
+            int x = list.at(1).toInt();
+            int y = list.at(2).toInt();
+            if(PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(model.getCurrentLevel()->getBlocks()[y][x])) {
+                b->setDeleting(true);
+            }
+        } else if(data.startsWith("Block")) {
+            QStringList list = data.split(" ");
+            int x = list.at(1).toInt();
+            int y = list.at(2).toInt();
+            PlaceableBlock* block = model.placeBlock(x, y);
+            makeLabel(block, placeableImg);
+            block->update();
+        } else {
+            otherPlayer->dataReceived(data);
+        }
+    }
+}
+
+void GameWindow::networkTimerHit() {
+    Player* p = model.getCurrentLevel()->getPlayer();
+    int x = p->getX();
+    int y = p->getY();
+    int dir = p->getDir();
+    Network::instance().send(QString::number(x) + " " + QString::number(y) + " " + QString::number(dir));
+}
+
+void GameWindow::serverDisconnected() {
+    QMessageBox::information(this, "End of the World!", "AHHHHHH THE SERVER DISCONNECTED!!! :(");
+    menu->show();
+}
+
+void GameWindow::socketError(QAbstractSocket::SocketError) {
+
 }

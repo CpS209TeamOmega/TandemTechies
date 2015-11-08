@@ -12,11 +12,11 @@ Enemy::Enemy(Level* initLevel, int initX, int initY)
 void Enemy::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
-    if(dir == -1) {
+    if(dir == -1) { //If going left
         if(level->testCollision(getX() - 1, getY()) || !level->testCollision(getX(), getY() + getHeight() + 1)) {
             dir = 1;
         }
-    } else if(dir == 1) {
+    } else if(dir == 1) { //If going right
         if(level->testCollision(getX() + Entity::SIZE + 1, getY()) || !level->testCollision(getX() + getWidth(), getY() + getHeight() + 1)) {
             dir = -1;
         }

@@ -12,6 +12,8 @@
 
 #include "level.h"
 #include "scoremanager.h"
+#include "remoteplayer.h"
+#include "player.h"
 
 //The class containing all the data and methods
 //for the entire game.
@@ -22,7 +24,6 @@ class GameModel
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;//The level's data file name
     bool updateGUI;       //When the GUI must be updated to reflect model state
-    int lives;
 
 public:
     GameModel();
@@ -40,7 +41,11 @@ public:
     //Load game state
     void load();
 
+    void levelFinished();
+
+    //Places a block in the level
     PlaceableBlock* placeBlock();
+    PlaceableBlock* placeBlock(int x, int y);
 
     //Keyboard Press/Release Event
     void playerInputP(int p);
@@ -63,9 +68,6 @@ public:
 
     //Restarts the current level
     void resetCurrentLevel();
-
-    //Getters
-    int getLives() { return lives; }
 
     //Sets the background label
     void setBackground(QLabel* newBack) { back = newBack; }
