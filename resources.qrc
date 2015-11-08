@@ -14,5 +14,6 @@
         <file>images/e_right.png</file>
         <file>images/back.jpg</file>
         <file>images/heart.png</file>
+        <file>images/multi.png</file>
     </qresource>
 </RCC>

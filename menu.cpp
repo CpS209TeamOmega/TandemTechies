@@ -7,12 +7,12 @@
 #include "ui_menu.h"
 #include <QLabel>
 #include <QDebug>
+#include <QInputDialog>
 
 Menu::Menu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Menu)
 {
-
     ui->setupUi(this);
     setWindowFlags(Qt::WindowStaysOnTopHint);
     setWindowModality(Qt::ApplicationModal);
@@ -46,14 +46,19 @@ Menu::~Menu()
 
 void Menu::on_btnStart_clicked()
 {
-    ui->btnStart->setText("Resume");
-    emit startGame();
+    QString server = "";
+    bool ok;
+    if(ui->btnMulti->isChecked()) {
+        server = QInputDialog::getText(this, "Server IP", "Server IP Address:", QLineEdit::Normal, "10.20.2.137", &ok);
+        if(!ok) return;
+    }
+
+    emit startGame(server);
     hide();
 }
 
 void Menu::on_btnLoad_clicked()
 {
-    ui->btnStart->setText("Resume");
     emit loadGame();
     hide();
 }
@@ -66,4 +71,22 @@ void Menu::on_btnExit_clicked()
 
 void Menu::closeEvent(QCloseEvent*) {
     emit exitGame();
+}
+
+void Menu::on_btnSingle_clicked()
+{
+    if(ui->btnSingle->isChecked()) {
+        ui->btnMulti->setChecked(false);
+    } else {
+        ui->btnMulti->setChecked(true);
+    }
+}
+
+void Menu::on_btnMulti_clicked()
+{
+    if(ui->btnMulti->isChecked()) {
+        ui->btnSingle->setChecked(false);
+    } else {
+        ui->btnSingle->setChecked(true);
+    }
 }

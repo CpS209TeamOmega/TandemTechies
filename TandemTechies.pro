@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     menu.cpp \
     exit.cpp \
     collectible.cpp \
-    enemy.cpp
+    enemy.cpp \
+    remoteplayer.cpp \
+    network.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -35,7 +37,9 @@ HEADERS  += gamewindow.h\
     menu.h \
     exit.h \
     collectible.h \
-    enemy.h
+    enemy.h \
+    remoteplayer.h \
+    network.h
 
 FORMS    += gamewindow.ui \
     menu.ui
