@@ -157,6 +157,8 @@ void GameWindow::updateGUI() {
     makeLabel(e, exitImg);
 
     if(otherPlayer) {
+        otherPlayer->getBuddy()->deleteLater();
+        delete otherPlayer;
         otherPlayer = new RemotePlayer(lvl, 0, 0);
         makeLabel(otherPlayer, QPixmap());
         lvl->setRemotePlayer(otherPlayer);
@@ -248,6 +250,7 @@ void GameWindow::leaveEvent(QEvent *) {
 
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
     if(k->key() == Qt::Key_R) {
+        Network::instance().send("Reset");
         model.resetCurrentLevel();
         updateGUI();
     } else {
@@ -275,6 +278,9 @@ void GameWindow::dataReceived() {
             updateGUI();
         } else if(data == "Finished") {
             model.levelFinished();
+        } else if(data == "Reset") {
+            model.resetCurrentLevel();
+            updateGUI();
         } else if(data.startsWith("Collectible")) {
             QStringList list = data.split(" ");
             int x = list.at(1).toInt();
@@ -283,6 +289,7 @@ void GameWindow::dataReceived() {
             for(int i = 0; i < entities.size(); i++) {
                 if(Collectible* c = dynamic_cast<Collectible*>(entities[i])) {
                     if(c->getX() == x && c->getY() == y) {
+                        ScoreManager::instance().addToScore(c->getPoint());
                         c->getBuddy()->deleteLater();
                         model.getCurrentLevel()->removeEntity(c);
                         break;

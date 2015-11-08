@@ -5,8 +5,8 @@ RemotePlayer::RemotePlayer(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
     dir = 1;
 
-    pLeft.load(":/images/p_left.png");
-    pRight.load(":/images/p_right.png");
+    pLeft.load(":/images/p2_left.png");
+    pRight.load(":/images/p2_right.png");
 }
 
 void RemotePlayer::update() {

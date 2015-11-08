@@ -26,14 +26,13 @@ void GameModel::update()
     if(getCurrentLevel()->getPlayer()->isDead()) {
         getCurrentLevel()->getPlayer()->setDead(false);
         getCurrentLevel()->getPlayer()->setLives(getCurrentLevel()->getPlayer()->getLives() - 1);
+        Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
     }
 
 	//Test to see if the user has gotten to the exit
     if(getCurrentLevel()->isFinished()) {
-        ScoreManager::instance().addToScore(getCurrentLevel()->getPoints());
-
         if(Network::instance().isOpen()) { Network::instance().write("Finished\n"); }
 
         levelFinished();
@@ -49,6 +48,7 @@ void GameModel::update()
 
 void GameModel::levelFinished() {
     //Go the the next level and make sure the currentLevel is not the last level
+    ScoreManager::instance().addToScore(getCurrentLevel()->getPoints());
     currentLevel++;
     if(currentLevel >= levels.size()) {
         currentLevel = 0;
