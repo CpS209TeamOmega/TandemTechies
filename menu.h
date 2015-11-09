@@ -33,11 +33,15 @@ private slots:
 
     void on_btnHighScores_clicked();
 
+    void on_btnSingle_clicked();
+
+    void on_btnMulti_clicked();
+
 private:
     Ui::Menu *ui;
 
 signals:
-    void startGame();
+    void startGame(QString server);
     void loadGame();
     void exitGame();
     void scoreDisplay();

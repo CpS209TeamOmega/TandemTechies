@@ -42,7 +42,7 @@ border-radius:20px;
 color:white;</string>
    </property>
    <property name="text">
-    <string>Start</string>
+    <string>Play</string>
    </property>
    <property name="iconSize">
     <size>
@@ -298,23 +298,72 @@ color:white;
     <pixmap resource="resources.qrc">:/images/logo.png</pixmap>
    </property>
   </widget>
-  <widget class="QLabel" name="lblPlayerImg">
+  <widget class="QPushButton" name="btnSingle">
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>280</y>
-     <width>111</width>
-     <height>111</height>
+     <y>320</y>
+     <width>81</width>
+     <height>81</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:checked {
+	background-color:green;
+}</string>
    </property>
    <property name="text">
     <string/>
    </property>
-   <property name="pixmap">
-    <pixmap resource="resources.qrc">:/images/player.png</pixmap>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/player.png</normaloff>:/images/player.png</iconset>
    </property>
-   <property name="scaledContents">
+   <property name="iconSize">
+    <size>
+     <width>64</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnMulti">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>320</y>
+     <width>81</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:checked {
+	background-color:green;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/multi.png</normaloff>:/images/multi.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>64</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="btnHighScores">

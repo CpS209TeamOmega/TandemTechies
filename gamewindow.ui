@@ -150,6 +150,19 @@ color: rgb(200, 200, 50);</string>
       <string>Level 1:</string>
      </property>
     </widget>
+    <widget class="QWidget" name="wgLives" native="true">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>80</y>
+       <width>351</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(0,0,0,0);</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="lblBack">
     <property name="geometry">

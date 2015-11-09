@@ -22,7 +22,9 @@ class Player : public Entity {
     int jumpDistance;			  //The current distance the player has jumped
 	int jumpSpeed;				  //The speed of a jump
     int dir;					  //The direction the player is currently facing
+    int lives;
     bool dead;
+    bool cheat;
 
     QPixmap pLeft;                //The image for facing left
     QPixmap pRight;               //The image for facing right
@@ -53,10 +55,13 @@ public:
     void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
 	void setDir(int newDir) { dir = newDir; }
     void setDead(bool isDead) { dead = isDead; }
+    void setLives(int newLives) { lives = newLives; }
+    void setCheatJumpHeight();
 
 	//Getters
 	int getDir() { return dir; }
     bool isDead() { return dead; }
+    int getLives() { return lives; }
 };
 
 #endif // PLAYER_H
