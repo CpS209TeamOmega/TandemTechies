@@ -15,6 +15,7 @@
 #include "remoteplayer.h"
 #include "entity.h"
 #include "menu.h"
+#include "scoremanager.h"
 
 namespace Ui
 {
@@ -73,6 +74,7 @@ private slots:
     void start(QString server);
     void load();
     void exit();
+    void scores();
 
     void keyPressEvent(QKeyEvent *k);
     void keyReleaseEvent(QKeyEvent *k);

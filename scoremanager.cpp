@@ -6,7 +6,6 @@
 #include "scoremanager.h"
 
 #include <QtSql/QSqlDatabase>
-#include <QFile>
 #include <QDebug>
 
 int ScoreManager::getHiScore()
@@ -48,9 +47,7 @@ bool ScoreManager::addHighScore(QString player, int score)
 
 void ScoreManager::saveScores()
 {
-    //create file to save information to
-    QFile saveFile(fileName);
-    if(!saveFile.open(QIODevice::WriteOnly))
+    if(!file.open(QIODevice::WriteOnly))
     {
         qDebug() << "Could not save scores!";
         return;
@@ -58,24 +55,23 @@ void ScoreManager::saveScores()
 
     //loops through all the current scores and stores them in the file
     QHash<QString, int>::const_iterator i = dashBoard.constBegin();
-    QTextStream out(&saveFile);
+    QTextStream out(&file);
     while (i != dashBoard.constEnd())
     {
-        out << i.key() << ": " << i.value();
+        out << i.key() << ": " << i.value() << "\n";
     }
 }
 
 void ScoreManager::loadScores()
 {
-    QFile saveFile(fileName);
-    if(!saveFile.open(QIODevice::WriteOnly))
+    if(!file.open(QIODevice::WriteOnly))
     {
         qDebug() << "Could not load scores!";
         return;
     }
     else
     {
-        QTextStream in(&saveFile);
+        QTextStream in(&file);
         QString line = in.readLine();
         while(!line.isNull())
         {

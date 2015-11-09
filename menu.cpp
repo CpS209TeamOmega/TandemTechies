@@ -90,3 +90,8 @@ void Menu::on_btnMulti_clicked()
         ui->btnSingle->setChecked(true);
     }
 }
+
+void Menu::on_btnHighScores_clicked()
+{
+    emit highScores();
+}

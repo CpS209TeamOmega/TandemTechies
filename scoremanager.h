@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QString>
 #include <QLabel>
+#include <QFile>
 
 #include "block.h"
 #include "collectible.h"
@@ -19,21 +20,18 @@ class ScoreManager
 {
 private:
     //The file to save the scores to
-    QString fileName;
+    QFile file;
 
     //The virtual score "dashboard"
     QHash<QString, int> dashBoard;
 
     QLabel *buddy;
 
-    //the start score
-    int startScore;
-
     //the in-game score
     int curScore;
 
     //private constructor
-    ScoreManager() : startScore{0}, curScore{0} { }
+    ScoreManager() : file("scores.txt"), curScore{0} { }
 
 public:
     //Return the highest score ever

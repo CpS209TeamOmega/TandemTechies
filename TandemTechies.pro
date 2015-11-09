@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -42,7 +42,8 @@ HEADERS  += gamewindow.h\
     network.h
 
 FORMS    += gamewindow.ui \
-    menu.ui
+    menu.ui \
+    scoremanager.ui
 
 QMAKE_CXXFLAGS += -std=c++11
 

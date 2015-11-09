@@ -44,6 +44,7 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     connect(menu, SIGNAL(startGame(QString)), this, SLOT(start(QString)));
     connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
     connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
+    connect(menu, SIGNAL(highScores()), this, SLOT(scores()));
 
     //Connect server signals
     Network::instance();
@@ -221,6 +222,11 @@ void GameWindow::load(){
 
 void GameWindow::exit(){
     close();
+}
+
+void GameWindow::scores()
+{
+
 }
 
 //Key Event

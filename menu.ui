@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>713</width>
-    <height>496</height>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -364,6 +364,39 @@ color:white;
    </property>
    <property name="checked">
     <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnHighScores">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>450</y>
+     <width>241</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>CrossCursor</cursorShape>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 30pt &quot;Anatolian&quot;;
+background-color: rgb(100,0,0);
+border-color:white;
+border-radius:20px;
+color:white;
+</string>
+   </property>
+   <property name="text">
+    <string>High Scores</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
    </property>
   </widget>
  </widget>
