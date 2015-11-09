@@ -20,7 +20,7 @@ class ScoreManager
 {
 private:
     //The file to save the scores to
-    QString fileName;
+    QFile file;
 
     //The virtual score "dashboard"
     QHash<QString, int> dashBoard;
@@ -32,7 +32,7 @@ private:
     int curScore;
 
     //private constructor
-    ScoreManager() : curScore{0} { }
+    ScoreManager() : file("scores.txt"), curScore{0} { }
 
 public:
     //Return the highest score ever

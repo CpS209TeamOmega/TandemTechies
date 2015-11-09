@@ -74,11 +74,6 @@ void Menu::closeEvent(QCloseEvent*) {
     emit exitGame();
 }
 
-void Menu::on_btnHighScores_clicked()
-{
-    emit scoreDisplay();
-}
-
 void Menu::on_btnSingle_clicked()
 {
     if(ui->btnSingle->isChecked()) {
@@ -95,4 +90,9 @@ void Menu::on_btnMulti_clicked()
     } else {
         ui->btnSingle->setChecked(true);
     }
+}
+
+void Menu::on_btnHighScores_clicked()
+{
+    emit highScores();
 }

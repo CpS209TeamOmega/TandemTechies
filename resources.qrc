@@ -18,4 +18,11 @@
         <file>images/p2_left.png</file>
         <file>images/p2_right.png</file>
     </qresource>
+    <qresource prefix="/sounds">
+        <file>sounds/collectpot.mp3</file>
+        <file>sounds/dropbox.mp3</file>
+        <file>sounds/jump.mp3</file>
+        <file>sounds/loselife.mp3</file>
+        <file>sounds/pickbox.mp3</file>
+    </qresource>
 </RCC>
