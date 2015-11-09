@@ -19,11 +19,8 @@ Menu::Menu(QWidget *parent) :
     setWindowTitle("Tandem Techies");
     setFixedSize(geometry().width(), geometry().height());
 
-    QLabel* cover = new QLabel(this);
-    cover->setStyleSheet("background-color:rgba(0,0,0,.8);");
-    cover->setGeometry(0, 0, geometry().width(), geometry().height());
-    cover->lower();
-    cover->show();
+    QIcon icon(":/images/player.png");
+    setWindowIcon(icon);
 
     QLabel* background = new QLabel(this);
     QPixmap backgroundImg(":/images/bg.png");
@@ -52,10 +49,12 @@ void Menu::on_btnStart_clicked()
     ui->btnStart->setText("Resume");
     emit startGame();
     hide();
+
 }
 
 void Menu::on_btnLoad_clicked()
 {
+    ui->btnStart->setText("Resume");
     emit loadGame();
     hide();
 }
@@ -68,4 +67,9 @@ void Menu::on_btnExit_clicked()
 
 void Menu::closeEvent(QCloseEvent*) {
     emit exitGame();
+}
+
+void Menu::on_btnHighScores_clicked()
+{
+    emit scoreDisplay();
 }

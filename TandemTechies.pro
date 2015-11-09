@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     block.cpp \
     menu.cpp \
     exit.cpp \
-    collectible.cpp
+    collectible.cpp \
+    enemy.cpp \
+    scoredisplay.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -33,12 +35,17 @@ HEADERS  += gamewindow.h\
     block.h \
     menu.h \
     exit.h \
-    collectible.h
+    collectible.h \
+    enemy.h \
+    scoredisplay.h
 
 FORMS    += gamewindow.ui \
-    menu.ui
+    menu.ui \
+    scoreDisplay.ui
 
 QMAKE_CXXFLAGS += -std=c++11
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES +=

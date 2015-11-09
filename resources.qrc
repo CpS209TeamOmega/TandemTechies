@@ -10,5 +10,8 @@
         <file>images/p_right.png</file>
         <file>images/player.png</file>
         <file>images/placeable.png</file>
+        <file>images/e_left.png</file>
+        <file>images/e_right.png</file>
+        <file>images/back.jpg</file>
     </qresource>
 </RCC>

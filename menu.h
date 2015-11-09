@@ -18,8 +18,6 @@ class Menu : public QWidget
 {
     Q_OBJECT
 
-    int iconPos = 0;
-
 public:
     explicit Menu(QWidget *parent = 0);
     ~Menu();
@@ -33,6 +31,8 @@ private slots:
 
     void closeEvent(QCloseEvent*);
 
+    void on_btnHighScores_clicked();
+
 private:
     Ui::Menu *ui;
 
@@ -40,6 +40,7 @@ signals:
     void startGame();
     void loadGame();
     void exitGame();
+    void scoreDisplay();
 };
 
 #endif // MENU_H

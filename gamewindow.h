@@ -23,20 +23,16 @@ class GameWindow : public QMainWindow
 {
     Q_OBJECT
 
-    GameModel model;
-    Menu* menu;
-    QWidget* wgScore;
+    GameModel model;        //For the GUI/model interactions
+    Menu* menu;             //The Game menu
 
-    double fadeInAmt = 0;
-    double fadeDir = 1;
-
+    //All of the images for the game
     QPixmap blockImg;
     QPixmap collectibleImg;
     QPixmap exitImg;
-	QPixmap backgroundImg;
 	QPixmap placeableImg;
 
-    int fps;
+    int fps;                //The frames per second the game will run at
 
 
 public:

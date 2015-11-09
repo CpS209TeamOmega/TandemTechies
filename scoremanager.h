@@ -7,11 +7,11 @@
 #ifndef SCOREMANAGER_H
 #define SCOREMANAGER_H
 
-//I don't know how to use QHash things.....
 #include <QHash>
 #include <QDebug>
 #include <QString>
 #include <QLabel>
+#include <QFile>
 
 #include "block.h"
 #include "collectible.h"
@@ -25,16 +25,14 @@ private:
     //The virtual score "dashboard"
     QHash<QString, int> dashBoard;
 
+    QLabel *scorePanel;
     QLabel *buddy;
-
-    //the start score
-    int startScore;
 
     //the in-game score
     int curScore;
 
     //private constructor
-    ScoreManager() : startScore{0}, curScore{0} { }
+    ScoreManager() : curScore{0} { }
 
 public:
     //Return the highest score ever
@@ -55,6 +53,9 @@ public:
 
     //Loads all of the scores from file
     void loadScores();
+
+    //Updates the label on the screen
+    void update();
 
     //getters
     int getCurScore() { return curScore; }

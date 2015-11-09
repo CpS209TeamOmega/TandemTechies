@@ -1,155 +1,252 @@
 level Beginning Your Journey
+blocks 0
+points 500
+bbbbbbbb
+b      b
+b      b
+bpccccxb
+bbbbbbbb
+endlevel
+
+level Curvy
+blocks 0
+points 1000
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                                             b
+b                                             b
+b                                             b
+b                                             b
+b                                             b
+b   bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b   bp                              b
+b   b                               b
+b    bb                             b
+b      bb                           b
+ bb      bbb                        b
+   bb       bbbb           x        b
+     bbb        bbbbbbbbbbbbbbb     b
+        bbbb                        b
+            bbbbbbbbbbbbbbbbbbbbbbbbb
+endlevel
+
+level Baby Steps
+blocks 0
+points 500
+bbbbbbbbbbbbb
+b           b
+b          xb
+b  c     cbbb
+bpc c  cbbbbb
+bbbbbbbbbbbbb
+endlevel
+
+level Block Practice
 blocks 3
-bbbbbbbbbbbb
-b          b
-b   ccc    b
-b   bbb    b
-b  b   b   b
-bp        xb
-bbbbbbbbbbbb
-endlevel
-
-level ZigZag
-blocks 0
-bbbbbbbbbbbbb
-bp    m     b
-bbbbbbbbbbb b
-b     m     b
-b bbbbbbbbbbb
-b     m     b
-bbbbbbbbbbb b
-bx    m     b
-bbbbbbbbbbbbb
-endlevel
-
-level First Steps
-blocks 2
-bbbbbbbbbbbb
-b         xb
-b        bbb
-b     bbb  b
-b          b
-bp         b
-bbbbbbbbbbbb
-endlevel
-
-level Money Pit
-blocks 0
-bbbbbbbbbbbbb
-b           b
-b           b
-b           b
-b   bcccb   b
-bm  bcccb   b
-bm pbcccb  xb
-bbbbbbbbbbbbb
+points 500
+bbbbbbbbbbbbbbbbb
+b               b
+b            c  b
+b               b
+b        cc     b
+b               b
+b   b      bb   b
+b   b      b    b
+bp  bb     bcccxb
+bbbbbbbbbbbbbbbbb
 endlevel
 
 level Up and Down
 blocks 2
+points 500
 bbbbbbbbb
 b       b
-b       b
+b ccccc b
 b  bbb  b
 b   b   b
 b   b   b
 b  pbx  b
 bbbbbbbbb
+endlevel
+
+level Don't Fall
+blocks 0
+points 750
+bbbbbbbbbbbbbb
+bp b         b
+b  b         b
+b  bcccccccccb
+b  m         b
+bbbbb b b b bb
+bxcccccccccccb
+b            b
+b            b
+b            b
+b  e    e    b
+bbbbbbbbbbbbbb
+endlevel
+
+level Pick Up After Yourself
+blocks 0
+points 750
+bbbbbbbbbbbbbb
+b            b
+b            b
+b   b    b   b
+b  mb   cb   b
+bp mb   cb  xb
+bbbbbbbbbbbbbb
 endlevel
 
 level Down and Up
 blocks 2
+points 1000
 bbbbbbbbb
 b  pbx  b
 b  bbb  b
+b c b c b
+b c b c b
 b   b   b
-b   b   b
-b   b   b
-b       b
+b  ccc  b
 bbbbbbbbb
 endlevel
 
-level Platformer
-blocks 2
-bbbbbbbbbbb
-b        xb
-b         b
-b      b  b
-b         b
-b    b    b
-b         b
-b  b      b
-bp        b
-bb        b
-bb        b
-bb        b
-bb        b
-bbbbbbbbbbb
+level Climb
+blocks 1
+points 1000
+bbbbbbbbbbbb
+b          b
+b          b
+b   c     xb
+bbbbcbbbbbbb
+b   c      b
+b         cb
+b      c cmb
+bbbbbbbcbbbb
+b      c   b
+bc         b
+bmc       pb
+bbbbbbbbbbbb
 endlevel
 
-level Endian
+level (R)estart if your stuck
+blocks 0
+points 500
+bbbbbbbb
+bccccccb
+bpmccmcb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bb bb
+bb bbxbb
+bbbbbbbb
+endlevel
+
+level Leap of Faith
 blocks 2
-bbbbbbbbbbbbb
-b           b
-bp         xb
-bbbbb    bbbb
-b           b
-b           b
-b           b
-bbbbbbbbbbbbb
+points 750
+bbbbbbbbbbbbbbbb
+b      c       b
+b  cccccc      b
+b      c       b
+b              b
+b              b
+bp             b
+bbbbbbb        b
+b              b
+b              b
+b              b
+b              b
+b              b
+b              b
+b              b
+b              b
+b             xb
+b            bbb
+b              b
+b              b
+b              b
+b              b
+b              b
+bbbbbbbbbbbbbbbb
+endlevel
+
+level Platforming
+blocks 3
+points 750
+bbbbbbbbbbbbbbbbbbbb
+b                  b
+b                  b
+b                 xb
+b           b     bb
+b       bb  b      b
+bp  bb      b      b
+bb          b      b
+b           b      b
+b           bccccccb
+b           bccccccb
+b           bmcccccb
+bbbbbbbbbbbbbbbbbbbb
 endlevel
 
 level Tower
-blocks 6
-bbbbbbbbbbbbb
-bx          b
-bbbbbb      b
-b           b
-b           b
-b           b
-b           b
-b           b
-b           b
-b           b
-b           b
-b           b
-b           b
-bp          b
-bbbbbbbbbbbbb
-endlevel
-
-level Fun
-blocks 0
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-b                             b
-b                             b
-b                             b
-b        bb   bb              b
-b        bb   bb              b
-b                             b
-b      b         b            b
-b       bbp    bb             b
-b        bbbbbbb              b
-b                            xb
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+blocks 2
+points 1500
+bbbbbbbbbb
+bxccc    b
+bbbbb    b
+b     c  b
+b        b
+b    c   b
+b        b
+b   c    b
+b     m  b
+b  c     b
+b    m   b
+b        b
+bp  m    b
+bbbbbbbbbb
 endlevel
 
 level Impossible
 blocks 0
+points 5000
 bbbbbbbbbbbbbbbbbbbbbbbbb
 bp                     xb
-b                      bb
-b                     bbb
-bm                      b
-b bb                    b
-b b                     b
-b b  b                  b
-b b                     b
-b bb                    b
-b b                     b
-b b  b                  b
-b b                     b
-b bb                    b
+b                       b
+b                     cbb
+bm      c     c     c bbb
+b bb    c     c     c   b
+b b     c     c     c   b
+b b  b  c     c     c   b
+b b     c     c     c   b
+b bb    c     c     c   b
+b b     c     c     c   b
+b b  b  c     c     c   b
+b b     c     c     c   b
+b bb    c     c     c   b
 b b     m     m     m   b
 bbbbbbbbbbbbbbbbbbbbbbbbb
+endlevel
+
+level Vault
+blocks 1
+points 0
+bbbbbbbbbbb
+bxccccccccb
+bbccccccccb
+bbccccccccb
+bbccccccccb
+bbccbcccccb
+bbccbcccccb
+bbcmbccbccb
+bbcmbcmbccb
+bbbbbcmbcpb
+bbbbbbbbbbb
 endlevel

@@ -40,5 +40,3 @@ Makefile*
 *.vcxproj
 *.vcxproj.*
 *.sln
-debug/
-x64/
