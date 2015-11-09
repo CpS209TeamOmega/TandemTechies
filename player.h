@@ -24,6 +24,7 @@ class Player : public Entity {
     int dir;					  //The direction the player is currently facing
     int lives;
     bool dead;
+    bool cheat;
 
     QPixmap pLeft;                //The image for facing left
     QPixmap pRight;               //The image for facing right
@@ -55,6 +56,7 @@ public:
 	void setDir(int newDir) { dir = newDir; }
     void setDead(bool isDead) { dead = isDead; }
     void setLives(int newLives) { lives = newLives; }
+    void setCheatJumpHeight();
 
 	//Getters
 	int getDir() { return dir; }
