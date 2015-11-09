@@ -132,6 +132,8 @@ void GameModel::playerInputP(int p){//Press Event Handler
         getCurrentLevel()->getPlayer()->setRight(true);
 		getCurrentLevel()->getPlayer()->setDir(1);
         break;
+    case Qt::Key_C:
+        getCurrentLevel()->getPlayer()->setCheatJumpHeight();
     default:
         break;
     }

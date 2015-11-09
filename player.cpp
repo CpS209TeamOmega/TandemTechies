@@ -12,7 +12,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
     hSpeed = 8;
     vSpeed = 0;
-    right = left = jumping = jumpKeyPressed = dead = false;
+    right = left = jumping = jumpKeyPressed = dead = cheat = false;
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;
@@ -86,4 +86,11 @@ void Player::clearFlags() {
 void Player::savePosition()
 {
 
+}
+
+void Player::setCheatJumpHeight(){
+    if (!cheat)
+    {jumpHeight = 1920; cheat = true;}
+    else
+    {jumpHeight = 192; cheat = false;}
 }
