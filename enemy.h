@@ -34,6 +34,9 @@ public:
 
     //Getters
     int getDir() { return dir; }
+
+    //Setters
+    void setDir(int newDir) { dir = newDir; }
 };
 
 #endif // ENEMY_H

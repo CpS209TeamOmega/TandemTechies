@@ -66,6 +66,9 @@ public:
     //Removes an entity from the QList of entities
     void removeEntity(Entity* e);
 
+    //Remotes all entities
+    void removeAllEntities();
+
     //Removes the block at the position given
     void removeBlock(int x, int y);
     PlaceableBlock* removeBlockX();

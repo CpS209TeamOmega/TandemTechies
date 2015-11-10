@@ -24,6 +24,7 @@ class GameModel
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;//The level's data file name
     bool updateGUI;       //When the GUI must be updated to reflect model state
+    int lives;
 
 public:
     GameModel();
@@ -72,6 +73,12 @@ public:
 
     //Sets the background label
     void setBackground(QLabel* newBack) { back = newBack; }
+
+    //Gets the current lives of the player
+    int getLives() { return lives; }
+
+    //Sets the current level and loads the level
+    void setCurrentLevel(int newLevel);
 
 };
 

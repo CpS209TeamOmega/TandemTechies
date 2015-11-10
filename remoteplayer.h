@@ -6,6 +6,7 @@
 class RemotePlayer : public Entity
 {
     int dir;
+    int id;
 
     QPixmap pLeft;                //The image for facing left
     QPixmap pRight;               //The image for facing right
@@ -19,8 +20,10 @@ public:
     void dataReceived(QString data);
 
     void setDir(int newDir) { dir = newDir; }
+    void setId(int newId) { id = newId; }
 
     int getDir() { return dir; }
+    int getId() { return id; }
 };
 
 #endif // REMOTEPLAYER_H

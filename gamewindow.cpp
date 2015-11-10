@@ -9,15 +9,18 @@
 #include "enemy.h"
 #include "remoteplayer.h"
 #include "network.h"
+#include "sound.h"
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
 #include <QObjectList>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QFile>
 #include <QtGlobal>
 #include <QStringList>
 #include <QIcon>
+#include <QMessageBox>
 
 //The default width of the game
 int GameWindow::WIDTH = 1024;
@@ -184,7 +187,7 @@ void GameWindow::showLives() {
 
     int margin = 10;
     int size = 32;
-    for(int i = 0; i < model.getCurrentLevel()->getPlayer()->getLives(); i++) {
+    for(int i = 0; i < model.getLives(); i++) {
         QLabel* life = new QLabel(ui->wgLives);
         life->setGeometry(margin * (i + 1) + size * i, margin, size, size);
         life->setPixmap(heartImg);
@@ -194,12 +197,12 @@ void GameWindow::showLives() {
 }
 
 void GameWindow::timerHit() {
-    if(model.mustUpdateGUI()) {
-        updateGUI();
-        model.setUpdateGUI(false);
-    }
-    model.update();
-    if(otherPlayer) otherPlayer->update();
+        if(model.mustUpdateGUI()) {
+            updateGUI();
+            model.setUpdateGUI(false);
+        }
+        model.update();
+        if(otherPlayer) otherPlayer->update();
 }
 
 GameWindow::~GameWindow()
@@ -215,12 +218,108 @@ void GameWindow::start(QString server) {
     }
 }
 
-void GameWindow::load(){
+void GameWindow::load() {
+    QFile loadFile("save.dat");
+    if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Could not load save file.";
+        return;
+    }
 
+    qDebug() << "Loading save file.";
+    QTextStream in(&loadFile);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+
+        if(!line.isEmpty()) {
+            if(line.startsWith("Chicken")) { //Level number
+                QStringList list = line.split(" ");
+                model.setCurrentLevel(list[1].toInt());
+                model.getCurrentLevel()->removeAllEntities();
+            } else if(line.startsWith("Banana")) { //Player position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                Player* p = model.getCurrentLevel()->getPlayer();
+                p->setX(x);
+                p->setY(y);
+                p->setWidth(Entity::SIZE);
+                p->setHeight(Entity::SIZE);
+                p->setDir(dir);
+            } else if(line.startsWith("Goodguy")) { //Enemy position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                Enemy* e = new Enemy(model.getCurrentLevel(), x, y);
+                e->setDir(dir);
+                model.getCurrentLevel()->getEntities() << e;
+            } else if(line.startsWith("Enchilada")) { //Collectibles
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                model.getCurrentLevel()->getEntities() << new Collectible(model.getCurrentLevel(), x, y);
+            } else if(line.startsWith("Broccoli")) { //Placeable Blocks
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                model.getCurrentLevel()->getBlocks()[y / Entity::SIZE][x / Entity::SIZE] = new PlaceableBlock(model.getCurrentLevel(), x, y);
+            }
+        }
+    }
+    model.setUpdateGUI(true);
 }
 
 void GameWindow::exit(){
     close();
+}
+
+void GameWindow::closeEvent(QCloseEvent* e) {
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Save", "Save game before exiting?", QMessageBox::Yes | QMessageBox::Cancel | QMessageBox::No);
+
+    if(reply == QMessageBox::Yes) {
+        save();
+    } else if(reply != QMessageBox::No) {
+        e->ignore();
+    }
+}
+
+void GameWindow::save() {
+    qDebug() << "Saving Game File";
+
+    QFile saveFile("save.dat");
+    if(!saveFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Error saving game data";
+        return;
+    }
+
+    QTextStream out(&saveFile);
+
+    Level* current = model.getCurrentLevel();
+
+    out << "Chicken " << model.getLevelNumber() - 1 << "\n";
+
+    Player* p = current->getPlayer();
+    out << "Banana " << p->getX() << " " << p->getY() << " " << p->getDir() << "\n";
+
+    QList<Entity*> ents = current->getEntities();
+    for(int i = 0; i < ents.size(); i++) {
+        Enemy* e = dynamic_cast<Enemy*>(ents[i]);
+        if(e) out << "Goodguy " << e->getX() << " " << e->getY() << " " << e->getDir() << "\n";
+
+        Collectible* c = dynamic_cast<Collectible*>(ents[i]);
+        if(c) out << "Enchilada " << c->getX() << " " << c->getY() << "\n";
+    }
+
+    QList<QList<Block*>> blocks = model.getCurrentLevel()->getBlocks();
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
+            if(b) out << "Broccoli " << b->getX() << " " << b->getY() << "\n";
+        }
+    }
 }
 
 //Key Event
@@ -293,6 +392,7 @@ void GameWindow::dataReceived() {
                 if(Collectible* c = dynamic_cast<Collectible*>(entities[i])) {
                     if(c->getX() == x && c->getY() == y) {
                         ScoreManager::instance().addToScore(c->getPoint());
+                        Sound::instance().collect();
                         c->getBuddy()->deleteLater();
                         model.getCurrentLevel()->removeEntity(c);
                         break;
@@ -303,6 +403,7 @@ void GameWindow::dataReceived() {
             QStringList list = data.split(" ");
             int x = list.at(1).toInt();
             int y = list.at(2).toInt();
+            Sound::instance().removeBlock();
             if(PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(model.getCurrentLevel()->getBlocks()[y][x])) {
                 b->setDeleting(true);
             }
@@ -333,5 +434,5 @@ void GameWindow::serverDisconnected() {
 }
 
 void GameWindow::socketError(QAbstractSocket::SocketError) {
-
+    qDebug() << "COULDN'T CONNECT";
 }

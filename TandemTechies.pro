@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     collectible.cpp \
     enemy.cpp \
     remoteplayer.cpp \
-    network.cpp
+    network.cpp \
+    sound.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -39,7 +40,8 @@ HEADERS  += gamewindow.h\
     collectible.h \
     enemy.h \
     remoteplayer.h \
-    network.h
+    network.h \
+    sound.h
 
 FORMS    += gamewindow.ui \
     menu.ui

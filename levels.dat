@@ -173,7 +173,7 @@ b              b
 b              b
 b              b
 b              b
-b              b
+b e e e e e e eb
 bbbbbbbbbbbbbbbb
 endlevel
 
@@ -191,7 +191,7 @@ bb          b      b
 b           b      b
 b           bccccccb
 b           bccccccb
-b           bmcccccb
+be e e e e ebmcccccb
 bbbbbbbbbbbbbbbbbbbb
 endlevel
 
@@ -231,7 +231,7 @@ b b     c     c     c   b
 b b  b  c     c     c   b
 b b     c     c     c   b
 b bb    c     c     c   b
-b b     m     m     m   b
+b b     m     m     m e b
 bbbbbbbbbbbbbbbbbbbbbbbbb
 endlevel
 
