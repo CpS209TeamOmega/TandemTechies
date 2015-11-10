@@ -325,12 +325,15 @@ void GameWindow::save() {
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
-    if(k->key() == Qt::Key_Space) {
+    if(k->key() == Qt::Key_Z) {
         PlaceableBlock* newBlock = model.placeBlock();
         if(newBlock != nullptr) {
             makeLabel(newBlock, placeableImg);
             newBlock->update();
         }
+        ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    } else if(k->key() == Qt::Key_X){
+	model.getCurrentLevel()->removeBlockX();
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();

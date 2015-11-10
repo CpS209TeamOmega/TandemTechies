@@ -89,7 +89,7 @@ void Player::savePosition()
 
 void Player::setCheatJumpHeight(){
     if (!cheat)
-    {jumpHeight = 1920; cheat = true;}
-    else
-    {jumpHeight = 192; cheat = false;}
+        {jumpHeight = 1920; hSpeed = 20; jumpSpeed = -30; cheat = true;}
+   else
+        {jumpHeight = 192; hSpeed = 8; jumpSpeed = -12; cheat = false;}
 }

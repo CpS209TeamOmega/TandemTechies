@@ -174,7 +174,29 @@ PlaceableBlock* Level::placeBlock(){
                 return nullptr;
             }
         }
-    } else {
+    } 
+    return nullptr;
+}
+
+PlaceableBlock* Level::removeBlockX(){
+    int x = 0, y = 0;
+    if(player->getDir() == -1){
+        x = player->getX() - Entity::SIZE + 2;
+        y = player->getY();
+    } else if(player->getDir() == 1){
+        x = player->getX() + Entity::SIZE * 2 - 2;
+        y = player->getY();
+     }
+ 
+    if(x < 0 || y < 0) return nullptr;
+
+    x /= Entity::SIZE;					 //Make the x position the array x position
+    y /= Entity::SIZE;					 //Make the y position the array y position
+
+    if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
+    if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
+
+    if(blocks[y][x] != nullptr){
         PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
         if(test != nullptr && !test->isCreating() && !test->isDeleting()) {
             Sound::instance().removeBlock();
@@ -182,7 +204,7 @@ PlaceableBlock* Level::placeBlock(){
             test->setDeleting(true);
             numBlocks++;
         }
-    }
+     }
+     return nullptr;
+ }
 
-    return nullptr;
-}

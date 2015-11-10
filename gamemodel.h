@@ -46,6 +46,7 @@ public:
 
     //Places a block in the level
     PlaceableBlock* placeBlock();
+    PlaceableBlock* removeBlock();
     PlaceableBlock* placeBlock(int x, int y);
 
     //Keyboard Press/Release Event

@@ -71,6 +71,7 @@ public:
 
     //Removes the block at the position given
     void removeBlock(int x, int y);
+    PlaceableBlock* removeBlockX();
 
     //Place block in certain position
     PlaceableBlock* placeBlock(int x, int y);
