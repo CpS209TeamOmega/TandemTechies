@@ -330,5 +330,5 @@ void GameWindow::serverDisconnected() {
 }
 
 void GameWindow::socketError(QAbstractSocket::SocketError) {
-
+    qDebug() << "COULDN'T CONNECT";
 }
