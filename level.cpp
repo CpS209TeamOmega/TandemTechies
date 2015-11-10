@@ -10,6 +10,7 @@
 #include "network.h"
 #include "scoremanager.h"
 #include "enemy.h"
+#include "sound.h"
 #include <QDebug>
 
 Level::Level(QList<QString> &initData, GameModel *initModel)
@@ -73,6 +74,14 @@ void Level::removeEntity(Entity *e) {
     delete e;
 }
 
+void Level::removeAllEntities() {
+    for(int i = 0; i < entities.size(); i++) {
+        Entity* e = entities[i];
+        entities.removeOne(e);
+        delete e;
+    }
+}
+
 void Level::removeBlock(int x, int y) {
     delete blocks[y][x];
     blocks[y][x] = nullptr;
@@ -117,6 +126,7 @@ void Level::load() {
 
 PlaceableBlock* Level::placeBlock(int x, int y) {
     PlaceableBlock* block = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
+    Sound::instance().placeBlock();
     blocks[y][x] = block;
     return block;
 }
@@ -153,6 +163,7 @@ PlaceableBlock* Level::placeBlock(){
                 return nullptr;
             }
             if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
+                Sound::instance().placeBlock();
                 Network::instance().send("Block " + QString::number(x) + " " + QString::number(y));
                 blocks[y][x] = b;
                 b->setCreating(true);
@@ -166,6 +177,7 @@ PlaceableBlock* Level::placeBlock(){
     } else {
         PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
         if(test != nullptr && !test->isCreating() && !test->isDeleting()) {
+            Sound::instance().removeBlock();
             Network::instance().send("Remove " + QString::number(x) + " " + QString::number(y));
             test->setDeleting(true);
             numBlocks++;

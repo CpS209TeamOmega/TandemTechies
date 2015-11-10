@@ -16,8 +16,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;
-	dir = 1;
-    lives = 8;
+    dir = 1;
     jumpSpeed = -12;
 	pLeft.load(":/images/p_left.png");
 	pRight.load(":/images/p_right.png");
