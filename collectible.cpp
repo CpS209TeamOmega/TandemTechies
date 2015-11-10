@@ -4,7 +4,7 @@
 #include "sound.h"
 
 void Collectible::update() {
-    buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
+    if(buddy) buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
     if(isCollidingWith(level->getPlayer())) {
         deleteCollectible();

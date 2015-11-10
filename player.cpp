@@ -70,9 +70,9 @@ void Player::update() {
     }
 
 	if (dir == -1) {
-		buddy->setPixmap(pLeft);
+        buddy->setPixmap(pLeft);
 	} else {
-		buddy->setPixmap(pRight);
+        buddy->setPixmap(pRight);
 	}
 }
 

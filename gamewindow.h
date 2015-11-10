@@ -10,6 +10,7 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QWidget>
+#include <QMutex> //For loading level
 #include <QTcpSocket>
 #include "gamemodel.h"
 #include "remoteplayer.h"

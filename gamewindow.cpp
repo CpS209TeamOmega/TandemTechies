@@ -197,12 +197,12 @@ void GameWindow::showLives() {
 }
 
 void GameWindow::timerHit() {
-    if(model.mustUpdateGUI()) {
-        updateGUI();
-        model.setUpdateGUI(false);
-    }
-    model.update();
-    if(otherPlayer) otherPlayer->update();
+        if(model.mustUpdateGUI()) {
+            updateGUI();
+            model.setUpdateGUI(false);
+        }
+        model.update();
+        if(otherPlayer) otherPlayer->update();
 }
 
 GameWindow::~GameWindow()
@@ -218,7 +218,7 @@ void GameWindow::start(QString server) {
     }
 }
 
-void GameWindow::load(){
+void GameWindow::load() {
     QFile loadFile("save.dat");
     if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Could not load save file.";
@@ -241,9 +241,12 @@ void GameWindow::load(){
                 int x = list[1].toInt();
                 int y = list[2].toInt();
                 int dir = list[3].toInt();
-                model.getCurrentLevel()->getPlayer()->setX(x);
-                model.getCurrentLevel()->getPlayer()->setY(y);
-                model.getCurrentLevel()->getPlayer()->setDir(dir);
+                Player* p = model.getCurrentLevel()->getPlayer();
+                p->setX(x);
+                p->setY(y);
+                p->setWidth(Entity::SIZE);
+                p->setHeight(Entity::SIZE);
+                p->setDir(dir);
             } else if(line.startsWith("Goodguy")) { //Enemy position
                 QStringList list = line.split(" ");
                 int x = list[1].toInt();
@@ -257,9 +260,15 @@ void GameWindow::load(){
                 int x = list[1].toInt();
                 int y = list[2].toInt();
                 model.getCurrentLevel()->getEntities() << new Collectible(model.getCurrentLevel(), x, y);
+            } else if(line.startsWith("Broccoli")) { //Placeable Blocks
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                model.getCurrentLevel()->getBlocks()[y / Entity::SIZE][x / Entity::SIZE] = new PlaceableBlock(model.getCurrentLevel(), x, y);
             }
         }
     }
+    model.setUpdateGUI(true);
 }
 
 void GameWindow::exit(){
@@ -302,6 +311,14 @@ void GameWindow::save() {
 
         Collectible* c = dynamic_cast<Collectible*>(ents[i]);
         if(c) out << "Enchilada " << c->getX() << " " << c->getY() << "\n";
+    }
+
+    QList<QList<Block*>> blocks = model.getCurrentLevel()->getBlocks();
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
+            if(b) out << "Broccoli " << b->getX() << " " << b->getY() << "\n";
+        }
     }
 }
 
