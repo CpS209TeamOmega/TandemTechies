@@ -5,6 +5,7 @@
 
 #include "gamemodel.h"
 #include "enemy.h"
+#include "sound.h"
 #include "network.h"
 #include <QFile>
 #include <QDebug>
@@ -15,6 +16,7 @@ GameModel::GameModel()
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
     updateGUI = false;
+    lives = 8;
 }
 
 void GameModel::update()
@@ -24,8 +26,9 @@ void GameModel::update()
 
     //If the player is dead, then reset the level and decrement the lives
     if(getCurrentLevel()->getPlayer()->isDead()) {
+        Sound::instance().gameOver();
         getCurrentLevel()->getPlayer()->setDead(false);
-        getCurrentLevel()->getPlayer()->setLives(getCurrentLevel()->getPlayer()->getLives() - 1);
+        lives--;
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
@@ -46,9 +49,15 @@ void GameModel::update()
     back->move(-(pX / width * 250), -(pY / height) * 25);
 }
 
+void GameModel::setCurrentLevel(int newLevel) {
+    currentLevel = newLevel;
+    levels[currentLevel]->load();
+}
+
 void GameModel::levelFinished() {
     //Go the the next level and make sure the currentLevel is not the last level
     ScoreManager::instance().addToScore(getCurrentLevel()->getPoints());
+    Sound::instance().endLevel();
     currentLevel++;
     if(currentLevel >= levels.size()) {
         currentLevel = 0;
@@ -132,6 +141,8 @@ void GameModel::playerInputP(int p){//Press Event Handler
         getCurrentLevel()->getPlayer()->setRight(true);
 		getCurrentLevel()->getPlayer()->setDir(1);
         break;
+    case Qt::Key_C:
+        getCurrentLevel()->getPlayer()->setCheatJumpHeight();
     default:
         break;
     }
