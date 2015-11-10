@@ -112,6 +112,10 @@ PlaceableBlock* GameModel::placeBlock() {
     return getCurrentLevel()->placeBlock();
 }
 
+PlaceableBlock* GameModel::removeBlock(){
+    return getCurrentLevel()->removeBlockX();
+}
+
 PlaceableBlock* GameModel::placeBlock(int x, int y) {
     return getCurrentLevel()->placeBlock(x, y);
 }
