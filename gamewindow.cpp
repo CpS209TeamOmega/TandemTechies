@@ -370,7 +370,12 @@ void GameWindow::dataReceived() {
     while(sock->canReadLine()) {
         QString data = sock->readLine();
         data.chop(1);
-        if(data == "Connect") {
+        if(data.startsWith("Connect")) {
+            QStringList list = data.split(" ");
+            int id = list[1].toInt();
+            if(id == 1) {
+                Network::instance().send("Level " + QString::number(model.getLevelNumber()));
+            }
             otherPlayer = new RemotePlayer(model.getCurrentLevel(), 0, 0);
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
             QTimer* networkTimer = new QTimer(this);
@@ -414,6 +419,10 @@ void GameWindow::dataReceived() {
             PlaceableBlock* block = model.placeBlock(x, y);
             makeLabel(block, placeableImg);
             block->update();
+        } else if(data.startsWith("Level")) {
+            QStringList list = data.split(" ");
+            int lvl = list.at(1).toInt();
+            model.setCurrentLevel(lvl);
         } else {
             otherPlayer->dataReceived(data);
         }
