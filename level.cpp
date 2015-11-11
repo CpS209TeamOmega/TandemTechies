@@ -12,6 +12,7 @@
 #include "enemy.h"
 #include "sound.h"
 #include <QDebug>
+#include "unistd.h"
 
 Level::Level(QList<QString> &initData, GameModel *initModel)
     : data(initData), model(initModel) {
@@ -52,6 +53,7 @@ void Level::update() {
         if ((entities[i]->isCollidingWith(getPlayer()))&&(entities[i]->type=="Enemy")){
             entities[i]->getBuddy()->deleteLater();
             removeEntity(entities[i]);
+            getPlayer()->setVib(true);
         } else {
             entities[i]->update();
         }

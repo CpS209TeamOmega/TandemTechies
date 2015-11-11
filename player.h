@@ -58,6 +58,7 @@ public:
 	void setDir(int newDir) { dir = newDir; }
     void setDead(bool isDead) { dead = isDead; }
     void setCheatJumpHeight();
+    void setVib(bool v){vibrate = v;}
 
 	//Getters
 	int getDir() { return dir; }
