@@ -25,7 +25,3 @@ void RemotePlayer::dataReceived(QString data) {
     setY(split.at(1).toInt());
     setDir(split.at(2).toInt());
 }
-
-void RemotePlayer::savePosition() {
-
-}

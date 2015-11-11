@@ -50,14 +50,7 @@ void Level::update() {
         }
     }
     for(int i = 0; i < entities.size(); i++) {
-        if ((entities[i]->isCollidingWith(getPlayer()))&&(entities[i]->type=="Enemy")){
-            Sound::instance().killedEnemy();
-            entities[i]->getBuddy()->deleteLater();
-            removeEntity(entities[i]);
-            getPlayer()->setVib(true);
-        } else {
-            entities[i]->update();
-        }
+        entities[i]->update();
     }
     player->update();
     exit->update();
@@ -94,9 +87,20 @@ void Level::removeEntity(Entity *e) {
 
 void Level::removeAllEntities() {
     for(int i = 0; i < entities.size(); i++) {
-        Entity* e = entities[i];
-        entities.removeOne(e);
-        delete e;
+        delete entities[i];
+    }
+    entities.clear();
+}
+
+void Level::removePlaceableBlocks() {
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
+            if(b) {
+                delete b;
+                blocks[y][x] = nullptr;
+            }
+        }
     }
 }
 
@@ -119,6 +123,7 @@ void Level::load() {
                 list << new Block(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
             } else if(type == 'p') {				//If the character represents the player
                 list << nullptr;
+                delete player;
                 player = new Player(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
             } else if(type == 'x') {
                 list << nullptr;					//If the character is an exit
@@ -226,3 +231,19 @@ PlaceableBlock* Level::removeBlockX(){
      return nullptr;
  }
 
+void Level::save(QTextStream &out) {
+    out << "Score " << ScoreManager::instance().getCurScore() << "\n";
+    out << "Numblocks " << numBlocks << "\n";
+
+    player->savePosition(out);
+
+    for(int i = 0; i < entities.size(); i++) {
+        entities[i]->savePosition(out);
+    }
+
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            if(blocks[y][x]) blocks[y][x]->savePosition(out);
+        }
+    }
+}

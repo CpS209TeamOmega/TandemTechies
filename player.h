@@ -45,7 +45,7 @@ public:
     void update();
 
     //save the status of the player entity
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Clears the input flags of the user, such as
     //left, right, and jumpKeyPressed

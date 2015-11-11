@@ -26,7 +26,7 @@ public:
     void update();
 
     //Saves the exit's position to the save file.
-    void savePosition();
+    void savePosition(QTextStream&) { }
 };
 
 #endif // EXIT_H

@@ -11,11 +11,6 @@ void Block::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 }
 
-void Block::savePosition()
-{
-
-}
-
 void PlaceableBlock::update() {
     if(!deleting) {
         if(curSize < Entity::SIZE) {
@@ -38,6 +33,6 @@ void PlaceableBlock::update() {
     }
 }
 
-void PlaceableBlock::savePosition() {
-
+void PlaceableBlock::savePosition(QTextStream &out) {
+    out << "Block " << getX() << " " << getY() << "\n";
 }

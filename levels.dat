@@ -8,27 +8,6 @@ bpccccxb
 bbbbbbbb
 endlevel
 
-level Curvy
-blocks 0
-points 1000
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-b                                             b
-b                                             b
-b                                             b
-b                                             b
-b     e e e e e e e e e e e e e e             b
-b   bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-b   bp                              b
-b   b                               b
-b    bb                             b
-b      bb                           b
- bb      bbb                        b
-   bb       bbbb    e      x        b
-     bbb        bbbbbbbbbbbbbbb     b
-        bbbb                        b
-            bbbbbbbbbbbbbbbbbbbbbbbbb
-endlevel
-
 level Baby Steps
 blocks 0
 points 500
