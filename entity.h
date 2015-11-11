@@ -7,6 +7,7 @@
 #define ENTITY_H
 
 #include <QRect>
+#include <QTextStream>
 #include <QLabel>
 #include <QDebug>
 
@@ -41,7 +42,7 @@ public:
     virtual void update() = 0;
 
     //Saves the position of the entity to the save file
-    virtual void savePosition() = 0;
+    virtual void savePosition(QTextStream &out) = 0;
 
     //Adds a certain amount to the x position of the entity
     //<amt> The amount to add to the x position

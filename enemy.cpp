@@ -36,6 +36,6 @@ void Enemy::update() {
     }
 }
 
-void Enemy::savePosition() {
-
+void Enemy::savePosition(QTextStream &out) {
+    out << "Enemy " << getX() << " " << getY() << " " << dir << "\n";
 }

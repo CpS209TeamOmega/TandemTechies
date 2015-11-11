@@ -46,7 +46,7 @@ void GameModel::update()
     double height = getCurrentLevel()->getBlocks().size() * Entity::SIZE;
     double pX = getCurrentLevel()->getPlayer()->getX();
     double pY = getCurrentLevel()->getPlayer()->getY();
-    back->move(-(pX / width * 250), -(pY / height) * 25);
+    back->move(-(pX / width * 250) + getCurrentLevel()->getAmplitudeW(), -(pY / height) * 25 + getCurrentLevel()->getAmplitudeH());
 }
 
 void GameModel::setCurrentLevel(int newLevel) {
@@ -96,6 +96,88 @@ bool GameModel::loadLevels() {
 
     getCurrentLevel()->load();
 
+    return true;
+}
+
+void GameModel::save() {
+    qDebug() << "Saving Game File";
+    QFile saveFile("save.dat");
+    if(!saveFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Error saving game data";
+        return;
+    }
+
+    QTextStream out(&saveFile);
+
+    out << "Level " << currentLevel << "\n";
+    out << "Lives " << lives << "\n";
+
+    getCurrentLevel()->save(out);
+    qDebug() << "Game saved.";
+}
+
+bool GameModel::load() {
+    QFile loadFile("save.dat");
+    if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Could not load save file.";
+        return false;
+    }
+
+    qDebug() << "Loading save file.";
+    QTextStream in(&loadFile);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+
+        if(!line.isEmpty()) {
+            if(line.startsWith("Level")) { //Level number
+                QStringList list = line.split(" ");
+                setCurrentLevel(list[1].toInt());
+                getCurrentLevel()->removeAllEntities();
+                getCurrentLevel()->removePlaceableBlocks();
+            } else if(line.startsWith("Score")) {
+                QStringList list = line.split(" ");
+                ScoreManager::instance().setScore(list[1].toInt());
+                ScoreManager::instance().update();
+            } else if(line.startsWith("Numblocks")) {
+                QStringList list = line.split(" ");
+                getCurrentLevel()->setNumBlocks(list[1].toInt());
+            } else if(line.startsWith("Lives")) {
+                QStringList list = line.split(" ");
+                lives = list[1].toInt();
+            } else if(line.startsWith("Player")) { //Player position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                Player* p = getCurrentLevel()->getPlayer();
+                p->setX(x);
+                p->setY(y);
+                p->setWidth(Entity::SIZE);
+                p->setHeight(Entity::SIZE);
+                p->setDir(dir);
+            } else if(line.startsWith("Enemy")) { //Enemy position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                Enemy* e = new Enemy(getCurrentLevel(), x, y);
+                e->setDir(dir);
+                getCurrentLevel()->getEntities() << e;
+            } else if(line.startsWith("Collect")) { //Collectibles
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                getCurrentLevel()->getEntities() << new Collectible(getCurrentLevel(), x, y);
+            } else if(line.startsWith("Block")) { //Placeable Blocks
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                getCurrentLevel()->getBlocks()[y / Entity::SIZE][x / Entity::SIZE] = new PlaceableBlock(getCurrentLevel(), x, y);
+            }
+        }
+    }
+    updateGUI = true;
     return true;
 }
 

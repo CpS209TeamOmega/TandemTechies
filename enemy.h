@@ -30,7 +30,7 @@ public:
     void update();
 
     //Save the status of the enemy entity
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Getters
     int getDir() { return dir; }

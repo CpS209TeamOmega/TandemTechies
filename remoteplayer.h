@@ -15,7 +15,7 @@ public:
     RemotePlayer(Level* initLevel, int initX, int initY);
 
     void update();
-    void savePosition();
+    void savePosition(QTextStream&) { }
 
     void dataReceived(QString data);
 

@@ -28,7 +28,7 @@ public:
     void update();
 
     //Saves the exit's position to the save file.
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Gets the score to add to the total score
     int getPoint() { return pointPlus; }

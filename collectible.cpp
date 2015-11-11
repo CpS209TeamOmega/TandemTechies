@@ -20,6 +20,6 @@ void Collectible::deleteCollectible()
     level->removeEntity(this);
 }
 
-void Collectible::savePosition() {
-
+void Collectible::savePosition(QTextStream &out) {
+    out << "Collect " << getX() << " " << getY() << "\n";
 }

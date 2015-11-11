@@ -93,9 +93,8 @@ void Player::clearFlags() {
     left = false;
 }
 
-void Player::savePosition()
-{
-
+void Player::savePosition(QTextStream &out) {
+    out << "Player " << getX() << " " << getY() << " " << dir << "\n";
 }
 
 void Player::setCheatJumpHeight(){
