@@ -49,7 +49,12 @@ void Level::update() {
         }
     }
     for(int i = 0; i < entities.size(); i++) {
-        entities[i]->update();
+        if ((entities[i]->isCollidingWith(getPlayer()))&&(entities[i]->type=="Enemy")){
+            entities[i]->getBuddy()->deleteLater();
+            removeEntity(entities[i]);
+        } else {
+            entities[i]->update();
+        }
     }
     player->update();
     exit->update();
