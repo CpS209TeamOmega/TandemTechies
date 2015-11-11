@@ -3,6 +3,7 @@
 
 Enemy::Enemy(Level* initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
+    type = "Enemy";
     dir = 1;
     hSpeed = 4;
     eLeft.load(":/images/e_left.png");

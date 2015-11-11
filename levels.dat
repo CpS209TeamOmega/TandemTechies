@@ -16,14 +16,14 @@ b                                             b
 b                                             b
 b                                             b
 b                                             b
-b                                             b
-b   bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b     e e e e e e e e e e e e e e             b
+b   bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 b   bp                              b
 b   b                               b
 b    bb                             b
 b      bb                           b
  bb      bbb                        b
-   bb       bbbb           x        b
+   bb       bbbb    e      x        b
      bbb        bbbbbbbbbbbbbbb     b
         bbbb                        b
             bbbbbbbbbbbbbbbbbbbbbbbbb
@@ -95,6 +95,33 @@ b   b    b   b
 b  mb   cb   b
 bp mb   cb  xb
 bbbbbbbbbbbbbb
+endlevel
+
+level the World
+blocks 1
+points 750
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                                x                      b
+b                               bbb                     b
+b                                    eeeeeeeeeeeeeee    b
+b          b b b b b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbb                     b                           b
+b  eee                      b                           b
+bbbbbbbbbbbbbbb             b                           b
+b                           b                           b
+b                  bbbbbbbbbb                           b
+b                           b                           b
+b         bbbbbbb                                       b
+b                                                       b
+b       b         bbbbbbbb  b  b b  bbbbb               b
+b       b  eeeeeeee                                     b
+bp      bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb            b
+bbbbb                                         bbbbbbbbbbb
+b                                                       b
+b                                   bbbbbbbbbbbbbbbb    b
+b                bbbbbbbbbbbbbbbbbb                     b
+b eeeeeeeeeeeeeeeeeeeeeeee  eeeeeee                m    b
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 endlevel
 
 level Down and Up

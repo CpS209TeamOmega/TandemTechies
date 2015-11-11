@@ -271,6 +271,10 @@ void GameWindow::load() {
     model.setUpdateGUI(true);
 }
 
+void GameWindow::shoot(){
+
+}
+
 void GameWindow::exit(){
     close();
 }
@@ -335,6 +339,8 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
     } else if(k->key() == Qt::Key_X){
 	model.getCurrentLevel()->removeBlockX();
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    } else if(k->key() == Qt::Key_S){
+        shoot();
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();
     } else {

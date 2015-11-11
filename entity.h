@@ -22,6 +22,7 @@ protected:
     QLabel* buddy;  //The QLabel that the entity corresponds to
 
 public:
+    QString type;
     //Creates the entity with a starting x and y position
     //<initLevel> The level the entity is inside
     //<initX> The starting x position

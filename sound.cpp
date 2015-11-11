@@ -1,4 +1,5 @@
 #include "sound.h"
+#include <qdebug.h>
 
 Sound* Sound::instance_ = nullptr;
 
@@ -16,6 +17,10 @@ Sound::Sound()
     collect_.setSource(QUrl("qrc:/soundeffects/collect.wav"));
     placeBlock_.setSource(QUrl("qrc:/soundeffects/place_block.wav"));
     removeBlock_.setSource(QUrl("qrc:/soundeffects/remove_block.wav"));
+    killedEnemy_.setSource(QUrl("qrc:/soundeffects/BugDead.wav"));
+    hitGround_.setSource(QUrl("qrc:/soundeffects/hitGround.wav"));
+    cheatOn_.setSource(QUrl("qrc:/soundeffects/cheatOn.wav"));
+    cheatOff_.setSource(QUrl("qrc:/soundeffects/cheatOff.wav"));
 }
 
 void Sound::placeBlock() {
@@ -36,4 +41,21 @@ void Sound::gameOver() {
 
 void Sound::collect() {
     collect_.play();
+}
+
+void Sound::killedEnemy(){
+    killedEnemy_.play();
+}
+
+void Sound::hitGround(){
+    hitGround_.play();
+}
+
+void Sound::cheatOff(){
+    cheatOff_.play();
+}
+
+void Sound::cheatOn(){
+    cheatOn_.play();
+    qDebug() << "here";
 }

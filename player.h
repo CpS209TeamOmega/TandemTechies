@@ -24,6 +24,9 @@ class Player : public Entity {
     int dir;					  //The direction the player is currently facing
     bool dead;
     bool cheat;
+    bool touched;
+    bool vibrate;
+    int times;
 
     QPixmap pLeft;                //The image for facing left
     QPixmap pRight;               //The image for facing right
@@ -55,9 +58,11 @@ public:
 	void setDir(int newDir) { dir = newDir; }
     void setDead(bool isDead) { dead = isDead; }
     void setCheatJumpHeight();
+    void setVib(bool v){vibrate = v;}
 
 	//Getters
 	int getDir() { return dir; }
+    bool getVib(){return vibrate;}
     bool isDead() { return dead; }
 };
 
