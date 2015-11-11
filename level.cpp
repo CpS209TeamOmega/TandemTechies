@@ -23,6 +23,8 @@ Level::Level(QList<QString> &initData, GameModel *initModel)
     remotePlayer = nullptr;
     exit = nullptr;
     scoreBeforeLevel = 0;
+    vibrate = false;
+    amplitudeH = amplitudeW = 0;
 }
 
 Level::~Level() {
@@ -52,9 +54,17 @@ void Level::update() {
     player->update();
     exit->update();
 
+    //check vibrate
+    if(getPlayer()->getVib()){
+        amplitudeH = rand() % 10 + (-5);
+        amplitudeW = rand() % 10 + (-5);
+    }else{
+        amplitudeH = amplitudeW = 0;
+    }
+
     //Update the x and y offsets relative to the player
-    xOffs = player->getX() + (player->getWidth() / 2) - (GameWindow::WIDTH / 2);
-    yOffs = player->getY() + (player->getHeight() / 2) - (GameWindow::HEIGHT / 2);
+    xOffs = player->getX() + (player->getWidth() / 2) - (GameWindow::WIDTH / 2) + amplitudeW;
+    yOffs = player->getY() + (player->getHeight() / 2) - (GameWindow::HEIGHT / 2) + amplitudeH;
 }
 
 bool Level::testCollision(int testX, int testY) {

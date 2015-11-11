@@ -20,6 +20,9 @@ Player::Player(Level *initLevel, int initX, int initY)
     jumpSpeed = -12;
 	pLeft.load(":/images/p_left.png");
 	pRight.load(":/images/p_right.png");
+    touched = true;
+    vibrate = false;
+    times = 0;
 }
 
 void Player::update() {
@@ -30,8 +33,15 @@ void Player::update() {
                 || level->testCollision(getX() + getWidth() - hSpeed, getY() + getHeight() + vSpeed)) {
             while(getY() % Entity::SIZE != 0) addY(1);
             vSpeed = 0;
+            if (!touched){vibrate = true; touched = true;}
+            times++;
+            if(times > 50){vibrate = false; times = 0;}
+
             if(jumpKeyPressed) jumping = true;		//If player is on a block and trying to jump, jump
         } else {
+            touched = false;
+            vibrate = false;
+            times = 0;
             vSpeed += 1;							//Make the player fall with the illusion of gravity
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }

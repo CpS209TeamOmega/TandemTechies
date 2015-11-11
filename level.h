@@ -16,6 +16,7 @@
 #include "player.h"
 #include "remoteplayer.h"
 #include "exit.h"
+#include "stdlib.h"
 
 //Forward declaration of the entity class, since level
 //refers to entity and entity refers to level.
@@ -41,7 +42,10 @@ private:
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
     GameModel* model;
-    int scoreBeforeLevel;
+    int scoreBeforeLevel;    
+
+    bool vibrate;
+    int amplitudeW, amplitudeH;
 
     bool finished;              //If the level is finished
 

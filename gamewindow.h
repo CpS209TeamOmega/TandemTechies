@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QMutex> //For loading level
 #include <QTcpSocket>
+
 #include "gamemodel.h"
 #include "remoteplayer.h"
 #include "entity.h"
@@ -52,6 +53,8 @@ public:
 	//This method is called when the level is changed, e.g.
 	//evel 1 to level 2
     void updateGUI();
+
+    void shoot();
 
 	//Performs unit tests to make sure the game is working,
 	//and exits the program if any of them fail.
