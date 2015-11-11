@@ -51,6 +51,7 @@ void Level::update() {
     }
     for(int i = 0; i < entities.size(); i++) {
         if ((entities[i]->isCollidingWith(getPlayer()))&&(entities[i]->type=="Enemy")){
+            Sound::instance().killedEnemy();
             entities[i]->getBuddy()->deleteLater();
             removeEntity(entities[i]);
             getPlayer()->setVib(true);

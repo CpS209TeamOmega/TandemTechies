@@ -22,5 +22,9 @@
         <file>soundeffects/gameOver.wav</file>
         <file>soundeffects/place_block.wav</file>
         <file>soundeffects/remove_block.wav</file>
+        <file>soundeffects/BugDead.wav</file>
+        <file>soundeffects/cheatOff.wav</file>
+        <file>soundeffects/cheatOn.wav</file>
+        <file>soundeffects/hitGround.wav</file>
     </qresource>
 </RCC>

@@ -13,6 +13,10 @@ class Sound
     QSoundEffect collect_;
     QSoundEffect placeBlock_;
     QSoundEffect removeBlock_;
+    QSoundEffect killedEnemy_;
+    QSoundEffect hitGround_;
+    QSoundEffect cheatOn_;
+    QSoundEffect cheatOff_;
 
 public:
     void endLevel();
@@ -20,6 +24,10 @@ public:
     void collect();
     void placeBlock();
     void removeBlock();
+    void killedEnemy();
+    void hitGround();
+    void cheatOn();
+    void cheatOff();
 
     static Sound& instance();
 

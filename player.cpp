@@ -6,6 +6,7 @@
 
 #include "level.h"
 #include <QTcpSocket>
+#include "sound.h"
 
 
 Player::Player(Level *initLevel, int initX, int initY)
@@ -33,7 +34,7 @@ void Player::update() {
                 || level->testCollision(getX() + getWidth() - hSpeed, getY() + getHeight() + vSpeed)) {
             while(getY() % Entity::SIZE != 0) addY(1);
             vSpeed = 0;
-            if (!touched){vibrate = true; touched = true;}
+            if (!touched){vibrate = true; touched = true; Sound::instance().hitGround();}
             times++;
             if(times > 50){vibrate = false; times = 0;}
 
@@ -99,7 +100,7 @@ void Player::savePosition()
 
 void Player::setCheatJumpHeight(){
     if (!cheat)
-        {jumpHeight = 1920; hSpeed = 20; jumpSpeed = -30; cheat = true;}
+        {jumpHeight = 1920; hSpeed = 20; jumpSpeed = -30; cheat = true; Sound::instance().cheatOn();}
    else
-        {jumpHeight = 192; hSpeed = 8; jumpSpeed = -12; cheat = false;}
+        {jumpHeight = 192; hSpeed = 8; jumpSpeed = -12; cheat = false; Sound::instance().cheatOff();}
 }
