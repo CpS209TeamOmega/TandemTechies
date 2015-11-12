@@ -12,7 +12,6 @@
 #include "enemy.h"
 #include "sound.h"
 #include <QDebug>
-#include "unistd.h"
 
 Level::Level(QList<QString> &initData, GameModel *initModel)
     : data(initData), model(initModel) {
