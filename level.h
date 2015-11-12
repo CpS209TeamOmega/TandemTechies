@@ -43,10 +43,7 @@ private:
     int yOffs;                  //The y offset of the player (side-scrolling)
     GameModel* model;
     int scoreBeforeLevel;    
-
-    bool vibrate;
     int amplitudeW, amplitudeH;
-
     bool finished;              //If the level is finished
 
 public:
