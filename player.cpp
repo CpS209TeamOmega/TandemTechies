@@ -34,15 +34,17 @@ void Player::update() {
                 || level->testCollision(getX() + getWidth() - hSpeed, getY() + getHeight() + vSpeed)) {
             while(getY() % Entity::SIZE != 0) addY(1);
             vSpeed = 0;
-            if (!touched){vibrate = true; touched = true; Sound::instance().hitGround();}
-            times++;
-            if(times > 50){vibrate = false; times = 0;}
+            if(vibrate) {
+                times++;
+                if(times > 50){vibrate = false; times = 0;}
+            }
 
             if(jumpKeyPressed) jumping = true;		//If player is on a block and trying to jump, jump
         } else {
-            touched = false;
-            vibrate = false;
-            times = 0;
+            if(vibrate) {
+                times++;
+                if(times > 50){vibrate = false; times = 0;}
+            }
             vSpeed += 1;							//Make the player fall with the illusion of gravity
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }

@@ -50,7 +50,6 @@ void Enemy::update() {
         curHeight -= 4;
         if(curHeight > 0) {
             buddy->setGeometry(getX() - level->getXOffs(), getY() + (getHeight() - curHeight) - level->getYOffs(), getWidth(), curHeight);
-            buddy->updateGeometry();
         } else {
             buddy->deleteLater();
             level->removeEntity(this);

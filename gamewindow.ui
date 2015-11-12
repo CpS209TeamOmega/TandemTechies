@@ -16,9 +16,6 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="cursor">
-   <cursorShape>BlankCursor</cursorShape>
-  </property>
   <property name="windowTitle">
    <string>GameWindow</string>
   </property>

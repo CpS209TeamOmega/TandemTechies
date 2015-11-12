@@ -24,7 +24,6 @@ Level::Level(QList<QString> &initData, GameModel *initModel)
     remotePlayer = nullptr;
     exit = nullptr;
     scoreBeforeLevel = 0;
-    vibrate = false;
     amplitudeH = amplitudeW = 0;
 }
 
@@ -57,8 +56,8 @@ void Level::update() {
 
     //check vibrate
     if(getPlayer()->getVib()){
-        amplitudeH = rand() % 10 + (-5);
-        amplitudeW = rand() % 10 + (-5);
+        amplitudeH = rand() % 10 - 5;
+        amplitudeW = rand() % 10 - 5;
     }else{
         amplitudeH = amplitudeW = 0;
     }
