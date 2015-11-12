@@ -24,6 +24,7 @@ class GameModel
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;//The level's data file name
     bool updateGUI;       //When the GUI must be updated to reflect model state
+    bool finished;        //When the game is finished =D
 
 public:
     GameModel();
@@ -71,6 +72,9 @@ public:
 
     //Sets the background label
     void setBackground(QLabel* newBack) { back = newBack; }
+
+    //If the game is finishd
+    bool gameFinished() { return finished; }
 
 };
 

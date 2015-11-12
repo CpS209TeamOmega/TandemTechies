@@ -18,6 +18,7 @@
 
 class ScoreManager
 {
+
 private:
     //The file to save the scores to
     QFile file;
@@ -32,7 +33,7 @@ private:
     int curScore;
 
     //private constructor
-    ScoreManager() : file("scores.txt"), curScore{0} { }
+    ScoreManager() : file("scores.dat"), curScore{0} { }
 
 public:
     //Return the highest score ever

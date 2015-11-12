@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>ScoreDisplay</class>
+ <widget class="QFrame" name="ScoreDisplay">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>601</width>
-    <height>566</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
   </property>
   <widget class="QLabel" name="lblBack">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>611</width>
-     <height>571</height>
+     <width>411</width>
+     <height>301</height>
     </rect>
    </property>
    <property name="text">

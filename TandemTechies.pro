@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     collectible.cpp \
     enemy.cpp \
     remoteplayer.cpp \
-    network.cpp
+    network.cpp \
+    scoredisplay.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -39,11 +40,12 @@ HEADERS  += gamewindow.h\
     collectible.h \
     enemy.h \
     remoteplayer.h \
-    network.h
+    network.h \
+    scoredisplay.h
 
 FORMS    += gamewindow.ui \
     menu.ui \
-    scoremanager.ui
+    scoredisplay.ui
 
 QMAKE_CXXFLAGS += -std=c++11
 

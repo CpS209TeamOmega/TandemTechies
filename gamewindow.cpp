@@ -224,11 +224,6 @@ void GameWindow::exit(){
     close();
 }
 
-void GameWindow::scores()
-{
-
-}
-
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){

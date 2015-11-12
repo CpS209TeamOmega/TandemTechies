@@ -16,6 +16,7 @@
 #include "entity.h"
 #include "menu.h"
 #include "scoremanager.h"
+#include "scoredisplay.h"
 
 namespace Ui
 {
@@ -26,8 +27,8 @@ class GameWindow : public QMainWindow
 {
     Q_OBJECT
 
-    GameModel model;        //For the GUI/model interactions
-    Menu* menu;             //The Game menu
+    GameModel model;          //For the GUI/model interactions
+    Menu* menu;               //The Game menu
     RemotePlayer* otherPlayer;
     bool multiPlayer;
 

@@ -14,7 +14,7 @@ GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
-    updateGUI = false;
+    updateGUI = finished = false;
 }
 
 void GameModel::update()
@@ -51,7 +51,8 @@ void GameModel::levelFinished() {
     ScoreManager::instance().addToScore(getCurrentLevel()->getPoints());
     currentLevel++;
     if(currentLevel >= levels.size()) {
-        currentLevel = 0;
+        finished = true;
+        ScoreManager::instance().addHighScore("billy", ScoreManager::instance().getCurScore());
         resetGame();
     }
     getCurrentLevel()->load();
