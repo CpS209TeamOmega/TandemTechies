@@ -10,7 +10,6 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QWidget>
-#include <QMutex> //For loading level
 #include <QTcpSocket>
 
 #include "gamemodel.h"
@@ -66,6 +65,9 @@ public:
 
     //Save the state of the game for loading next time
     void save();
+
+    //Make sure the check is true. If not, terminate program.
+    void check(bool val);
 
     static int WIDTH;       //The width of the window
     static int HEIGHT;      //The height of the window
