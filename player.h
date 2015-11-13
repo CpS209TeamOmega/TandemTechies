@@ -26,6 +26,7 @@ class Player : public Entity {
     bool cheat;
     bool touched;
     bool vibrate;
+    bool invincible;
     int times;
 
     QPixmap pLeft;                //The image for facing left
@@ -45,7 +46,7 @@ public:
     void update();
 
     //save the status of the player entity
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Clears the input flags of the user, such as
     //left, right, and jumpKeyPressed
@@ -58,12 +59,13 @@ public:
 	void setDir(int newDir) { dir = newDir; }
     void setDead(bool isDead) { dead = isDead; }
     void setCheatJumpHeight();
-    void setVib(bool v){vibrate = v;}
+    void setVib(bool v){vibrate = v; times = 0;}
 
 	//Getters
 	int getDir() { return dir; }
     bool getVib(){return vibrate;}
     bool isDead() { return dead; }
+    bool isInvincible() { return invincible; }
 };
 
 #endif // PLAYER_H

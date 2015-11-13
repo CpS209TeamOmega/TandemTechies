@@ -219,56 +219,9 @@ void GameWindow::start(QString server) {
 }
 
 void GameWindow::load() {
-    QFile loadFile("save.dat");
-    if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Could not load save file.";
-        return;
+    if(!model.load()) {
+        qDebug() << "Could not load last save.";
     }
-
-    qDebug() << "Loading save file.";
-    QTextStream in(&loadFile);
-
-    while(!in.atEnd()) {
-        QString line = in.readLine();
-
-        if(!line.isEmpty()) {
-            if(line.startsWith("Chicken")) { //Level number
-                QStringList list = line.split(" ");
-                model.setCurrentLevel(list[1].toInt());
-                model.getCurrentLevel()->removeAllEntities();
-            } else if(line.startsWith("Banana")) { //Player position
-                QStringList list = line.split(" ");
-                int x = list[1].toInt();
-                int y = list[2].toInt();
-                int dir = list[3].toInt();
-                Player* p = model.getCurrentLevel()->getPlayer();
-                p->setX(x);
-                p->setY(y);
-                p->setWidth(Entity::SIZE);
-                p->setHeight(Entity::SIZE);
-                p->setDir(dir);
-            } else if(line.startsWith("Goodguy")) { //Enemy position
-                QStringList list = line.split(" ");
-                int x = list[1].toInt();
-                int y = list[2].toInt();
-                int dir = list[3].toInt();
-                Enemy* e = new Enemy(model.getCurrentLevel(), x, y);
-                e->setDir(dir);
-                model.getCurrentLevel()->getEntities() << e;
-            } else if(line.startsWith("Enchilada")) { //Collectibles
-                QStringList list = line.split(" ");
-                int x = list[1].toInt();
-                int y = list[2].toInt();
-                model.getCurrentLevel()->getEntities() << new Collectible(model.getCurrentLevel(), x, y);
-            } else if(line.startsWith("Broccoli")) { //Placeable Blocks
-                QStringList list = line.split(" ");
-                int x = list[1].toInt();
-                int y = list[2].toInt();
-                model.getCurrentLevel()->getBlocks()[y / Entity::SIZE][x / Entity::SIZE] = new PlaceableBlock(model.getCurrentLevel(), x, y);
-            }
-        }
-    }
-    model.setUpdateGUI(true);
 }
 
 void GameWindow::shoot(){
@@ -291,39 +244,7 @@ void GameWindow::closeEvent(QCloseEvent* e) {
 }
 
 void GameWindow::save() {
-    qDebug() << "Saving Game File";
-
-    QFile saveFile("save.dat");
-    if(!saveFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Error saving game data";
-        return;
-    }
-
-    QTextStream out(&saveFile);
-
-    Level* current = model.getCurrentLevel();
-
-    out << "Chicken " << model.getLevelNumber() - 1 << "\n";
-
-    Player* p = current->getPlayer();
-    out << "Banana " << p->getX() << " " << p->getY() << " " << p->getDir() << "\n";
-
-    QList<Entity*> ents = current->getEntities();
-    for(int i = 0; i < ents.size(); i++) {
-        Enemy* e = dynamic_cast<Enemy*>(ents[i]);
-        if(e) out << "Goodguy " << e->getX() << " " << e->getY() << " " << e->getDir() << "\n";
-
-        Collectible* c = dynamic_cast<Collectible*>(ents[i]);
-        if(c) out << "Enchilada " << c->getX() << " " << c->getY() << "\n";
-    }
-
-    QList<QList<Block*>> blocks = model.getCurrentLevel()->getBlocks();
-    for(int y = 0; y < blocks.size(); y++) {
-        for(int x = 0; x < blocks[y].size(); x++) {
-            PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
-            if(b) out << "Broccoli " << b->getX() << " " << b->getY() << "\n";
-        }
-    }
+    model.save();
 }
 
 //Key Event

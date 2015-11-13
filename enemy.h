@@ -13,6 +13,8 @@
 class Enemy : public Entity {
     int hSpeed;					  //The enemy's velocity
     int dir;					  //The direction the enemy is currently facing
+    bool dead;                    //If the enemy is dead
+    int curHeight;                //For the dead animation
 
     QPixmap eLeft, eRight;
 
@@ -30,7 +32,7 @@ public:
     void update();
 
     //Save the status of the enemy entity
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Getters
     int getDir() { return dir; }

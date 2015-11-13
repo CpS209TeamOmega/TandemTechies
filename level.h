@@ -43,10 +43,7 @@ private:
     int yOffs;                  //The y offset of the player (side-scrolling)
     GameModel* model;
     int scoreBeforeLevel;    
-
-    bool vibrate;
     int amplitudeW, amplitudeH;
-
     bool finished;              //If the level is finished
 
 public:
@@ -64,6 +61,9 @@ public:
     //Loads the level with the data
     void load();
 
+    //Saves the state of the level
+    void save(QTextStream &out);
+
     //Tests if there is a block at a certain point
     bool testCollision(int testX, int testY);
 
@@ -72,6 +72,9 @@ public:
 
     //Remotes all entities
     void removeAllEntities();
+
+    //Removes all placeable blocks from the level
+    void removePlaceableBlocks();
 
     //Removes the block at the position given
     void removeBlock(int x, int y);
@@ -102,6 +105,8 @@ public:
     int getNumBlocks() { return numBlocks; }
     QList<QString>& getData() { return data; }
     int getScoreBeforeLevel() { return scoreBeforeLevel; }
+    int getAmplitudeW() { return amplitudeW; }
+    int getAmplitudeH() { return amplitudeH; }
 
 };
 

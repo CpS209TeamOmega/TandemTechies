@@ -26,14 +26,11 @@ private:
 
     QLabel *buddy;
 
-    //the start score
-    int startScore;
-
     //the in-game score
     int curScore;
 
     //private constructor
-    ScoreManager() : startScore{0}, curScore{0} { }
+    ScoreManager() : curScore(0) { }
 
 public:
     //Return the highest score ever

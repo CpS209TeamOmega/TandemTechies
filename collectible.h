@@ -12,13 +12,16 @@
 //The collectible entity, which finishes the game on player collision
 class Collectible : public Entity {
     int pointPlus; //Score that this entity adds to the total score
+    bool removing; //Whether or not the player has picked it up
+    int curSize;   //The size (for animation)
+    int maxSize;   //The maximum animation size
 
 public:
     //Creates the exit at a certain position
     //<initLevel> The level that the entity is inside
     //<initX> The starting x position of the exit
     //<initY> The starting y position of the exit
-    Collectible(Level* initLevel, int initX, int initY) : Entity(initLevel, initX, initY), pointPlus(50) { }
+    Collectible(Level* initLevel, int initX, int initY);
 
     //Destructor for exit
     ~Collectible() { }
@@ -28,7 +31,7 @@ public:
     void update();
 
     //Saves the exit's position to the save file.
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Gets the score to add to the total score
     int getPoint() { return pointPlus; }
