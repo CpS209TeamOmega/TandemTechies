@@ -55,11 +55,11 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     connect(Network::pointer(), SIGNAL(disconnected()), this, SLOT(serverDisconnected()));
     connect(Network::pointer(), SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
 
-    Q_ASSERT(blockImg.load(":/images/block.png"));
-    Q_ASSERT(exitImg.load(":/images/exit.png"));
-    Q_ASSERT(collectibleImg.load(":/images/collectible.png"));
-    Q_ASSERT(placeableImg.load(":/images/placeable.png"));
-    Q_ASSERT(heartImg.load(":/images/heart.png"));
+    check(blockImg.load(":/images/block.png"));
+    check(exitImg.load(":/images/exit.png"));
+    check(collectibleImg.load(":/images/collectible.png"));
+    check(placeableImg.load(":/images/placeable.png"));
+    check(heartImg.load(":/images/heart.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -77,6 +77,13 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     ScoreManager::instance().setBuddy(ui->lblScore);
     ui->wgStatusBar->setParent(this);
     ui->wgStatusBar->move(20, HEIGHT - 20 - ui->wgStatusBar->geometry().height());
+}
+
+void GameWindow::check(bool val) {
+    if(!val) {
+        qDebug() << "Error on check!";
+        close();
+    }
 }
 
 void GameWindow::unitTests() {
@@ -350,6 +357,7 @@ void GameWindow::dataReceived() {
             QStringList list = data.split(" ");
             int lvl = list.at(1).toInt();
             model.setCurrentLevel(lvl);
+            model.getCurrentLevel()->setRemotePlayer(otherPlayer);
         } else {
             otherPlayer->dataReceived(data);
         }
