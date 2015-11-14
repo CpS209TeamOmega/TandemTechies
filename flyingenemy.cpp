@@ -51,7 +51,6 @@ void FlyingEnemy::update() {
             curHeight -= 8;
             buddy->setGeometry(getX() + (Entity::SIZE / 2 - curHeight / 2) - level->getXOffs(), getY() + (Entity::SIZE / 2 - curHeight / 2) - level->getYOffs(), curHeight, curHeight);
         } else {
-            Sound::instance().killedEnemy();
             buddy->deleteLater();
             level->removeEntity(this);
         }

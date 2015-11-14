@@ -30,5 +30,8 @@
         <file>images/flyingEnemy2.png</file>
         <file>images/bullet.png</file>
         <file>images/bulletR.png</file>
+        <file>soundeffects/colwall.wav</file>
+        <file>soundeffects/dead.wav</file>
+        <file>soundeffects/shoot.wav</file>
     </qresource>
 </RCC>

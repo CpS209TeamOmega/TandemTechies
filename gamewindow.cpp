@@ -280,14 +280,16 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();
     } else if (k->key() == Qt::Key_F){
-        Bullet* newBullet = model.fire();
-        if(newBullet != nullptr) {
-            if(newBullet->getDir() == -1){
-                makeLabel(newBullet, bulletImg);
-                newBullet->update();
-            } else if(newBullet->getDir() == 1){
-                makeLabel(newBullet, bulletImgR);
-                newBullet->update();
+        if(!this->model.getCurrentLevel()->getPlayer()->hasBullet()){
+            Bullet* newBullet = model.fire();
+            if(newBullet != nullptr) {
+                if(newBullet->getDir() == -1){
+                    makeLabel(newBullet, bulletImg);
+                    newBullet->update();
+                } else if(newBullet->getDir() == 1){
+                    makeLabel(newBullet, bulletImgR);
+                    newBullet->update();
+                }
             }
         }
     } else {

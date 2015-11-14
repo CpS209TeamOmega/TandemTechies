@@ -4,29 +4,32 @@
 #include "enemy.h"
 #include "flyingenemy.h"
 
-#include <QDebug>
 
 
-Bullet::Bullet(Level* initLevel, int initX, int initY, Player* ply): Entity(initLevel, initX, initY), player(ply)
+Bullet::Bullet(Level* initLevel, int initX, int initY, Player* ply)
+       :Entity(initLevel, initX, initY)
 {
+    player = ply;
     dir = ply->getDir();
-    hSpeed = 10;
+    hSpeed = 20;
     flying = true;
-    Sound::instance().cheatOn();
+    ply->setBullet(true);
+    Sound::instance().shoot();
 }
 
 void Bullet::update(){
     if(flying) {
-        qDebug() << getX() << " " << getY();
         buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 
         if(dir == -1) { //If going left
             if(level->testCollision(getX() - 1, getY()))  {
                 this->setFlying(false);
+                Sound::instance().colWall();
             }
         } else if(dir == 1) { //If going right
             if(level->testCollision(getX() + Entity::SIZE + 1, getY())) {
                 this->setFlying(false);
+                Sound::instance().colWall();
             }
         }
 

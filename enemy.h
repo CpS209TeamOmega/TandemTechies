@@ -8,6 +8,7 @@
 #define ENEMY_H
 
 #include "entity.h"
+#include "sound.h"
 #include <QPixmap>
 
 class Enemy : public Entity {
@@ -39,7 +40,7 @@ public:
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
-    void setDead(bool die) {dead = die;}
+    void setDead(bool die) {dead = die;Sound::instance().killedEnemy();}
 };
 
 #endif // ENEMY_H

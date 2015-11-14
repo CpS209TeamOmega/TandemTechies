@@ -10,6 +10,7 @@
 
 #include "entity.h"
 #include "block.h"
+#include "sound.h"
 #include <QPixmap>
 
 class Player : public Entity {
@@ -27,7 +28,9 @@ class Player : public Entity {
     bool touched;
     bool vibrate;
     bool invincible;
+    bool bullet;
     int times;
+    int reload;
 
     QPixmap pLeft;                //The image for facing left
     QPixmap pRight;               //The image for facing right
@@ -57,13 +60,15 @@ public:
     void setLeft(bool newLeft) { left = newLeft; }
     void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
 	void setDir(int newDir) { dir = newDir; }
-    void setDead(bool isDead) { dead = isDead; }
+    void setDead(bool isDead) { dead = isDead; Sound::instance().dead();}
     void setCheatJumpHeight();
     void setVib(bool v){vibrate = v; times = 0;}
+    void setBullet(bool b){bullet = b; if(b)reload = 20;}
 
 	//Getters
 	int getDir() { return dir; }
     bool getVib(){return vibrate;}
+    bool hasBullet(){return bullet;}
     bool isDead() { return dead; }
     bool isInvincible() { return invincible; }
 };

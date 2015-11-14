@@ -6,6 +6,7 @@
 #ifndef FLYINGENEMY_H
 #define FLYINGENEMY_H
 #include "entity.h"
+#include "sound.h"
 #include <QPixmap>
 
 class FlyingEnemy : public Entity {
@@ -37,7 +38,7 @@ public:
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
-    void setDead(bool d){ dead = d;}
+    void setDead(bool d){ dead = d; Sound::instance().killedEnemy(); }
 };
 
 

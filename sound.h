@@ -18,6 +18,9 @@ class Sound
     QSoundEffect cheatOn_;
     QSoundEffect cheatOff_;
     QSoundEffect backGround_;
+    QSoundEffect shoot_;
+    QSoundEffect dead_;
+    QSoundEffect colWall_;
 
 public:
     void endLevel();
@@ -30,6 +33,9 @@ public:
     void cheatOn();
     void cheatOff();
     void backGround();
+    void shoot();
+    void dead();
+    void colWall();
 
     bool getBack();
 

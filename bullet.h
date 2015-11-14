@@ -14,6 +14,8 @@ private:
 public:
     Bullet(Level* initLevel, int initX, int initY, Player* ply);
 
+    //~Bullet();
+
     bool isFlying(){ return flying; }
     int getDir(){return dir;}
 

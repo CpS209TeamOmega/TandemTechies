@@ -46,12 +46,11 @@ void Enemy::update() {
         } else if(dir == -1) {
             buddy->setPixmap(eLeft);
         }
-    } else {
+    } else {        
         curHeight -= 4;
         if(curHeight > 0) {
             buddy->setGeometry(getX() - level->getXOffs(), getY() + (getHeight() - curHeight) - level->getYOffs(), getWidth(), curHeight);
         } else {
-            Sound::instance().killedEnemy();
             buddy->deleteLater();
             level->removeEntity(this);
         }
