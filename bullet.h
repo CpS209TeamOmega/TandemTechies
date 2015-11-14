@@ -11,6 +11,7 @@ private:
     bool flying;
     int hSpeed;					  //The bullet's velocity
     int dir;					  //The direction the bullet is currently facing
+    int curWidth;
 public:
     Bullet(Level* initLevel, int initX, int initY, Player* ply);
 

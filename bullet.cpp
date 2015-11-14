@@ -15,6 +15,7 @@ Bullet::Bullet(Level* initLevel, int initX, int initY, Player* ply)
     flying = true;
     ply->setBullet(true);
     Sound::instance().shoot();
+    curWidth = Entity::SIZE;
 }
 
 void Bullet::update(){
@@ -51,8 +52,17 @@ void Bullet::update(){
         }
 
     } else {
-        buddy->deleteLater();
-        level->removeEntity(this);
+        curWidth -= 16;
+        if(curWidth > 0) {
+            if(dir == -1){
+                buddy->setGeometry(getX() - level->getXOffs(), getY() - level->getYOffs(), curWidth, getHeight());
+            } else if(dir == 1){
+                buddy->setGeometry(getX() + (getWidth() - curWidth)  - level->getXOffs(), getY() - level->getYOffs(), curWidth, getHeight());
+            }
+        } else {
+            buddy->deleteLater();
+            level->removeEntity(this);
+        }
     }
 }
 
