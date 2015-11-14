@@ -13,7 +13,7 @@ Player::Player(Level *initLevel, int initX, int initY)
     : Entity(initLevel, initX, initY) {
     hSpeed = 8;
     vSpeed = 0;
-    right = left = jumping = jumpKeyPressed = dead = cheat = false;
+    right = left = jumping = jumpKeyPressed = dead = cheat = vibrate = invincible = false;
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;
@@ -22,7 +22,6 @@ Player::Player(Level *initLevel, int initX, int initY)
 	pLeft.load(":/images/p_left.png");
 	pRight.load(":/images/p_right.png");
     touched = true;
-    vibrate = false;
     times = 0;
 }
 
@@ -34,15 +33,17 @@ void Player::update() {
                 || level->testCollision(getX() + getWidth() - hSpeed, getY() + getHeight() + vSpeed)) {
             while(getY() % Entity::SIZE != 0) addY(1);
             vSpeed = 0;
-            if (!touched){vibrate = true; touched = true; Sound::instance().hitGround();}
-            times++;
-            if(times > 50){vibrate = false; times = 0;}
+            if(vibrate) {
+                times++;
+                if(times > 50){vibrate = false; times = 0;}
+            }
 
             if(jumpKeyPressed) jumping = true;		//If player is on a block and trying to jump, jump
         } else {
-            touched = false;
-            vibrate = false;
-            times = 0;
+            if(vibrate) {
+                times++;
+                if(times > 50){vibrate = false; times = 0;}
+            }
             vSpeed += 1;							//Make the player fall with the illusion of gravity
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }
@@ -98,8 +99,20 @@ void Player::savePosition(QTextStream &out) {
 }
 
 void Player::setCheatJumpHeight(){
-    if (!cheat)
-        {jumpHeight = 1920; hSpeed = 20; jumpSpeed = -30; cheat = true; Sound::instance().cheatOn();}
-   else
-        {jumpHeight = 192; hSpeed = 8; jumpSpeed = -12; cheat = false; Sound::instance().cheatOff();}
+    if (!cheat) {
+        jumpHeight = 1920;
+        hSpeed = 20;
+        jumpSpeed = -30;
+        cheat = true;
+        invincible = true;
+        Sound::instance().cheatOn();
+   } else {
+        jumpHeight = 192;
+        if(dir == 1) while(getX() % Entity::SIZE != 0) addX(-1);
+        else if(dir == -1) while(getX() % Entity::SIZE != 0) addX(1);
+        hSpeed = 8; jumpSpeed = -12;
+        cheat = false;
+        invincible = false;
+        Sound::instance().cheatOff();
+   }
 }

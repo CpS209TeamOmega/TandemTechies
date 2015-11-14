@@ -57,5 +57,4 @@ void Sound::cheatOff(){
 
 void Sound::cheatOn(){
     cheatOn_.play();
-    qDebug() << "here";
 }
