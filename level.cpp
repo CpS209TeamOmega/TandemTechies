@@ -38,6 +38,7 @@ Level::~Level() {
         delete entities[i];
     }
     delete exit;
+    delete player;
 }
 
 void Level::update() {

@@ -52,7 +52,6 @@ void GameModel::update()
 
 void GameModel::setCurrentLevel(int newLevel) {
     currentLevel = newLevel;
-    levels[currentLevel]->load();
 }
 
 void GameModel::levelFinished() {
