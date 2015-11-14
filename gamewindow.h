@@ -84,7 +84,6 @@ private slots:
     void start(QString server);
     void load();
     void exit();
-    void scores();
 
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *k);
