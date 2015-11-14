@@ -14,6 +14,8 @@
 #include "scoremanager.h"
 #include "remoteplayer.h"
 #include "player.h"
+#include "bullet.h"
+
 
 //The class containing all the data and methods
 //for the entire game.
@@ -49,6 +51,8 @@ public:
     PlaceableBlock* placeBlock();
     PlaceableBlock* removeBlock();
     PlaceableBlock* placeBlock(int x, int y);
+
+    Bullet* fire();
 
     //Keyboard Press/Release Event
     void playerInputP(int p);

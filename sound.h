@@ -17,6 +17,7 @@ class Sound
     QSoundEffect hitGround_;
     QSoundEffect cheatOn_;
     QSoundEffect cheatOff_;
+    QSoundEffect backGround_;
 
 public:
     void endLevel();
@@ -28,6 +29,9 @@ public:
     void hitGround();
     void cheatOn();
     void cheatOff();
+    void backGround();
+
+    bool getBack();
 
     static Sound& instance();
 

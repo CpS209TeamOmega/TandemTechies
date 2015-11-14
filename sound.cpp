@@ -21,6 +21,7 @@ Sound::Sound()
     hitGround_.setSource(QUrl("qrc:/soundeffects/hitGround.wav"));
     cheatOn_.setSource(QUrl("qrc:/soundeffects/cheatOn.wav"));
     cheatOff_.setSource(QUrl("qrc:/soundeffects/cheatOff.wav"));
+    backGround_.setSource(QUrl("qrc:/soundeffects/back.wav"));
 }
 
 void Sound::placeBlock() {
@@ -57,4 +58,12 @@ void Sound::cheatOff(){
 
 void Sound::cheatOn(){
     cheatOn_.play();
+}
+
+void Sound::backGround(){
+    backGround_.play();
+}
+
+bool Sound::getBack(){
+    return backGround_.isPlaying();
 }

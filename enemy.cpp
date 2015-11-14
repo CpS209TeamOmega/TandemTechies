@@ -33,7 +33,7 @@ void Enemy::update() {
         if(isCollidingWith(p)) {
             QRect test(getX(), getY(), getWidth(), 32);
             if(p->isInvincible() || test.contains(p->getX(), p->getY() + p->getHeight()) || test.contains(p->getX() + p->getWidth(), p->getY() + p->getHeight())) {
-                Sound::instance().killedEnemy();
+
                 dead = true;
                 p->setVib(true);
             } else {
@@ -51,6 +51,7 @@ void Enemy::update() {
         if(curHeight > 0) {
             buddy->setGeometry(getX() - level->getXOffs(), getY() + (getHeight() - curHeight) - level->getYOffs(), getWidth(), curHeight);
         } else {
+            Sound::instance().killedEnemy();
             buddy->deleteLater();
             level->removeEntity(this);
         }

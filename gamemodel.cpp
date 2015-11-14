@@ -5,6 +5,7 @@
 
 #include "gamemodel.h"
 #include "enemy.h"
+#include "flyingenemy.h"
 #include "sound.h"
 #include "network.h"
 #include <QFile>
@@ -164,6 +165,14 @@ bool GameModel::load() {
                 Enemy* e = new Enemy(getCurrentLevel(), x, y);
                 e->setDir(dir);
                 getCurrentLevel()->getEntities() << e;
+            } else if(line.startsWith("FlyingEnemy")) { //Enemy position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                FlyingEnemy* e = new FlyingEnemy(getCurrentLevel(), x, y);
+                e->setDir(dir);
+                getCurrentLevel()->getEntities() << e;
             } else if(line.startsWith("Collect")) { //Collectibles
                 QStringList list = line.split(" ");
                 int x = list[1].toInt();
@@ -211,6 +220,10 @@ PlaceableBlock* GameModel::placeBlock(int x, int y) {
     return getCurrentLevel()->placeBlock(x, y);
 }
 
+Bullet* GameModel::fire(){
+    return getCurrentLevel()->fire();
+}
+
 void GameModel::playerInputP(int p){//Press Event Handler
     switch (p) {
     case Qt::Key_W:
@@ -229,6 +242,8 @@ void GameModel::playerInputP(int p){//Press Event Handler
         break;
     case Qt::Key_C:
         getCurrentLevel()->getPlayer()->setCheatJumpHeight();
+    case Qt::Key_F:
+
     default:
         break;
     }
