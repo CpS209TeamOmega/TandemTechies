@@ -31,7 +31,7 @@ public:
     void update();
 
     //Saves the block's position to the save file
-    void savePosition();
+    void savePosition(QTextStream&) { }
 
     //getters
     int getScorePlus() { return scorePlus; }
@@ -55,7 +55,7 @@ public:
     void update();
 
     //Saves the block's position to the save file
-    void savePosition();
+    void savePosition(QTextStream& out);
 
     //When the user presses space to pick up a block, this method is called, which
     //makes the block shrink and delete

@@ -8,27 +8,6 @@ bpccccxb
 bbbbbbbb
 endlevel
 
-level Curvy
-blocks 0
-points 1000
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-b                                             b
-b                                             b
-b                                             b
-b                                             b
-b                                             b
-b   bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-b   bp                              b
-b   b                               b
-b    bb                             b
-b      bb                           b
- bb      bbb                        b
-   bb       bbbb           x        b
-     bbb        bbbbbbbbbbbbbbb     b
-        bbbb                        b
-            bbbbbbbbbbbbbbbbbbbbbbbbb
-endlevel
-
 level Baby Steps
 blocks 0
 points 500
@@ -95,6 +74,33 @@ b   b    b   b
 b  mb   cb   b
 bp mb   cb  xb
 bbbbbbbbbbbbbb
+endlevel
+
+level the World
+blocks 1
+points 750
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                                x                      b
+b                               bbb                     b
+b                                    eeeeeeeeeeeeeee    b
+b          b b b b b bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bbbbbbb                     b                           b
+b  eee                      b                           b
+bbbbbbbbbbbbbbb             b                           b
+b                           b                           b
+b                  bbbbbbbbbb                           b
+b                           b                           b
+b         bbbbbbb                                       b
+b                                                       b
+b       b         bbbbbbbb  b  b b  bbbbb               b
+b       b  eeeeeeee                                     b
+bp      bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb            b
+bbbbb                                         bbbbbbbbbbb
+b                                                       b
+b                                   bbbbbbbbbbbbbbbb    b
+b                bbbbbbbbbbbbbbbbbb                     b
+b eeeeeeeeeeeeeeeeeeeeeeee  eeeeeee                m    b
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 endlevel
 
 level Down and Up
@@ -173,7 +179,7 @@ b              b
 b              b
 b              b
 b              b
-b              b
+b e e e e e e eb
 bbbbbbbbbbbbbbbb
 endlevel
 
@@ -191,7 +197,7 @@ bb          b      b
 b           b      b
 b           bccccccb
 b           bccccccb
-b           bmcccccb
+be e e e e ebmcccccb
 bbbbbbbbbbbbbbbbbbbb
 endlevel
 
@@ -231,7 +237,7 @@ b b     c     c     c   b
 b b  b  c     c     c   b
 b b     c     c     c   b
 b bb    c     c     c   b
-b b     m     m     m   b
+b b     m     m     m e b
 bbbbbbbbbbbbbbbbbbbbbbbbb
 endlevel
 

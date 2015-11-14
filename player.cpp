@@ -6,6 +6,7 @@
 
 #include "level.h"
 #include <QTcpSocket>
+#include "sound.h"
 
 
 Player::Player(Level *initLevel, int initX, int initY)
@@ -16,11 +17,13 @@ Player::Player(Level *initLevel, int initX, int initY)
     jumpDistance = 0;
     jumpHeight = 192;
     maxVSpeed = 32;
-	dir = 1;
-    lives = 8;
+    dir = 1;
     jumpSpeed = -12;
 	pLeft.load(":/images/p_left.png");
 	pRight.load(":/images/p_right.png");
+    touched = true;
+    vibrate = false;
+    times = 0;
 }
 
 void Player::update() {
@@ -31,8 +34,15 @@ void Player::update() {
                 || level->testCollision(getX() + getWidth() - hSpeed, getY() + getHeight() + vSpeed)) {
             while(getY() % Entity::SIZE != 0) addY(1);
             vSpeed = 0;
+            if (!touched){vibrate = true; touched = true; Sound::instance().hitGround();}
+            times++;
+            if(times > 50){vibrate = false; times = 0;}
+
             if(jumpKeyPressed) jumping = true;		//If player is on a block and trying to jump, jump
         } else {
+            touched = false;
+            vibrate = false;
+            times = 0;
             vSpeed += 1;							//Make the player fall with the illusion of gravity
             if(vSpeed > maxVSpeed) vSpeed = maxVSpeed;
         }
@@ -71,9 +81,9 @@ void Player::update() {
     }
 
 	if (dir == -1) {
-		buddy->setPixmap(pLeft);
+        buddy->setPixmap(pLeft);
 	} else {
-		buddy->setPixmap(pRight);
+        buddy->setPixmap(pRight);
 	}
 }
 
@@ -83,14 +93,13 @@ void Player::clearFlags() {
     left = false;
 }
 
-void Player::savePosition()
-{
-
+void Player::savePosition(QTextStream &out) {
+    out << "Player " << getX() << " " << getY() << " " << dir << "\n";
 }
 
 void Player::setCheatJumpHeight(){
     if (!cheat)
-    {jumpHeight = 1920; cheat = true;}
-    else
-    {jumpHeight = 192; cheat = false;}
+        {jumpHeight = 1920; hSpeed = 20; jumpSpeed = -30; cheat = true; Sound::instance().cheatOn();}
+   else
+        {jumpHeight = 192; hSpeed = 8; jumpSpeed = -12; cheat = false; Sound::instance().cheatOff();}
 }

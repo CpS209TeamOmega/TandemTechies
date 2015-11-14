@@ -22,9 +22,11 @@ class Player : public Entity {
     int jumpDistance;			  //The current distance the player has jumped
 	int jumpSpeed;				  //The speed of a jump
     int dir;					  //The direction the player is currently facing
-    int lives;
     bool dead;
     bool cheat;
+    bool touched;
+    bool vibrate;
+    int times;
 
     QPixmap pLeft;                //The image for facing left
     QPixmap pRight;               //The image for facing right
@@ -43,7 +45,7 @@ public:
     void update();
 
     //save the status of the player entity
-    void savePosition();
+    void savePosition(QTextStream &out);
 
     //Clears the input flags of the user, such as
     //left, right, and jumpKeyPressed
@@ -55,13 +57,13 @@ public:
     void setJumping(bool newJumping) { jumpKeyPressed = newJumping; }
 	void setDir(int newDir) { dir = newDir; }
     void setDead(bool isDead) { dead = isDead; }
-    void setLives(int newLives) { lives = newLives; }
     void setCheatJumpHeight();
+    void setVib(bool v){vibrate = v;}
 
 	//Getters
 	int getDir() { return dir; }
+    bool getVib(){return vibrate;}
     bool isDead() { return dead; }
-    int getLives() { return lives; }
 };
 
 #endif // PLAYER_H

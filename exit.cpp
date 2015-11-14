@@ -15,7 +15,3 @@ void Exit::update() {
 	//Update the exit's label according to the player's position (side-scrolling)
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
 }
-
-void Exit::savePosition() {
-
-}

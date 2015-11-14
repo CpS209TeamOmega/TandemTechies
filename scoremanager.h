@@ -33,7 +33,7 @@ private:
     int curScore;
 
     //private constructor
-    ScoreManager() : file("scores.dat"), curScore{0} { }
+    ScoreManager() : curScore(0) { }
 
 public:
     //Return the highest score ever

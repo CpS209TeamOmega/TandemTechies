@@ -16,6 +16,7 @@
 #include "player.h"
 #include "remoteplayer.h"
 #include "exit.h"
+#include "stdlib.h"
 
 //Forward declaration of the entity class, since level
 //refers to entity and entity refers to level.
@@ -41,7 +42,10 @@ private:
     int xOffs;                  //The x offset of the player (side-scrolling)
     int yOffs;                  //The y offset of the player (side-scrolling)
     GameModel* model;
-    int scoreBeforeLevel;
+    int scoreBeforeLevel;    
+
+    bool vibrate;
+    int amplitudeW, amplitudeH;
 
     bool finished;              //If the level is finished
 
@@ -60,14 +64,24 @@ public:
     //Loads the level with the data
     void load();
 
+    //Saves the state of the level
+    void save(QTextStream &out);
+
     //Tests if there is a block at a certain point
     bool testCollision(int testX, int testY);
 
     //Removes an entity from the QList of entities
     void removeEntity(Entity* e);
 
+    //Remotes all entities
+    void removeAllEntities();
+
+    //Removes all placeable blocks from the level
+    void removePlaceableBlocks();
+
     //Removes the block at the position given
     void removeBlock(int x, int y);
+    PlaceableBlock* removeBlockX();
 
     //Place block in certain position
     PlaceableBlock* placeBlock(int x, int y);
@@ -94,6 +108,8 @@ public:
     int getNumBlocks() { return numBlocks; }
     QList<QString>& getData() { return data; }
     int getScoreBeforeLevel() { return scoreBeforeLevel; }
+    int getAmplitudeW() { return amplitudeW; }
+    int getAmplitudeH() { return amplitudeH; }
 
 };
 

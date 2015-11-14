@@ -24,7 +24,7 @@ class GameModel
     int currentLevel;     //The current level you are on in the levels QList
     QString levelDataFile;//The level's data file name
     bool updateGUI;       //When the GUI must be updated to reflect model state
-    bool finished;        //When the game is finished =D
+    int lives;
 
 public:
     GameModel();
@@ -40,12 +40,14 @@ public:
     void save();
 
     //Load game state
-    void load();
+    bool load();
 
+    //Called when the level is finished
     void levelFinished();
 
     //Places a block in the level
     PlaceableBlock* placeBlock();
+    PlaceableBlock* removeBlock();
     PlaceableBlock* placeBlock(int x, int y);
 
     //Keyboard Press/Release Event
@@ -55,26 +57,20 @@ public:
     //Loads the levels into the game so we can actually play
     bool loadLevels();
 
-    //Returns the level the user is currently in.
-    Level* getCurrentLevel() { return levels[currentLevel]; }
-
-    //Gets the current level number
-    int getLevelNumber() { return currentLevel + 1; }
-
-    //Whether or not the GUI must be updated
-    bool mustUpdateGUI() { return updateGUI; }
-
-    //Says the GUI should be updated
-    void setUpdateGUI(bool newValue) { updateGUI = newValue; }
-
     //Restarts the current level
     void resetCurrentLevel();
 
-    //Sets the background label
-    void setBackground(QLabel* newBack) { back = newBack; }
+    //Getters
+    int getLives() { return lives; }
+    bool mustUpdateGUI() { return updateGUI; }
+    int getLevelNumber() { return currentLevel + 1; }
+    Level* getCurrentLevel() { return levels[currentLevel]; }
 
-    //If the game is finishd
-    bool gameFinished() { return finished; }
+    //Setters
+    void setCurrentLevel(int newLevel);
+    void setBackground(QLabel* newBack) { back = newBack; }
+    void setUpdateGUI(bool newValue) { updateGUI = newValue; }
+    void setLives(int newLives) { lives = newLives; }
 
 };
 

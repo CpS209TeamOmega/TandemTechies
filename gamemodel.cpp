@@ -5,6 +5,7 @@
 
 #include "gamemodel.h"
 #include "enemy.h"
+#include "sound.h"
 #include "network.h"
 #include <QFile>
 #include <QDebug>
@@ -14,7 +15,8 @@ GameModel::GameModel()
 {
     levelDataFile = ":/levels.dat";
     currentLevel = 0;
-    updateGUI = finished = false;
+    updateGUI = false;
+    lives = 8;
 }
 
 void GameModel::update()
@@ -24,8 +26,9 @@ void GameModel::update()
 
     //If the player is dead, then reset the level and decrement the lives
     if(getCurrentLevel()->getPlayer()->isDead()) {
+        Sound::instance().gameOver();
         getCurrentLevel()->getPlayer()->setDead(false);
-        getCurrentLevel()->getPlayer()->setLives(getCurrentLevel()->getPlayer()->getLives() - 1);
+        lives--;
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
@@ -43,15 +46,20 @@ void GameModel::update()
     double height = getCurrentLevel()->getBlocks().size() * Entity::SIZE;
     double pX = getCurrentLevel()->getPlayer()->getX();
     double pY = getCurrentLevel()->getPlayer()->getY();
-    back->move(-(pX / width * 250), -(pY / height) * 25);
+    back->move(-(pX / width * 250) + getCurrentLevel()->getAmplitudeW(), -(pY / height) * 25 + getCurrentLevel()->getAmplitudeH());
+}
+
+void GameModel::setCurrentLevel(int newLevel) {
+    currentLevel = newLevel;
+    levels[currentLevel]->load();
 }
 
 void GameModel::levelFinished() {
     //Go the the next level and make sure the currentLevel is not the last level
     ScoreManager::instance().addToScore(getCurrentLevel()->getPoints());
+    Sound::instance().endLevel();
     currentLevel++;
     if(currentLevel >= levels.size()) {
-        finished = true;
         ScoreManager::instance().addHighScore("billy", ScoreManager::instance().getCurScore());
         resetGame();
     }
@@ -91,6 +99,88 @@ bool GameModel::loadLevels() {
     return true;
 }
 
+void GameModel::save() {
+    qDebug() << "Saving Game File";
+    QFile saveFile("save.dat");
+    if(!saveFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Error saving game data";
+        return;
+    }
+
+    QTextStream out(&saveFile);
+
+    out << "Level " << currentLevel << "\n";
+    out << "Lives " << lives << "\n";
+
+    getCurrentLevel()->save(out);
+    qDebug() << "Game saved.";
+}
+
+bool GameModel::load() {
+    QFile loadFile("save.dat");
+    if(!loadFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Could not load save file.";
+        return false;
+    }
+
+    qDebug() << "Loading save file.";
+    QTextStream in(&loadFile);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+
+        if(!line.isEmpty()) {
+            if(line.startsWith("Level")) { //Level number
+                QStringList list = line.split(" ");
+                setCurrentLevel(list[1].toInt());
+                getCurrentLevel()->removeAllEntities();
+                getCurrentLevel()->removePlaceableBlocks();
+            } else if(line.startsWith("Score")) {
+                QStringList list = line.split(" ");
+                ScoreManager::instance().setScore(list[1].toInt());
+                ScoreManager::instance().update();
+            } else if(line.startsWith("Numblocks")) {
+                QStringList list = line.split(" ");
+                getCurrentLevel()->setNumBlocks(list[1].toInt());
+            } else if(line.startsWith("Lives")) {
+                QStringList list = line.split(" ");
+                lives = list[1].toInt();
+            } else if(line.startsWith("Player")) { //Player position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                Player* p = getCurrentLevel()->getPlayer();
+                p->setX(x);
+                p->setY(y);
+                p->setWidth(Entity::SIZE);
+                p->setHeight(Entity::SIZE);
+                p->setDir(dir);
+            } else if(line.startsWith("Enemy")) { //Enemy position
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                int dir = list[3].toInt();
+                Enemy* e = new Enemy(getCurrentLevel(), x, y);
+                e->setDir(dir);
+                getCurrentLevel()->getEntities() << e;
+            } else if(line.startsWith("Collect")) { //Collectibles
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                getCurrentLevel()->getEntities() << new Collectible(getCurrentLevel(), x, y);
+            } else if(line.startsWith("Block")) { //Placeable Blocks
+                QStringList list = line.split(" ");
+                int x = list[1].toInt();
+                int y = list[2].toInt();
+                getCurrentLevel()->getBlocks()[y / Entity::SIZE][x / Entity::SIZE] = new PlaceableBlock(getCurrentLevel(), x, y);
+            }
+        }
+    }
+    updateGUI = true;
+    return true;
+}
+
 void GameModel::resetCurrentLevel() {
     Level* level = getCurrentLevel();
     ScoreManager::instance().setScore(level->getScoreBeforeLevel());
@@ -111,6 +201,10 @@ GameModel::~GameModel() {
 
 PlaceableBlock* GameModel::placeBlock() {
     return getCurrentLevel()->placeBlock();
+}
+
+PlaceableBlock* GameModel::removeBlock(){
+    return getCurrentLevel()->removeBlockX();
 }
 
 PlaceableBlock* GameModel::placeBlock(int x, int y) {

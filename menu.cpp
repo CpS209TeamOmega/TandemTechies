@@ -70,10 +70,6 @@ void Menu::on_btnExit_clicked()
     close();
 }
 
-void Menu::closeEvent(QCloseEvent*) {
-    emit exitGame();
-}
-
 void Menu::on_btnSingle_clicked()
 {
     if(ui->btnSingle->isChecked()) {

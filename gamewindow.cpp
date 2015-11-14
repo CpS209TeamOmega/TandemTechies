@@ -9,15 +9,18 @@
 #include "enemy.h"
 #include "remoteplayer.h"
 #include "network.h"
+#include "sound.h"
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
 #include <QObjectList>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QFile>
 #include <QtGlobal>
 #include <QStringList>
 #include <QIcon>
+#include <QMessageBox>
 
 //The default width of the game
 int GameWindow::WIDTH = 1024;
@@ -185,7 +188,7 @@ void GameWindow::showLives() {
 
     int margin = 10;
     int size = 32;
-    for(int i = 0; i < model.getCurrentLevel()->getPlayer()->getLives(); i++) {
+    for(int i = 0; i < model.getLives(); i++) {
         QLabel* life = new QLabel(ui->wgLives);
         life->setGeometry(margin * (i + 1) + size * i, margin, size, size);
         life->setPixmap(heartImg);
@@ -195,12 +198,12 @@ void GameWindow::showLives() {
 }
 
 void GameWindow::timerHit() {
-    if(model.mustUpdateGUI()) {
-        updateGUI();
-        model.setUpdateGUI(false);
-    }
-    model.update();
-    if(otherPlayer) otherPlayer->update();
+        if(model.mustUpdateGUI()) {
+            updateGUI();
+            model.setUpdateGUI(false);
+        }
+        model.update();
+        if(otherPlayer) otherPlayer->update();
 }
 
 GameWindow::~GameWindow()
@@ -216,7 +219,13 @@ void GameWindow::start(QString server) {
     }
 }
 
-void GameWindow::load(){
+void GameWindow::load() {
+    if(!model.load()) {
+        qDebug() << "Could not load last save.";
+    }
+}
+
+void GameWindow::shoot(){
 
 }
 
@@ -224,16 +233,36 @@ void GameWindow::exit(){
     close();
 }
 
+void GameWindow::closeEvent(QCloseEvent* e) {
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Save", "Save game before exiting?", QMessageBox::Yes | QMessageBox::Cancel | QMessageBox::No);
+
+    if(reply == QMessageBox::Yes) {
+        save();
+    } else if(reply != QMessageBox::No) {
+        e->ignore();
+    }
+}
+
+void GameWindow::save() {
+    model.save();
+}
+
 //Key Event
 //<k>The key player pressed/released
 void GameWindow::keyPressEvent(QKeyEvent *k){
-    if(k->key() == Qt::Key_Space) {
+    if(k->key() == Qt::Key_Z) {
         PlaceableBlock* newBlock = model.placeBlock();
         if(newBlock != nullptr) {
             makeLabel(newBlock, placeableImg);
             newBlock->update();
         }
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    } else if(k->key() == Qt::Key_X){
+	model.getCurrentLevel()->removeBlockX();
+        ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
+    } else if(k->key() == Qt::Key_S){
+        shoot();
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();
     } else {
@@ -269,7 +298,12 @@ void GameWindow::dataReceived() {
     while(sock->canReadLine()) {
         QString data = sock->readLine();
         data.chop(1);
-        if(data == "Connect") {
+        if(data.startsWith("Connect")) {
+            QStringList list = data.split(" ");
+            int id = list[1].toInt();
+            if(id == 1) {
+                Network::instance().send("Level " + QString::number(model.getLevelNumber()));
+            }
             otherPlayer = new RemotePlayer(model.getCurrentLevel(), 0, 0);
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
             QTimer* networkTimer = new QTimer(this);
@@ -291,6 +325,7 @@ void GameWindow::dataReceived() {
                 if(Collectible* c = dynamic_cast<Collectible*>(entities[i])) {
                     if(c->getX() == x && c->getY() == y) {
                         ScoreManager::instance().addToScore(c->getPoint());
+                        Sound::instance().collect();
                         c->getBuddy()->deleteLater();
                         model.getCurrentLevel()->removeEntity(c);
                         break;
@@ -301,6 +336,7 @@ void GameWindow::dataReceived() {
             QStringList list = data.split(" ");
             int x = list.at(1).toInt();
             int y = list.at(2).toInt();
+            Sound::instance().removeBlock();
             if(PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(model.getCurrentLevel()->getBlocks()[y][x])) {
                 b->setDeleting(true);
             }
@@ -311,6 +347,10 @@ void GameWindow::dataReceived() {
             PlaceableBlock* block = model.placeBlock(x, y);
             makeLabel(block, placeableImg);
             block->update();
+        } else if(data.startsWith("Level")) {
+            QStringList list = data.split(" ");
+            int lvl = list.at(1).toInt();
+            model.setCurrentLevel(lvl);
         } else {
             otherPlayer->dataReceived(data);
         }
@@ -331,5 +371,5 @@ void GameWindow::serverDisconnected() {
 }
 
 void GameWindow::socketError(QAbstractSocket::SocketError) {
-
+    qDebug() << "COULDN'T CONNECT";
 }

@@ -7,13 +7,8 @@
 #include "block.h"
 
 void Block::update() {
-	//Update the label's position according to the player (side-scrolling)
+    //Update the label's position according to the player (side-scrolling)
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
-}
-
-void Block::savePosition()
-{
-
 }
 
 void PlaceableBlock::update() {
@@ -38,6 +33,6 @@ void PlaceableBlock::update() {
     }
 }
 
-void PlaceableBlock::savePosition() {
-
+void PlaceableBlock::savePosition(QTextStream &out) {
+    out << "Block " << getX() << " " << getY() << "\n";
 }

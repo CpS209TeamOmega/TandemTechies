@@ -10,7 +10,9 @@
 #include "network.h"
 #include "scoremanager.h"
 #include "enemy.h"
+#include "sound.h"
 #include <QDebug>
+#include "unistd.h"
 
 Level::Level(QList<QString> &initData, GameModel *initModel)
     : data(initData), model(initModel) {
@@ -22,6 +24,8 @@ Level::Level(QList<QString> &initData, GameModel *initModel)
     remotePlayer = nullptr;
     exit = nullptr;
     scoreBeforeLevel = 0;
+    vibrate = false;
+    amplitudeH = amplitudeW = 0;
 }
 
 Level::~Level() {
@@ -51,9 +55,17 @@ void Level::update() {
     player->update();
     exit->update();
 
+    //check vibrate
+    if(getPlayer()->getVib()){
+        amplitudeH = rand() % 10 + (-5);
+        amplitudeW = rand() % 10 + (-5);
+    }else{
+        amplitudeH = amplitudeW = 0;
+    }
+
     //Update the x and y offsets relative to the player
-    xOffs = player->getX() + (player->getWidth() / 2) - (GameWindow::WIDTH / 2);
-    yOffs = player->getY() + (player->getHeight() / 2) - (GameWindow::HEIGHT / 2);
+    xOffs = player->getX() + (player->getWidth() / 2) - (GameWindow::WIDTH / 2) + amplitudeW;
+    yOffs = player->getY() + (player->getHeight() / 2) - (GameWindow::HEIGHT / 2) + amplitudeH;
 }
 
 bool Level::testCollision(int testX, int testY) {
@@ -71,6 +83,25 @@ bool Level::testCollision(int testX, int testY) {
 void Level::removeEntity(Entity *e) {
     entities.removeOne(e);
     delete e;
+}
+
+void Level::removeAllEntities() {
+    for(int i = 0; i < entities.size(); i++) {
+        delete entities[i];
+    }
+    entities.clear();
+}
+
+void Level::removePlaceableBlocks() {
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            PlaceableBlock* b = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
+            if(b) {
+                delete b;
+                blocks[y][x] = nullptr;
+            }
+        }
+    }
 }
 
 void Level::removeBlock(int x, int y) {
@@ -92,6 +123,7 @@ void Level::load() {
                 list << new Block(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
             } else if(type == 'p') {				//If the character represents the player
                 list << nullptr;
+                delete player;
                 player = new Player(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
             } else if(type == 'x') {
                 list << nullptr;					//If the character is an exit
@@ -117,6 +149,7 @@ void Level::load() {
 
 PlaceableBlock* Level::placeBlock(int x, int y) {
     PlaceableBlock* block = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
+    Sound::instance().placeBlock();
     blocks[y][x] = block;
     return block;
 }
@@ -153,6 +186,7 @@ PlaceableBlock* Level::placeBlock(){
                 return nullptr;
             }
             if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
+                Sound::instance().placeBlock();
                 Network::instance().send("Block " + QString::number(x) + " " + QString::number(y));
                 blocks[y][x] = b;
                 b->setCreating(true);
@@ -163,14 +197,53 @@ PlaceableBlock* Level::placeBlock(){
                 return nullptr;
             }
         }
-    } else {
+    } 
+    return nullptr;
+}
+
+PlaceableBlock* Level::removeBlockX(){
+    int x = 0, y = 0;
+    if(player->getDir() == -1){
+        x = player->getX() - Entity::SIZE + 2;
+        y = player->getY();
+    } else if(player->getDir() == 1){
+        x = player->getX() + Entity::SIZE * 2 - 2;
+        y = player->getY();
+     }
+ 
+    if(x < 0 || y < 0) return nullptr;
+
+    x /= Entity::SIZE;					 //Make the x position the array x position
+    y /= Entity::SIZE;					 //Make the y position the array y position
+
+    if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
+    if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
+
+    if(blocks[y][x] != nullptr){
         PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
         if(test != nullptr && !test->isCreating() && !test->isDeleting()) {
+            Sound::instance().removeBlock();
             Network::instance().send("Remove " + QString::number(x) + " " + QString::number(y));
             test->setDeleting(true);
             numBlocks++;
         }
+     }
+     return nullptr;
+ }
+
+void Level::save(QTextStream &out) {
+    out << "Score " << ScoreManager::instance().getCurScore() << "\n";
+    out << "Numblocks " << numBlocks << "\n";
+
+    player->savePosition(out);
+
+    for(int i = 0; i < entities.size(); i++) {
+        entities[i]->savePosition(out);
     }
 
-    return nullptr;
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            if(blocks[y][x]) blocks[y][x]->savePosition(out);
+        }
+    }
 }

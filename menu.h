@@ -31,8 +31,6 @@ private slots:
 
     void on_btnExit_clicked();
 
-    void closeEvent(QCloseEvent*);
-
     void on_btnSingle_clicked();
 
     void on_btnMulti_clicked();
