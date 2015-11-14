@@ -38,7 +38,7 @@ public:
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
-    void setDead(bool d){ dead = d; Sound::instance().killedEnemy(); }
+    void setDead(bool d){ dead = d;}
 };
 
 

@@ -11,7 +11,7 @@ Bullet::Bullet(Level* initLevel, int initX, int initY, Player* ply)
 {
     player = ply;
     dir = ply->getDir();
-    hSpeed = 20;
+    hSpeed = 12;
     flying = true;
     ply->setBullet(true);
     Sound::instance().shoot();

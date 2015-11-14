@@ -40,7 +40,7 @@ public:
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
-    void setDead(bool die) {dead = die;Sound::instance().killedEnemy();}
+    void setDead(bool die) {dead = die; }
 };
 
 #endif // ENEMY_H
