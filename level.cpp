@@ -36,6 +36,7 @@ Level::~Level() {
         delete entities[i];
     }
     delete exit;
+    delete player;
 }
 
 void Level::update() {
@@ -121,7 +122,6 @@ void Level::load() {
                 list << new Block(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
             } else if(type == 'p') {				//If the character represents the player
                 list << nullptr;
-                delete player;
                 player = new Player(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
             } else if(type == 'x') {
                 list << nullptr;					//If the character is an exit
