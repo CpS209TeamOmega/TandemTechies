@@ -357,8 +357,12 @@ void GameWindow::dataReceived() {
         } else if(data.startsWith("Level")) {
             QStringList list = data.split(" ");
             int lvl = list.at(1).toInt();
-            model.setCurrentLevel(lvl);
+            model.setCurrentLevel(lvl - 1);
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
+            model.getCurrentLevel()->load();
+            model.setUpdateGUI(true);
+        } else if(data.startsWith("LEAVE")) {
+
         } else {
             otherPlayer->dataReceived(data);
         }
