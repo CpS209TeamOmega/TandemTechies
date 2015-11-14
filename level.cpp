@@ -128,46 +128,46 @@ Bullet* Level::fire(){
 }
 
 void Level::load() {
-scoreBeforeLevel = ScoreManager::instance().getCurScore();
-name = data[0].mid(6);
-numBlocks = data[1].mid(7).toInt();
-pointPlus = data[2].mid(7).toInt();
+    scoreBeforeLevel = ScoreManager::instance().getCurScore();
+    name = data[0].mid(6);
+    numBlocks = data[1].mid(7).toInt();
+    pointPlus = data[2].mid(7).toInt();
 
-for(int y = 3; y < data.size(); y++) {
-QList<Block*> list;							//The blocks in the current row
-for(int x = 0; x < data[y].length(); x++) {
-    QChar type = data[y][x];
-    if(type == 'b') {						//If the character represents a block
-        list << new Block(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-    } else if(type == 'p') {				//If the character represents the player
-        list << nullptr;
-        delete player;
-        player = new Player(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-    } else if(type == 'x') {
-        list << nullptr;					//If the character is an exit
-        exit = new Exit(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-    } else if(type == 'c') {
-        list << nullptr;
-        Collectible* c = new Collectible(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-        entities << c;
-    } else if(type == 'm') {
-        PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-        list << b;
-    } else if(type == 'e') {
-        list << nullptr;
-        Enemy* e = new Enemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-        entities << e;
-    } else if(type == 'f') {
-        list << nullptr;
-        FlyingEnemy* f = new FlyingEnemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
-        entities << f;
-    } else if(type == ' ') {				//If it is an empty space
-        list << nullptr;
+    for(int y = 3; y < data.size(); y++) {
+        QList<Block*> list;							//The blocks in the current row
+        for(int x = 0; x < data[y].length(); x++) {
+            QChar type = data[y][x];
+            if(type == 'b') {						//If the character represents a block
+                list << new Block(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+            } else if(type == 'p') {				//If the character represents the player
+                list << nullptr;
+                player = new Player(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+            } else if(type == 'x') {
+                list << nullptr;					//If the character is an exit
+                exit = new Exit(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+            } else if(type == 'c') {
+                list << nullptr;
+                Collectible* c = new Collectible(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                entities << c;
+            } else if(type == 'm') {
+                PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                list << b;
+            } else if(type == 'e') {
+                list << nullptr;
+                Enemy* e = new Enemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                entities << e;
+            } else if(type == 'f') {
+                list << nullptr;
+                FlyingEnemy* f = new FlyingEnemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                entities << f;
+            } else if(type == ' ') {				//If it is an empty space
+                list << nullptr;
+            }
+        }
+        blocks << list;								//Store the current row of blocks into the block list
     }
 }
-blocks << list;								//Store the current row of blocks into the block list
-}
-}
+
 
 PlaceableBlock* Level::placeBlock(int x, int y) {
 PlaceableBlock* block = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
