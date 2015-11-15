@@ -153,7 +153,7 @@ bool GameModel::load() {
                 int y = list[2].toInt();
                 int dir = list[3].toInt();
                 Player* p = new Player(getCurrentLevel(), x, y);
-                p->setX(x);                                           //<-------------Crashed while loading game
+                p->setX(x);
                 p->setY(y);
                 p->setWidth(Entity::SIZE);
                 p->setHeight(Entity::SIZE);
