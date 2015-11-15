@@ -16,6 +16,7 @@ Bullet::Bullet(Level* initLevel, int initX, int initY, Player* ply)
     ply->setBullet(true);
     Sound::instance().shoot();
     curWidth = Entity::SIZE;
+    invincible = false;
 }
 
 void Bullet::update(){
