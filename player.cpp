@@ -23,10 +23,17 @@ Player::Player(Level *initLevel, int initX, int initY)
 	pRight.load(":/images/p_right.png");
     touched = true;
     times = 0;
+    reload = 0;
 }
 
 void Player::update() {
     buddy->move(getX() - level->getXOffs(), getY() - level->getYOffs());
+
+    if(reload == 0){
+        bullet = false;
+    }else{
+        reload--;
+    }
 
     if(!jumping) {		//If the player is not currently jumping
         if(level->testCollision(getX(), getY() + getHeight() + vSpeed)    //Test to see if there is a block underneath

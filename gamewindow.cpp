@@ -10,6 +10,8 @@
 #include "remoteplayer.h"
 #include "network.h"
 #include "sound.h"
+#include "bullet.h"
+
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
@@ -60,6 +62,10 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     check(collectibleImg.load(":/images/collectible.png"));
     check(placeableImg.load(":/images/placeable.png"));
     check(heartImg.load(":/images/heart.png"));
+    check(bulletImg.load(":/images/b_left.png"));
+    check(bulletImgR.load(":/images/b_right.png"));
+    check(cBulletImg.load(":/images/bc_left.png"));
+    check(cBulletImgR.load(":/images/bc_right.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -142,6 +148,9 @@ void GameWindow::updateGUI() {
 
         Enemy* e = dynamic_cast<Enemy*>(entities[i]);
         if(e) { makeLabel(entities[i], QPixmap()); continue; }
+
+        FlyingEnemy* f = dynamic_cast<FlyingEnemy*>(entities[i]);
+        if(f) { makeLabel(entities[i], QPixmap()); continue; }
     }
 
     //Create the labels for the blocks in the level
@@ -231,10 +240,6 @@ void GameWindow::load() {
     }
 }
 
-void GameWindow::shoot(){
-
-}
-
 void GameWindow::exit(){
     close();
 }
@@ -267,12 +272,35 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
     } else if(k->key() == Qt::Key_X){
 	model.getCurrentLevel()->removeBlockX();
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
-    } else if(k->key() == Qt::Key_S){
-        shoot();
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();
+    } else if (k->key() == Qt::Key_Space){
+        if(!this->model.getCurrentLevel()->getPlayer()->hasBullet()){
+            Bullet* newBullet = model.fire();
+            if(newBullet != nullptr) {
+                if(model.isCheating()) {
+                    newBullet->setInvincible(true);
+
+                    if(newBullet->getDir() == -1){
+                        makeLabel(newBullet, cBulletImg);
+                        newBullet->update();
+                    } else if(newBullet->getDir() == 1){
+                        makeLabel(newBullet, cBulletImgR);
+                        newBullet->update();
+                    }
+                } else {
+                    if(newBullet->getDir() == -1){
+                        makeLabel(newBullet, bulletImg);
+                        newBullet->update();
+                    } else if(newBullet->getDir() == 1){
+                        makeLabel(newBullet, bulletImgR);
+                        newBullet->update();
+                    }
+                }
+            }
+        }
     } else {
-         model.playerInputP(k->key());
+        model.playerInputP(k->key());
     }
 }
 

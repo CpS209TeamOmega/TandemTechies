@@ -8,6 +8,7 @@
 #define ENEMY_H
 
 #include "entity.h"
+#include "sound.h"
 #include <QPixmap>
 
 class Enemy : public Entity {
@@ -41,8 +42,40 @@ public:
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
-    void setDead(bool isDead) { dead = isDead; }
     void setId(int newId) { id = newId; }
+    void setDead(bool die) {dead = die; }
+};
+
+class FlyingEnemy : public Entity {
+    int hSpeed;					  //The FlyingEnemy's velocity
+    int dir;					  //The direction the FlyingEnemy is currently facing
+    bool dead;                    //If the FlyingEnemy is dead
+    int curHeight;                //For the dead animation
+
+    QPixmap feLeft, feRight;
+
+public:
+    //Creates the FlyingEnemy at a certain position
+    //<initLevel> The level that the entity is inside
+    //<initX> The starting x position of the exit
+    //<initY> The starting y position of the exit
+    FlyingEnemy(Level* initLevel, int initX, int initY);
+
+    //Destructor for FlyingEnemy
+    ~FlyingEnemy() { }
+
+    //Updates the FlyingEnemy - all of the code for movement and such
+    void update();
+
+    //Save the status of the FlyingEnemy entity
+    void savePosition(QTextStream &out);
+
+    //Getters
+    int getDir() { return dir; }
+
+    //Setters
+    void setDir(int newDir) { dir = newDir; }
+    void setDead(bool d){ dead = d;}
 };
 
 #endif // ENEMY_H

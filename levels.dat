@@ -23,7 +23,7 @@ level Block Practice
 blocks 3
 points 500
 bbbbbbbbbbbbbbbbb
-b               b
+b    f          b
 b            c  b
 b               b
 b        cc     b
@@ -58,7 +58,7 @@ b  m         b
 bbbbb b b b bb
 bxcccccccccccb
 b            b
-b            b
+b   f    f   b
 b            b
 b  e    e    b
 bbbbbbbbbbbbbb
@@ -95,7 +95,7 @@ b                                                       b
 b       b         bbbbbbbb  b  b b  bbbbb               b
 b       b  eeeeeeee                                     b
 bp      bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb            b
-bbbbb                                         bbbbbbbbbbb
+bbbbb fffffffffffffffffffffffffffffffff       bbbbbbbbbbb
 b                                                       b
 b                                   bbbbbbbbbbbbbbbb    b
 b                bbbbbbbbbbbbbbbbbb                     b
