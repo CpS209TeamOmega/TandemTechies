@@ -93,6 +93,7 @@ public:
     void setNumBlocks(int newNum) { numBlocks = newNum; }
     void setFinished(bool newFinished) { finished = newFinished; }
     void setRemotePlayer(RemotePlayer* rm) { remotePlayer = rm; }
+    void setPlayer(Player* ply){player = ply;}
 
     //Getters
     Player* getPlayer() { return player; }

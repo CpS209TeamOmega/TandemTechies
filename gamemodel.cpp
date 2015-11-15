@@ -18,6 +18,7 @@ GameModel::GameModel()
     currentLevel = 0;
     updateGUI = false;
     lives = 8;
+    cheating = false;
 }
 
 void GameModel::update()
@@ -33,7 +34,6 @@ void GameModel::update()
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
-        cheating = false;
     }
 
 	//Test to see if the user has gotten to the exit
@@ -134,8 +134,9 @@ bool GameModel::load() {
             if(line.startsWith("Level")) { //Level number
                 QStringList list = line.split(" ");
                 setCurrentLevel(list[1].toInt());
+                getCurrentLevel()->load();
                 getCurrentLevel()->removeAllEntities();
-                getCurrentLevel()->removePlaceableBlocks();
+                getCurrentLevel()->removePlaceableBlocks();                
             } else if(line.startsWith("Score")) {
                 QStringList list = line.split(" ");
                 ScoreManager::instance().setScore(list[1].toInt());
@@ -151,12 +152,13 @@ bool GameModel::load() {
                 int x = list[1].toInt();
                 int y = list[2].toInt();
                 int dir = list[3].toInt();
-                Player* p = getCurrentLevel()->getPlayer();
+                Player* p = new Player(getCurrentLevel(), x, y);
                 p->setX(x);                                           //<-------------Crashed while loading game
                 p->setY(y);
                 p->setWidth(Entity::SIZE);
                 p->setHeight(Entity::SIZE);
                 p->setDir(dir);
+                getCurrentLevel()->setPlayer(p);
             } else if(line.startsWith("Enemy")) { //Enemy position
                 QStringList list = line.split(" ");
                 int x = list[1].toInt();
