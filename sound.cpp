@@ -23,6 +23,7 @@ Sound::Sound()
     cheatOff_.setSource(QUrl("qrc:/soundeffects/cheatOff.wav"));
     backGround_.setSource(QUrl("qrc:/soundeffects/back.wav"));
     shoot_.setSource(QUrl("qrc:/soundeffects/shoot.wav"));
+    shoot_.setVolume(0.5);
     dead_.setSource(QUrl("qrc:/soundeffects/dead.wav"));
     colWall_.setSource(QUrl("qrc:/soundeffects/colwall.wav"));
 }

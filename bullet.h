@@ -12,6 +12,7 @@ private:
     int hSpeed;					  //The bullet's velocity
     int dir;					  //The direction the bullet is currently facing
     int curWidth;
+    bool invincible;
 public:
     Bullet(Level* initLevel, int initX, int initY, Player* ply);
 
@@ -21,6 +22,7 @@ public:
     int getDir(){return dir;}
 
     void setFlying(bool f){ flying = f; }
+    void setInvincible(bool i){invincible = i;}
 
     void update();
 

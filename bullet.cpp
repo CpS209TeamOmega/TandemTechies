@@ -24,13 +24,13 @@ void Bullet::update(){
 
         if(dir == -1) { //If going left
             if(level->testCollision(getX() - 1, getY()))  {
-                this->setFlying(false);
                 Sound::instance().colWall();
+                this->setFlying(false);                
             }
         } else if(dir == 1) { //If going right
             if(level->testCollision(getX() + Entity::SIZE + 1, getY())) {
-                this->setFlying(false);
                 Sound::instance().colWall();
+                this->setFlying(false);
             }
         }
 
@@ -42,12 +42,12 @@ void Bullet::update(){
             Enemy* enemy = dynamic_cast<Enemy*> (entities[i]);
             if ((this->isCollidingWith(entities[i]))&&(enemy != nullptr)){
                 enemy->setDead(true);
-                this->setFlying(false);
+                if(!invincible)this->setFlying(false);
             }
             FlyingEnemy* flyingenemy = dynamic_cast<FlyingEnemy*> (entities[i]);
             if ((this->isCollidingWith(entities[i]))&&(flyingenemy != nullptr)){
                 flyingenemy->setDead(true);
-                this->setFlying(false);
+                if(!invincible)this->setFlying(false);
             }
         }
 

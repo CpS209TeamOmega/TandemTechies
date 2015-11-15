@@ -27,6 +27,7 @@ class GameModel
     QString levelDataFile;//The level's data file name
     bool updateGUI;       //When the GUI must be updated to reflect model state
     int lives;
+    bool cheating;
 
 public:
     GameModel();
@@ -69,6 +70,7 @@ public:
     bool mustUpdateGUI() { return updateGUI; }
     int getLevelNumber() { return currentLevel + 1; }
     Level* getCurrentLevel() { return levels[currentLevel]; }
+    bool isCheating(){return cheating;}
 
     //Setters
     void setCurrentLevel(int newLevel);

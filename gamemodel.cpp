@@ -33,6 +33,7 @@ void GameModel::update()
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
+        cheating = false;
     }
 
 	//Test to see if the user has gotten to the exit
@@ -241,8 +242,8 @@ void GameModel::playerInputP(int p){//Press Event Handler
         break;
     case Qt::Key_C:
         getCurrentLevel()->getPlayer()->setCheatJumpHeight();
-    case Qt::Key_F:
-
+        cheating = !cheating;
+        break;
     default:
         break;
     }

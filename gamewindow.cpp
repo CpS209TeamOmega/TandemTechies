@@ -279,10 +279,11 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
         shoot();
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();
-    } else if (k->key() == Qt::Key_F){
+    } else if (k->key() == Qt::Key_Space){
         if(!this->model.getCurrentLevel()->getPlayer()->hasBullet()){
             Bullet* newBullet = model.fire();
             if(newBullet != nullptr) {
+                if(model.isCheating())newBullet->setInvincible(true);
                 if(newBullet->getDir() == -1){
                     makeLabel(newBullet, bulletImg);
                     newBullet->update();
