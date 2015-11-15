@@ -17,6 +17,7 @@
 #include "remoteplayer.h"
 #include "exit.h"
 #include "stdlib.h"
+#include "bullet.h"
 
 //Forward declaration of the entity class, since level
 //refers to entity and entity refers to level.
@@ -32,6 +33,7 @@ class Level
 private:
     QList<QString> data;         //The level's data (for resetting and loading)
     Player* player;             //The player
+    QList<Bullet*> bullets;
     RemotePlayer* remotePlayer; //The other player
     Exit* exit;                 //The level's exit
     QList<QList<Block*>> blocks;//All of the blocks inside the level
@@ -84,12 +86,14 @@ public:
     PlaceableBlock* placeBlock(int x, int y);
     PlaceableBlock* placeBlock ();
 
+    Bullet* fire();
 
     //Setters
     void setName(QString newName) { name = newName; }
     void setNumBlocks(int newNum) { numBlocks = newNum; }
     void setFinished(bool newFinished) { finished = newFinished; }
     void setRemotePlayer(RemotePlayer* rm) { remotePlayer = rm; }
+    void setPlayer(Player* ply){player = ply;}
 
     //Getters
     Player* getPlayer() { return player; }

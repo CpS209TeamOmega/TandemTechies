@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     enemy.cpp \
     remoteplayer.cpp \
     network.cpp \
-    sound.cpp
+    sound.cpp \
+    flyingenemy.cpp \
+    bullet.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -41,7 +43,9 @@ HEADERS  += gamewindow.h\
     enemy.h \
     remoteplayer.h \
     network.h \
-    sound.h
+    sound.h \
+    flyingenemy.h \
+    bullet.h
 
 FORMS    += gamewindow.ui \
     menu.ui
@@ -49,6 +53,7 @@ FORMS    += gamewindow.ui \
 QMAKE_CXXFLAGS += -std=c++11
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    background.qrc
 
 DISTFILES +=

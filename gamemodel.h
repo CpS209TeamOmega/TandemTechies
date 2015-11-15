@@ -14,6 +14,8 @@
 #include "scoremanager.h"
 #include "remoteplayer.h"
 #include "player.h"
+#include "bullet.h"
+
 
 //The class containing all the data and methods
 //for the entire game.
@@ -25,6 +27,7 @@ class GameModel
     QString levelDataFile;//The level's data file name
     bool updateGUI;       //When the GUI must be updated to reflect model state
     int lives;
+    bool cheating;
 
 public:
     GameModel();
@@ -50,6 +53,8 @@ public:
     PlaceableBlock* removeBlock();
     PlaceableBlock* placeBlock(int x, int y);
 
+    Bullet* fire();
+
     //Keyboard Press/Release Event
     void playerInputP(int p);
     void playerInputR(int r);
@@ -65,6 +70,7 @@ public:
     bool mustUpdateGUI() { return updateGUI; }
     int getLevelNumber() { return currentLevel + 1; }
     Level* getCurrentLevel() { return levels[currentLevel]; }
+    bool isCheating(){return cheating;}
 
     //Setters
     void setCurrentLevel(int newLevel);
