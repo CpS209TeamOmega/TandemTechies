@@ -26,6 +26,15 @@
         <file>soundeffects/cheatOff.wav</file>
         <file>soundeffects/cheatOn.wav</file>
         <file>soundeffects/hitGround.wav</file>
+        <file>soundeffects/colwall.wav</file>
+        <file>soundeffects/dead.wav</file>
+        <file>soundeffects/shoot.wav</file>
+        <file>images/b_left.png</file>
+        <file>images/b_right.png</file>
+        <file>images/bc_left.png</file>
+        <file>images/bc_right.png</file>
+        <file>images/fly_e_left.png</file>
+        <file>images/fly_e_right.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>sounds/collectpot.mp3</file>

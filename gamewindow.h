@@ -38,6 +38,10 @@ class GameWindow : public QMainWindow
     QPixmap exitImg;
 	QPixmap placeableImg;
     QPixmap heartImg;
+    QPixmap bulletImg;
+    QPixmap bulletImgR;
+    QPixmap cBulletImg;
+    QPixmap cBulletImgR;
 
     int fps;                //The frames per second the game will run at
 
@@ -53,8 +57,6 @@ public:
 	//This method is called when the level is changed, e.g.
 	//evel 1 to level 2
     void updateGUI();
-
-    void shoot();
 
 	//Performs unit tests to make sure the game is working,
 	//and exits the program if any of them fail.

@@ -10,6 +10,8 @@
 #include "remoteplayer.h"
 #include "network.h"
 #include "sound.h"
+#include "bullet.h"
+
 #include <QLabel>
 #include <QDebug>
 #include <QObject>
@@ -61,6 +63,10 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     check(collectibleImg.load(":/images/collectible.png"));
     check(placeableImg.load(":/images/placeable.png"));
     check(heartImg.load(":/images/heart.png"));
+    check(bulletImg.load(":/images/b_left.png"));
+    check(bulletImgR.load(":/images/b_right.png"));
+    check(cBulletImg.load(":/images/bc_left.png"));
+    check(cBulletImgR.load(":/images/bc_right.png"));
 
     if(!model.loadLevels()) {
         qDebug() << "Couldn't load the levels!";
@@ -143,6 +149,21 @@ void GameWindow::updateGUI() {
 
         Enemy* e = dynamic_cast<Enemy*>(entities[i]);
         if(e) { makeLabel(entities[i], QPixmap()); continue; }
+
+        FlyingEnemy* f = dynamic_cast<FlyingEnemy*>(entities[i]);
+        if(f) { makeLabel(entities[i], QPixmap()); continue; }
+
+        Bullet* b = dynamic_cast<Bullet*>(entities[i]);
+        if(b) {
+            QPixmap map;
+            bool cheat = b->isInvincible();
+            int dir = b->getDir();
+            if(cheat && dir == -1) map = cBulletImg;
+            else if(cheat && dir == 1) map = cBulletImgR;
+            else if(dir == -1) map = bulletImg;
+            else map = bulletImgR;
+            makeLabel(entities[i], map);
+        }
     }
 
     //Create the labels for the blocks in the level
@@ -205,17 +226,20 @@ void GameWindow::showLives() {
 }
 
 void GameWindow::timerHit() {
-        if(model.mustUpdateGUI()) {
-            updateGUI();
-            model.setUpdateGUI(false);
+        if(menu->isHidden()) {
+            if(model.mustUpdateGUI()) {
+                updateGUI();
+                model.setUpdateGUI(false);
+            }
+            model.update();
+            if(otherPlayer) otherPlayer->update();
         }
-        model.update();
-        if(otherPlayer) otherPlayer->update();
 }
 
 GameWindow::~GameWindow()
 {
     delete ui;
+    delete otherPlayer;
 }
 
 //Menu Signal Receiver
@@ -230,10 +254,6 @@ void GameWindow::load() {
     if(!model.load()) {
         qDebug() << "Could not load last save.";
     }
-}
-
-void GameWindow::shoot(){
-
 }
 
 void GameWindow::exit(){
@@ -266,14 +286,32 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
         }
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
     } else if(k->key() == Qt::Key_X){
-	model.getCurrentLevel()->removeBlockX();
+    model.getCurrentLevel()->removeBlockX();
         ui->lblNumBlocks->setText(QString::number(model.getCurrentLevel()->getNumBlocks()));
-    } else if(k->key() == Qt::Key_S){
-        shoot();
     } else if (k->key() == Qt::Key_Escape) {
         menu->show();
+    } else if (k->key() == Qt::Key_Space){
+        if(!this->model.getCurrentLevel()->getPlayer()->hasBullet()){
+            Bullet* b = model.fire();
+            if(b != nullptr) {
+                model.getCurrentLevel()->getPlayer()->setBullet(true);
+
+                if(model.isCheating()) b->setInvincible(true);
+                int dir = b->getDir();
+                QPixmap map;
+                if(model.isCheating() && dir == -1) map = cBulletImg;
+                else if(model.isCheating() && dir == 1) map =  cBulletImgR;
+                else if(dir == -1) map = bulletImg;
+                else map = bulletImgR;
+
+                QString cheat = model.isCheating() ? "c " : "n ";
+                Network::instance().send("Bullet " + cheat + QString::number(b->getX()) + " " + QString::number(b->getY()) + " " + QString::number(b->getDir()));
+
+                makeLabel(b, map);
+            }
+        }
     } else {
-         model.playerInputP(k->key());
+        model.playerInputP(k->key());
     }
 }
 
@@ -329,6 +367,8 @@ void GameWindow::dataReceived() {
             if(id == 1) {
                 Network::instance().send("Level " + QString::number(model.getLevelNumber()));
             }
+            model.resetCurrentLevel();
+            model.setUpdateGUI(true);
             otherPlayer = new RemotePlayer(model.getCurrentLevel(), 0, 0);
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
             QTimer* networkTimer = new QTimer(this);
@@ -351,8 +391,7 @@ void GameWindow::dataReceived() {
                     if(c->getX() == x && c->getY() == y) {
                         ScoreManager::instance().addToScore(c->getPoint());
                         Sound::instance().collect();
-                        c->getBuddy()->deleteLater();
-                        model.getCurrentLevel()->removeEntity(c);
+                        c->setRemoving(true);
                         break;
                     }
                 }
@@ -372,6 +411,23 @@ void GameWindow::dataReceived() {
             PlaceableBlock* block = model.placeBlock(x, y);
             makeLabel(block, placeableImg);
             block->update();
+        } else if(data.startsWith("Bullet")) {
+            QStringList list = data.split(" ");
+            bool cheat = list.at(1) == "c";
+            int x = list.at(2).toInt();
+            int y = list.at(3).toInt();
+            int dir = list.at(4).toInt();
+            Bullet* b = new Bullet(model.getCurrentLevel(), x, y);
+            b->setDir(dir);
+            QPixmap map;
+            if(cheat) b->setInvincible(true);
+            if(cheat && dir == -1) map = cBulletImg;
+            else if(cheat && dir == 1) map = cBulletImgR;
+            else if(dir == -1) map = bulletImg;
+            else map = bulletImgR;
+
+            makeLabel(b, map);
+            model.getCurrentLevel()->getEntities() << b;
         } else if(data.startsWith("Level")) {
             QStringList list = data.split(" ");
             int lvl = list.at(1).toInt();
@@ -379,8 +435,21 @@ void GameWindow::dataReceived() {
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
             model.getCurrentLevel()->load();
             model.setUpdateGUI(true);
+        } else if(data.startsWith("Enemy")) {
+            QStringList list = data.split(" ");
+            int id = list.at(1).toInt();
+            model.getCurrentLevel()->removeEnemyById(id);
+        } else if(data.startsWith("Disconnect")) {
+            QMessageBox::information(this, "Player disconnected", "The other player disconnected!");
+            multiPlayer = false;
+            otherPlayer->getBuddy()->deleteLater();
+            delete otherPlayer;
+            otherPlayer = nullptr;
         } else if(data.startsWith("LEAVE")) {
-
+            QMessageBox::information(this, "Rejected", "Too many players already on server!");
+            multiPlayer = false;
+            delete otherPlayer;
+            otherPlayer = nullptr;
         } else {
             otherPlayer->dataReceived(data);
         }
@@ -396,10 +465,11 @@ void GameWindow::networkTimerHit() {
 }
 
 void GameWindow::serverDisconnected() {
-    QMessageBox::information(this, "End of the World!", "AHHHHHH THE SERVER DISCONNECTED!!! :(");
+    QMessageBox::information(this, "End of the World!", "<b style=\"color:red\">AHHHHHH THE SERVER DISCONNECTED!!! :(</b>");
     menu->show();
 }
 
 void GameWindow::socketError(QAbstractSocket::SocketError) {
-    qDebug() << "COULDN'T CONNECT";
+    QMessageBox::information(this, "Couldn't connect!", "Couldn't connect to the server<br>Make sure the IP address is right.");
+    menu->show();
 }
