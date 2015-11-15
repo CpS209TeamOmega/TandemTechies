@@ -14,7 +14,8 @@ class Enemy : public Entity {
     int hSpeed;					  //The enemy's velocity
     int dir;					  //The direction the enemy is currently facing
     bool dead;                    //If the enemy is dead
-    int curHeight;                //For the dead animation
+    int curHeight;                //For the dead
+    int id;                       //For removing enemies
 
     QPixmap eLeft, eRight;
 
@@ -36,9 +37,12 @@ public:
 
     //Getters
     int getDir() { return dir; }
+    int getId() { return id; }
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
+    void setDead(bool isDead) { dead = isDead; }
+    void setId(int newId) { id = newId; }
 };
 
 #endif // ENEMY_H

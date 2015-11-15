@@ -1,4 +1,6 @@
 #include "level.h"
+
+#include "network.h"
 #include "enemy.h"
 #include "sound.h"
 
@@ -34,6 +36,7 @@ void Enemy::update() {
             QRect test(getX(), getY(), getWidth(), 32);
             if(p->isInvincible() || test.contains(p->getX(), p->getY() + p->getHeight()) || test.contains(p->getX() + p->getWidth(), p->getY() + p->getHeight())) {
                 Sound::instance().killedEnemy();
+                Network::instance().send("Enemy " + QString::number(id));
                 dead = true;
                 p->setVib(true);
             } else {

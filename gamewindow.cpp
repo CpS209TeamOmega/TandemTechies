@@ -310,6 +310,8 @@ void GameWindow::dataReceived() {
             if(id == 1) {
                 Network::instance().send("Level " + QString::number(model.getLevelNumber()));
             }
+            model.resetCurrentLevel();
+            model.setUpdateGUI(true);
             otherPlayer = new RemotePlayer(model.getCurrentLevel(), 0, 0);
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
             QTimer* networkTimer = new QTimer(this);
@@ -359,6 +361,16 @@ void GameWindow::dataReceived() {
             model.setCurrentLevel(lvl - 1);
             model.getCurrentLevel()->setRemotePlayer(otherPlayer);
             model.getCurrentLevel()->load();
+            model.setUpdateGUI(true);
+        } else if(data.startsWith("Enemy")) {
+            QStringList list = data.split(" ");
+            int id = list.at(1).toInt();
+            model.getCurrentLevel()->removeEnemyById(id);
+        } else if(data.startsWith("Disconnect")) {
+            QMessageBox::information(this, "Player disconnected", "The other player disconnected!");
+            otherPlayer->getBuddy()->deleteLater();
+            delete otherPlayer;
+            model.resetCurrentLevel();
             model.setUpdateGUI(true);
         } else if(data.startsWith("LEAVE")) {
 

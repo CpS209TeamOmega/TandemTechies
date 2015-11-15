@@ -79,6 +79,17 @@ bool Level::testCollision(int testX, int testY) {
     return blocks[testY][testX] != nullptr;     //Return true if a block exists in that position
 }
 
+void Level::removeEnemyById(int id) {
+    for(int i = 0; i < entities.size(); i++) {
+        Enemy* enemy = dynamic_cast<Enemy*>(entities[i]);
+        if(enemy) {
+            if(enemy->getId() == id) {
+                enemy->setDead(true);
+            }
+        }
+    }
+}
+
 void Level::removeEntity(Entity *e) {
     entities.removeOne(e);
     delete e;
@@ -113,6 +124,7 @@ void Level::load() {
     name = data[0].mid(6);
     numBlocks = data[1].mid(7).toInt();
     pointPlus = data[2].mid(7).toInt();
+    int id = 0;
 
     for(int y = 3; y < data.size(); y++) {
         QList<Block*> list;							//The blocks in the current row
@@ -136,6 +148,7 @@ void Level::load() {
             } else if(type == 'e') {
                 list << nullptr;
                 Enemy* e = new Enemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                e->setId(id++);
                 entities << e;
             } else if(type == ' ') {				//If it is an empty space
                 list << nullptr;
