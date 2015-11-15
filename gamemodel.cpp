@@ -5,7 +5,6 @@
 
 #include "gamemodel.h"
 #include "enemy.h"
-#include "flyingenemy.h"
 #include "sound.h"
 #include "network.h"
 #include <QFile>
@@ -150,6 +149,16 @@ bool GameModel::load() {
             } else if(line.startsWith("Lives")) {
                 QStringList list = line.split(" ");
                 lives = list[1].toInt();
+            } else if(line.startsWith("Bullet")) {
+                QStringList list = line.split(" ");
+                bool cheat = list.at(1) == "c";
+                int x = list.at(2).toInt();
+                int y = list.at(3).toInt();
+                int dir = list.at(4).toInt();
+                Bullet* b = new Bullet(getCurrentLevel(), x, y);
+                b->setDir(dir);
+                b->setInvincible(cheat);
+                getCurrentLevel()->getEntities() << b;
             } else if(line.startsWith("Player")) { //Player position
                 QStringList list = line.split(" ");
                 int x = list[1].toInt();
@@ -201,11 +210,12 @@ void GameModel::resetCurrentLevel() {
     ScoreManager::instance().update();
     QList<QString> data = level->getData();
     Level* newLevel = new Level(data, this);
+    newLevel->load();
     levels.removeOne(level);
     delete level;
     cheating = false;
     levels.insert(currentLevel, newLevel);
-    newLevel->load();
+    updateGUI = true;
 }
 
 GameModel::~GameModel() {

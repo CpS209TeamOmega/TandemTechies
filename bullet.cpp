@@ -2,18 +2,15 @@
 #include "level.h"
 #include "sound.h"
 #include "enemy.h"
-#include "flyingenemy.h"
 
 
 
-Bullet::Bullet(Level* initLevel, int initX, int initY, Player* ply)
+Bullet::Bullet(Level* initLevel, int initX, int initY)
        :Entity(initLevel, initX, initY)
 {
-    player = ply;
-    dir = ply->getDir();
+    dir = 1;
     hSpeed = 12;
     flying = true;
-    ply->setBullet(true);
     Sound::instance().shoot();
     curWidth = Entity::SIZE;
     invincible = false;
@@ -67,4 +64,7 @@ void Bullet::update(){
     }
 }
 
-void Bullet::savePosition(QTextStream &out){out << "";}
+void Bullet::savePosition(QTextStream &out){
+    QString cheat = invincible ? "c " : "n ";
+    out << "Bullet " << cheat << QString::number(getX()) << " " << QString::number(getY()) << " " << QString::number(dir) << "\n";
+}
