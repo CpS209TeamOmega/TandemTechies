@@ -65,6 +65,7 @@ void GameModel::levelFinished() {
         resetGame();
     }
     getCurrentLevel()->load();
+    cheating = false;
     updateGUI = true;
 }
 
@@ -72,6 +73,7 @@ void GameModel::resetGame() {
     for(int i = 0; i < levels.size(); i++) {
         delete levels[i];
     }
+    cheating = false;
     levels.clear();
     loadLevels();
 }
@@ -135,6 +137,7 @@ bool GameModel::load() {
                 QStringList list = line.split(" ");
                 setCurrentLevel(list[1].toInt());
                 getCurrentLevel()->load();
+                cheating = false;
                 getCurrentLevel()->removeAllEntities();
                 getCurrentLevel()->removePlaceableBlocks();                
             } else if(line.startsWith("Score")) {
@@ -200,6 +203,7 @@ void GameModel::resetCurrentLevel() {
     Level* newLevel = new Level(data, this);
     levels.removeOne(level);
     delete level;
+    cheating = false;
     levels.insert(currentLevel, newLevel);
     newLevel->load();
 }
