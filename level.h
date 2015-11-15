@@ -76,6 +76,10 @@ public:
     //Removes all placeable blocks from the level
     void removePlaceableBlocks();
 
+    //Removes the enemy with the id [id]
+    //<id> The id of the enemy
+    void removeEnemyById(int id);
+
     //Removes the block at the position given
     void removeBlock(int x, int y);
     PlaceableBlock* removeBlockX();
