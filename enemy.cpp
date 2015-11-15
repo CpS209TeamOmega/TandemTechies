@@ -35,7 +35,6 @@ void Enemy::update() {
         if(isCollidingWith(p)) {
             QRect test(getX(), getY(), getWidth(), 32);
             if(p->isInvincible() || test.contains(p->getX(), p->getY() + p->getHeight()) || test.contains(p->getX() + p->getWidth(), p->getY() + p->getHeight())) {
-                Sound::instance().killedEnemy();
                 Network::instance().send("Enemy " + QString::number(id));
                 dead = true;
                 p->setVib(true);
@@ -96,7 +95,7 @@ void FlyingEnemy::update() {
         if(isCollidingWith(p)) {
             QRect test(getX(), getY(), getWidth(), 32);
             if(p->isInvincible() || test.contains(p->getX(), p->getY() + p->getHeight()) || test.contains(p->getX() + p->getWidth(), p->getY() + p->getHeight())) {
-
+                Network::instance().send("Enemy " + QString::number(id));
                 dead = true;
                 p->setVib(true);
             } else {

@@ -38,6 +38,9 @@ public:
 
     //Deletes the collectible from the level and also from the GUI
     void deleteCollectible();
+
+    //Sets the collectible to go away - similar to deleteLater();
+    void setRemoving(bool isRemoving) { removing = isRemoving; }
 };
 
 #endif // COLLECTIBLE_H

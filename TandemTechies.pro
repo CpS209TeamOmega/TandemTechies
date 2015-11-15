@@ -49,5 +49,6 @@ FORMS    += gamewindow.ui \
     menu.ui
 
 RESOURCES += \
-    resources.qrc \
-    background.qrc
+    resources.qrc
+
+QMAKE_CXXFLAGS += -std=c++11

@@ -51,6 +51,7 @@ class FlyingEnemy : public Entity {
     int dir;					  //The direction the FlyingEnemy is currently facing
     bool dead;                    //If the FlyingEnemy is dead
     int curHeight;                //For the dead animation
+    int id;                       //For server interaction
 
     QPixmap feLeft, feRight;
 
@@ -72,10 +73,12 @@ public:
 
     //Getters
     int getDir() { return dir; }
+    int getId() { return id; }
 
     //Setters
     void setDir(int newDir) { dir = newDir; }
     void setDead(bool d){ dead = d;}
+    void setId(int newId) { id = newId; }
 };
 
 #endif // ENEMY_H

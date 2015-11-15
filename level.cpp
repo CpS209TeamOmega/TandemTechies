@@ -86,6 +86,15 @@ void Level::removeEnemyById(int id) {
         if(enemy) {
             if(enemy->getId() == id) {
                 enemy->setDead(true);
+                break;
+            }
+        }
+
+        FlyingEnemy* fly = dynamic_cast<FlyingEnemy*>(entities[i]);
+        if(fly) {
+            if(fly->getId() == id) {
+                fly->setDead(true);
+                break;
             }
         }
     }
@@ -126,15 +135,11 @@ Bullet* Level::fire(){
 
     if(x <= 0 || y <= 0) return nullptr;
 
-    Bullet* b = new Bullet(this, x, y, player);
+    Bullet* b = new Bullet(this, x, y);
+    b->setDir(player->getDir());
 
-    if(b){
-        entities << b;
-        return b;
-    }
-
-    return nullptr;
-
+    entities << b;
+    return b;
 }
 
 void Level::load() {
@@ -171,6 +176,7 @@ void Level::load() {
             } else if(type == 'f') {
                 list << nullptr;
                 FlyingEnemy* f = new FlyingEnemy(this, x * Entity::SIZE, (y - 3) * Entity::SIZE);
+                f->setId(id++);
                 entities << f;
             } else if(type == ' ') {				//If it is an empty space
                 list << nullptr;
@@ -182,102 +188,102 @@ void Level::load() {
 
 
 PlaceableBlock* Level::placeBlock(int x, int y) {
-PlaceableBlock* block = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
-Sound::instance().placeBlock();
-blocks[y][x] = block;
-return block;
+    PlaceableBlock* block = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
+    Sound::instance().placeBlock();
+    blocks[y][x] = block;
+    return block;
 }
 
 PlaceableBlock* Level::placeBlock(){
-int x = 0, y = 0;
-if(player->getDir() == -1){
-x = player->getX() - Entity::SIZE + 2;
-y = player->getY();
-} else if(player->getDir() == 1){
-x = player->getX() + Entity::SIZE * 2 - 2;
-y = player->getY();
-}
+    int x = 0, y = 0;
+    if(player->getDir() == -1){
+        x = player->getX() - Entity::SIZE + 2;
+        y = player->getY();
+    } else if(player->getDir() == 1){
+        x = player->getX() + Entity::SIZE * 2 - 2;
+        y = player->getY();
+    }
 
-if(x < 0 || y < 0) return nullptr;
+    if(x < 0 || y < 0) return nullptr;
 
-x /= Entity::SIZE;					 //Make the x position the array x position
-y /= Entity::SIZE;					 //Make the y position the array y position
+    x /= Entity::SIZE;					 //Make the x position the array x position
+    y /= Entity::SIZE;					 //Make the y position the array y position
 
-if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
-if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
+    if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
+    if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
 
-if(blocks[y][x] == nullptr) {
-if(numBlocks) {
-    PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
-    for(int i = 0; i < entities.size(); i++) {
-        if(entities[i]->isCollidingWith(b)) {
-            delete b;
-            return nullptr;
+    if(blocks[y][x] == nullptr) {
+        if(numBlocks) {
+            PlaceableBlock* b = new PlaceableBlock(this, x * Entity::SIZE, y * Entity::SIZE);
+            for(int i = 0; i < entities.size(); i++) {
+                if(entities[i]->isCollidingWith(b)) {
+                    delete b;
+                    return nullptr;
+                }
+            }
+            if(exit->isCollidingWith(b)) {
+                delete b;
+                return nullptr;
+            }
+            if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
+                Sound::instance().placeBlock();
+                Network::instance().send("Block " + QString::number(x) + " " + QString::number(y));
+                blocks[y][x] = b;
+                b->setCreating(true);
+                numBlocks--;
+                return b;
+            } else {
+                delete b;
+                return nullptr;
+            }
         }
     }
-    if(exit->isCollidingWith(b)) {
-        delete b;
-        return nullptr;
-    }
-    if(testCollision(b->getX(), b->getY() + Entity::SIZE)) {
-        Sound::instance().placeBlock();
-        Network::instance().send("Block " + QString::number(x) + " " + QString::number(y));
-        blocks[y][x] = b;
-        b->setCreating(true);
-        numBlocks--;
-        return b;
-    } else {
-        delete b;
-        return nullptr;
-    }
-}
-}
-return nullptr;
+    return nullptr;
 }
 
 PlaceableBlock* Level::removeBlockX(){
-int x = 0, y = 0;
-if(player->getDir() == -1){
-x = player->getX() - Entity::SIZE + 2;
-y = player->getY();
-} else if(player->getDir() == 1){
-x = player->getX() + Entity::SIZE * 2 - 2;
-y = player->getY();
-}
+    int x = 0, y = 0;
+    if(player->getDir() == -1){
+        x = player->getX() - Entity::SIZE + 2;
+        y = player->getY();
+    } else if(player->getDir() == 1){
+        x = player->getX() + Entity::SIZE * 2 - 2;
+        y = player->getY();
+    }
 
-if(x < 0 || y < 0) return nullptr;
+    if(x < 0 || y < 0) return nullptr;
 
-x /= Entity::SIZE;					 //Make the x position the array x position
-y /= Entity::SIZE;					 //Make the y position the array y position
+    x /= Entity::SIZE;					 //Make the x position the array x position
+    y /= Entity::SIZE;					 //Make the y position the array y position
 
-if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
-if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
+    if(x >= blocks[0].size()) return nullptr; //Make sure the x is inside the level
+    if(y >= blocks.size()) return nullptr;    //Make sure the y is inside the level
 
-if(blocks[y][x] != nullptr){
-PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
-if(test != nullptr && !test->isCreating() && !test->isDeleting()) {
-    Sound::instance().removeBlock();
-    Network::instance().send("Remove " + QString::number(x) + " " + QString::number(y));
-    test->setDeleting(true);
-    numBlocks++;
-}
-}
-return nullptr;
+    if(blocks[y][x] != nullptr){
+        PlaceableBlock* test = dynamic_cast<PlaceableBlock*>(blocks[y][x]);
+        if(test != nullptr && !test->isCreating() && !test->isDeleting()) {
+            Sound::instance().removeBlock();
+            Network::instance().send("Remove " + QString::number(x) + " " + QString::number(y));
+            test->setDeleting(true);
+            numBlocks++;
+        }
+    }
+    return nullptr;
 }
 
 void Level::save(QTextStream &out) {
-out << "Score " << ScoreManager::instance().getCurScore() << "\n";
-out << "Numblocks " << numBlocks << "\n";
+    out << "Score " << ScoreManager::instance().getCurScore() << "\n";
+    out << "Numblocks " << numBlocks << "\n";
 
-player->savePosition(out);
+    player->savePosition(out);
 
-for(int i = 0; i < entities.size(); i++) {
-entities[i]->savePosition(out);
-}
+    for(int i = 0; i < entities.size(); i++) {
+        entities[i]->savePosition(out);
+    }
 
-for(int y = 0; y < blocks.size(); y++) {
-for(int x = 0; x < blocks[y].size(); x++) {
-    if(blocks[y][x]) blocks[y][x]->savePosition(out);
-}
-}
+    for(int y = 0; y < blocks.size(); y++) {
+        for(int x = 0; x < blocks[y].size(); x++) {
+            if(blocks[y][x]) blocks[y][x]->savePosition(out);
+        }
+    }
 }

@@ -3,10 +3,16 @@
 
 #include <QThread>
 #include <QSoundEffect>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 class Sound
 {
     Sound();
+    ~Sound();
+
+    QMediaPlayer player;
+    QMediaPlaylist* playlist;
 
     QSoundEffect endLevel_;
     QSoundEffect gameOver_;
@@ -17,7 +23,6 @@ class Sound
     QSoundEffect hitGround_;
     QSoundEffect cheatOn_;
     QSoundEffect cheatOff_;
-    QSoundEffect backGround_;
     QSoundEffect shoot_;
     QSoundEffect dead_;
     QSoundEffect colWall_;
