@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     enemy.cpp \
     remoteplayer.cpp \
     network.cpp \
-    sound.cpp
+    sound.cpp \
+    scoredisplay.cpp
 
 HEADERS  += gamewindow.h\
         entity.h\
@@ -41,7 +42,8 @@ HEADERS  += gamewindow.h\
     enemy.h \
     remoteplayer.h \
     network.h \
-    sound.h
+    sound.h \
+    scoredisplay.h
 
 FORMS    += gamewindow.ui \
     menu.ui \

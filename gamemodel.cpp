@@ -29,6 +29,9 @@ void GameModel::update()
         Sound::instance().gameOver();
         getCurrentLevel()->getPlayer()->setDead(false);
         lives--;
+        if(lives <= 0) {
+            emit gameFinished(true);
+        }
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
@@ -59,7 +62,8 @@ void GameModel::levelFinished() {
     Sound::instance().endLevel();
     currentLevel++;
     if(currentLevel >= levels.size()) {
-        ScoreManager::instance().addHighScore("billy", ScoreManager::instance().getCurScore());
+        ScoreManager::instance().addHighScore("Winner", ScoreManager::instance().getCurScore());
+        emit gameFinished(true);
         resetGame();
     }
     getCurrentLevel()->load();

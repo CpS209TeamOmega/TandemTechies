@@ -17,8 +17,10 @@
 
 //The class containing all the data and methods
 //for the entire game.
-class GameModel
+class GameModel : public QObject
 {
+    Q_OBJECT
+
     QLabel* back;
     QList<Level*> levels; //All of the current levels loaded into memory
     int currentLevel;     //The current level you are on in the levels QList
@@ -72,6 +74,8 @@ public:
     void setUpdateGUI(bool newValue) { updateGUI = newValue; }
     void setLives(int newLives) { lives = newLives; }
 
+signals:
+    void gameFinished(bool done);
 };
 
 #endif // GAMEMODEL_H

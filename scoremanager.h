@@ -14,11 +14,11 @@
 #include <QFile>
 
 #include "block.h"
+#include "menu.h"
 #include "collectible.h"
 
 class ScoreManager
 {
-
 private:
     //The file to save the scores to
     QFile file;
@@ -26,14 +26,13 @@ private:
     //The virtual score "dashboard"
     QHash<QString, int> dashBoard;
 
-    QLabel *scorePanel;
     QLabel *buddy;
 
     //the in-game score
     int curScore;
 
     //private constructor
-    ScoreManager() : curScore(0) { }
+    ScoreManager() : file("scores.txt"), curScore(0) { }
 
 public:
     //Return the highest score ever
@@ -44,16 +43,16 @@ public:
 
     //<player> The player's name
     //<score> The score the player got
-    bool addHighScore(QString player, int score);//Add to scoreTable and update dashBoard
+    void addHighScore(QString player, int score);//Add to scoreTable and update dashBoard
 
     //Return the records of scores and players
     QHash<QString, int> getAllScores();
 
     //Saves the scores to the file
-    void saveScores();
+    void writeScores();
 
     //Loads all of the scores from file
-    void loadScores();
+    QString readScores();
 
     //Updates the label on the screen
     void update();

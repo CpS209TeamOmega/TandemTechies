@@ -39,46 +39,65 @@ int ScoreManager::addToScore(int plusScore)
     return curScore;
 }
 
-bool ScoreManager::addHighScore(QString player, int score)
+void ScoreManager::addHighScore(QString player, int score)
 {
-    //after game has ended.....
     dashBoard.insert(player, score);
-    return 0;
-}
 
-void ScoreManager::saveScores()
-{
     if(!file.open(QIODevice::WriteOnly))
     {
-        qDebug() << "Could not save scores!";
-        return;
-    }
-
-    //loops through all the current scores and stores them in the file
-    QHash<QString, int>::const_iterator i = dashBoard.constBegin();
-    QTextStream out(&file);
-    while (i != dashBoard.constEnd())
-    {
-        out << i.key() << ": " << i.value() << "\n";
-    }
-}
-
-void ScoreManager::loadScores()
-{
-    if(!file.open(QIODevice::WriteOnly))
-    {
-        qDebug() << "Could not load scores!";
+        qDebug() << "Could not open file.";
         return;
     }
     else
     {
+        QTextStream out(&file);
+//        QString line = out.readLine();
+//        while(!line.isNull())
+//        {
+//            line = out.readLine();
+//            out << line;
+//        }
+        out << player << ": " << score << "\n";
+    }
+}
+
+void ScoreManager::writeScores()
+{
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        qDebug() << "Could not write scores!";
+        return;
+    }
+    else
+    {
+        //loops through all the current scores and stores them in the file
+        QHash<QString, int>::const_iterator i = dashBoard.constBegin();
+        QTextStream out(&file);
+        while (i != dashBoard.constEnd())
+        {
+            out << i.key() << ": " << i.value() << "\n";
+        }
+    }
+}
+
+QString ScoreManager::readScores()
+{
+    QString line;
+    if(!file.open(QIODevice::WriteOnly))
+    {
+        qDebug() << "Could not read scores!";
+        return 0;
+    }
+    else
+    {
         QTextStream in(&file);
-        QString line = in.readLine();
+        line = in.readLine();
         while(!line.isNull())
         {
             line = in.readLine();
         }
     }
+    return line;
 }
 
 //singleton

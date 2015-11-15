@@ -17,7 +17,6 @@
 #include "entity.h"
 #include "menu.h"
 #include "scoremanager.h"
-#include "scoredisplay.h"
 
 namespace Ui
 {
@@ -77,6 +76,9 @@ public:
 private:
     Ui::GameWindow *ui;
 
+signals:
+    void scores();
+
 private slots:
     void timerHit();        //When the timer goes off for the next frame update
     void networkTimerHit();
@@ -84,6 +86,7 @@ private slots:
     void start(QString server);
     void load();
     void exit();
+    void endGame(bool done);
 
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *k);

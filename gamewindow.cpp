@@ -47,7 +47,7 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     connect(menu, SIGNAL(startGame(QString)), this, SLOT(start(QString)));
     connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
     connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
-    connect(menu, SIGNAL(highScores()), this, SLOT(scores()));
+    connect(&model, SIGNAL(gameFinished(bool)), this, SLOT(endGame(bool)));
 
     //Connect server signals
     Network::instance();
@@ -275,6 +275,24 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
     } else {
          model.playerInputP(k->key());
     }
+}
+
+void GameWindow::endGame(bool done)
+{
+    if(done)
+    {
+        QMessageBox::information(this, "YOU LOST", "You lost all your lives. Try again.");
+        ScoreManager::instance().addHighScore("Loser", ScoreManager::instance().getCurScore());
+        emit scores();
+
+    }
+    else
+    {
+        QMessageBox::information(this, "CONGRATULATIONS", "You won!");
+        ScoreManager::instance().addHighScore("Winner", ScoreManager::instance().getCurScore());
+        emit scores();
+    }
+    close();
 }
 
 void GameWindow::focusOutEvent(QFocusEvent *) {
