@@ -27,6 +27,7 @@ SOURCES += main.cpp\
     remoteplayer.cpp \
     network.cpp \
     sound.cpp \
+    scoredisplay.cpp \
     bullet.cpp
 
 HEADERS  += gamewindow.h\
@@ -43,10 +44,12 @@ HEADERS  += gamewindow.h\
     remoteplayer.h \
     network.h \
     sound.h \
+    scoredisplay.h \
     bullet.h
 
 FORMS    += gamewindow.ui \
-    menu.ui
+    menu.ui \
+    scoredisplay.ui
 
 RESOURCES += \
     resources.qrc

@@ -4,31 +4,10 @@
 //**********************************************************
 
 #include "scoremanager.h"
-
-#include <QtSql/QSqlDatabase>
-#include <QFile>
 #include <QDebug>
 
-int ScoreManager::getHiScore()
+void ScoreManager::update()
 {
-    int highScore = 0;
-    QHash<QString, int>::const_iterator i = dashBoard.constBegin();
-    while (i != dashBoard.constEnd())
-    {
-        if(highScore < i.value())
-        {
-            highScore = i.value();
-            i++;
-        }
-        else
-        {
-            i++;
-        }
-    }
-    return highScore;
-}
-
-void ScoreManager::update() {
     buddy->setText(QString::number(curScore));
 }
 
@@ -39,49 +18,39 @@ int ScoreManager::addToScore(int plusScore)
     return curScore;
 }
 
-bool ScoreManager::addHighScore(QString player, int score)
+void ScoreManager::addHighScore(QString player)
 {
-    //after game has ended.....
-    dashBoard.insert(player, score);
-    return 0;
-}
-
-void ScoreManager::saveScores()
-{
-    //create file to save information to
-    QFile saveFile(fileName);
-    if(!saveFile.open(QIODevice::WriteOnly))
+    if(!file.open(QIODevice::Append | QIODevice::Text))
     {
-        qDebug() << "Could not save scores!";
-        return;
-    }
-
-    //loops through all the current scores and stores them in the file
-    QHash<QString, int>::const_iterator i = dashBoard.constBegin();
-    QTextStream out(&saveFile);
-    while (i != dashBoard.constEnd())
-    {
-        out << i.key() << ": " << i.value();
-    }
-}
-
-void ScoreManager::loadScores()
-{
-    QFile saveFile(fileName);
-    if(!saveFile.open(QIODevice::WriteOnly))
-    {
-        qDebug() << "Could not load scores!";
+        qDebug() << "Could not open file.";
         return;
     }
     else
     {
-        QTextStream in(&saveFile);
-        QString line = in.readLine();
-        while(!line.isNull())
+        QTextStream out(&file);
+        out << "\n" << player << ": " << curScore << "\n";
+    }
+    file.close();
+}
+
+QStringList ScoreManager::readScores()
+{
+    QStringList lines;
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Could not read scores!";
+        return lines;
+    }
+    else
+    {
+        QTextStream in(&file);
+        while(!in.atEnd())
         {
-            line = in.readLine();
+            lines << in.readLine();
         }
     }
+    file.close();
+    return lines;
 }
 
 //singleton

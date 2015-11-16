@@ -55,6 +55,7 @@ void Menu::on_btnStart_clicked()
 
     emit startGame(server);
     hide();
+
 }
 
 void Menu::on_btnLoad_clicked()
@@ -85,4 +86,9 @@ void Menu::on_btnMulti_clicked()
     } else {
         ui->btnSingle->setChecked(true);
     }
+}
+
+void Menu::on_btnHighScores_clicked()
+{
+    emit highScores();
 }

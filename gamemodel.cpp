@@ -30,6 +30,9 @@ void GameModel::update()
         Sound::instance().gameOver();
         getCurrentLevel()->getPlayer()->setDead(false);
         lives--;
+        if(lives <= 0) {
+            emit gameFinished(true);
+        }
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
@@ -60,7 +63,7 @@ void GameModel::levelFinished() {
     Sound::instance().endLevel();
     currentLevel++;
     if(currentLevel >= levels.size()) {
-        currentLevel = 0;
+        emit gameFinished(true);
         resetGame();
     }
     getCurrentLevel()->load();
@@ -73,8 +76,10 @@ void GameModel::resetGame() {
         delete levels[i];
     }
     cheating = false;
+    currentLevel = 0;
     levels.clear();
     loadLevels();
+    lives = 8;
 }
 
 bool GameModel::loadLevels() {

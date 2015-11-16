@@ -16,6 +16,8 @@
 #include "remoteplayer.h"
 #include "entity.h"
 #include "menu.h"
+#include "scoremanager.h"
+#include "scoredisplay.h"
 
 namespace Ui
 {
@@ -26,8 +28,9 @@ class GameWindow : public QMainWindow
 {
     Q_OBJECT
 
-    GameModel model;        //For the GUI/model interactions
-    Menu* menu;             //The Game menu
+    GameModel model;          //For the GUI/model interactions
+    Menu* menu;               //The Game menu
+    ScoreDisplay* display;
     RemotePlayer* otherPlayer;
     bool multiPlayer;
 
@@ -77,6 +80,9 @@ public:
 private:
     Ui::GameWindow *ui;
 
+signals:
+    void scores();
+
 private slots:
     void timerHit();        //When the timer goes off for the next frame update
     void networkTimerHit();
@@ -84,6 +90,8 @@ private slots:
     void start(QString server);
     void load();
     void exit();
+    void endGame(bool done);
+    void highScores();
 
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *k);

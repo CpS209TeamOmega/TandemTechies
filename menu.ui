@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>713</width>
-    <height>496</height>
+    <width>752</width>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,9 @@
   <widget class="QPushButton" name="btnStart">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>260</x>
      <y>240</y>
-     <width>241</width>
+     <width>251</width>
      <height>61</height>
     </rect>
    </property>
@@ -57,9 +57,9 @@ color:white;</string>
   <widget class="QPushButton" name="btnLoad">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>260</x>
      <y>310</y>
-     <width>241</width>
+     <width>251</width>
      <height>61</height>
     </rect>
    </property>
@@ -252,9 +252,9 @@ color:white;</string>
   <widget class="QPushButton" name="btnExit">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>260</x>
      <y>380</y>
-     <width>241</width>
+     <width>251</width>
      <height>61</height>
     </rect>
    </property>
@@ -285,7 +285,7 @@ color:white;
   <widget class="QLabel" name="lblLogo">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>10</y>
      <width>541</width>
      <height>201</height>
@@ -335,7 +335,7 @@ color:white;
   <widget class="QPushButton" name="btnMulti">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>590</x>
      <y>320</y>
      <width>81</width>
      <height>81</height>
@@ -364,6 +364,39 @@ color:white;
    </property>
    <property name="checked">
     <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnHighScores">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>450</y>
+     <width>251</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>CrossCursor</cursorShape>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 30pt &quot;Anatolian&quot;;
+background-color: rgb(100,0,0);
+border-color:white;
+border-radius:20px;
+color:white;
+</string>
+   </property>
+   <property name="text">
+    <string>High Scores</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
    </property>
   </widget>
  </widget>

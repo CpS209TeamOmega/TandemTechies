@@ -10,6 +10,8 @@
 #include <QWidget>
 #include <QCloseEvent>
 
+#include "scoremanager.h"
+
 namespace Ui {
 class Menu;
 }
@@ -33,6 +35,8 @@ private slots:
 
     void on_btnMulti_clicked();
 
+    void on_btnHighScores_clicked();
+
 private:
     Ui::Menu *ui;
 
@@ -40,6 +44,7 @@ signals:
     void startGame(QString server);
     void loadGame();
     void exitGame();
+    void highScores();
 };
 
 #endif // MENU_H
