@@ -53,7 +53,7 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
     connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
     connect(menu, SIGNAL(highScores()), this, SLOT(highScores()));
-    connect(&model, SIGNAL(gameFinished(bool)), this, SLOT(endGame(bool)));
+    connect(&model, SIGNAL(gameFinished(bool, bool)), this, SLOT(endGame(bool, bool)));
 
     //Connect server signals
     Network::instance();
@@ -324,36 +324,45 @@ void GameWindow::highScores() {
     display->show();
 }
 
-void GameWindow::endGame(bool done)
+void GameWindow::endGame(bool done, bool server)
 {
-    if(done)
+    QString ans = done ? "y" : "n";
+    if(!server) Network::instance().send("GameOver " + ans);
+
+    if(!done)
     {
-        QMessageBox::information(this, "YOU LOST", "You lost all your lives. Try again.");
+        QMessageBox::information(this, "Game Over", "<b style=\"color:red;\">You have died.</b>");
     }
     else
     {
-        QMessageBox::information(this, "CONGRATULATIONS", "You won!");
+        QMessageBox::information(this, "CONGRATULATIONS", "<b style=\"color:green;\">You won!</b>");
     }
 
     bool ok = false;
+    QString userName;
     while(!ok)
     {
-        QString userName = QInputDialog::getText(this, "High Score!", "Enter Your Name:", QLineEdit::Normal, "Banana", &ok);
-        ScoreManager::instance().addHighScore(userName);
+        userName = QInputDialog::getText(this, "High Score!", "Enter Your Name:", QLineEdit::Normal, "Banana", &ok);
+        if(userName.isEmpty()) ok = false;
     }
+    ScoreManager::instance().addHighScore(userName);
 
     display->update();
     display->show();
 
-    model.resetGame();
+    if(done && !server) model.resetGame();
 }
 
 void GameWindow::focusOutEvent(QFocusEvent *) {
-    model.getCurrentLevel()->getPlayer()->clearFlags();
+    if(model.getCurrentLevel()) {
+        model.getCurrentLevel()->getPlayer()->clearFlags();
+    }
 }
 
 void GameWindow::leaveEvent(QEvent *) {
-    model.getCurrentLevel()->getPlayer()->clearFlags();
+    if(model.getCurrentLevel()) {
+        model.getCurrentLevel()->getPlayer()->clearFlags();
+    }
 }
 
 void GameWindow::keyReleaseEvent(QKeyEvent *k){
@@ -396,6 +405,10 @@ void GameWindow::dataReceived() {
         } else if(data == "Reset") {
             model.resetCurrentLevel();
             updateGUI();
+        } else if(data == "GameOver") {
+            QStringList list = data.split(" ");
+            bool success = (list.at(1) == "y");
+            endGame(success, true);
         } else if(data.startsWith("Collectible")) {
             QStringList list = data.split(" ");
             int x = list.at(1).toInt();
@@ -472,11 +485,13 @@ void GameWindow::dataReceived() {
 }
 
 void GameWindow::networkTimerHit() {
-    Player* p = model.getCurrentLevel()->getPlayer();
-    int x = p->getX();
-    int y = p->getY();
-    int dir = p->getDir();
-    Network::instance().send(QString::number(x) + " " + QString::number(y) + " " + QString::number(dir));
+    if(model.getCurrentLevel()) {
+        Player* p = model.getCurrentLevel()->getPlayer();
+        int x = p->getX();
+        int y = p->getY();
+        int dir = p->getDir();
+        Network::instance().send(QString::number(x) + " " + QString::number(y) + " " + QString::number(dir));
+    }
 }
 
 void GameWindow::serverDisconnected() {
