@@ -123,11 +123,11 @@ bbbbbbbbbbbb
 b          b
 b          b
 b   c     xb
-bbbbcbbbbbbb
+bbb c bbbbbb
 b   c      b
 b         cb
 b      c cmb
-bbbbbbbcbbbb
+bbbbbb c bbb
 b      c   b
 bc         b
 bmc       pb
@@ -152,6 +152,126 @@ bb bb bb
 bb bb bb
 bb bbxbb
 bbbbbbbb
+endlevel
+
+level Cave
+blocks 0
+points 500
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                                  b
+bcc                                b
+bbb  bbbbbbbbbbbbbbbbbbbbbb        b
+b                         b        b
+b  bbbbbbbb         bbbbbbb        b
+b   bb                    b        b
+bb  bb                    b        b
+b   bb                    b        b
+b  bbb                    b        b
+b   bbccccccccccccccccccccb        b
+bb  bbbbbbbbbbbbbbbbbbbbbbb        b
+b    cccccccccccccccccccccb       xb
+b  bbbbbbbbbbbbbbbbbbbb   bbbbbbbbbb
+b   bbcccccccccccccccccccccccccbbbbb
+bb  bbcccccccccccccccccccccccccbbbbb
+bp  bbcccccccccccccccccccccccccbbbbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+endlevel
+
+level Bungie Jump
+blocks 0
+points 0
+bbbb
+bp b
+bbcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bfcb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bcfb
+bxbb
+endlevel
+
+level Watch out
+blocks 1
+points 800
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+bxeeeeeeeeeeeeeeeeeeeeeeeeee     pb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+endlevel
+
+level Bridge
+blocks 0
+points 1000
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+b                             b
+b                             b
+bp                           xb
+bbbbb  b  b  b  b  b  b  b  bbb
+bbbbffffffffffffffffffffffffbbb
+bbbbffffffffffffffffffffffffbbb
+bbbbffffffffffffffffffffffffbbb
+bbbbffffffffffffffffffffffffbbb
+bbbbeeeeeeeeeeeeeeeeeeeeeeeebbb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 endlevel
 
 level Leap of Faith
