@@ -46,12 +46,15 @@ public:
     //Updates the label on the screen
     void update();
 
+    //Deletes all high scores
+    void deleteHighScores();
+
     //getters
     int getCurScore() { return curScore; }
     QLabel* getBuddy() { return buddy; }
 
     //setters
-    void setScore(int newScore) { curScore = newScore; }
+    void setScore(int newScore) { curScore = newScore; update(); }
     void setBuddy(QLabel *newBuddy) {buddy = newBuddy; }
 
 private:

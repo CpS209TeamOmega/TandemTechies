@@ -28,7 +28,17 @@ void ScoreManager::addHighScore(QString player)
     else
     {
         QTextStream out(&file);
-        out << "\n" << player << ": " << curScore << "\n";
+        out << "\n" << player << ": " << curScore;
+    }
+    file.close();
+}
+
+void ScoreManager::deleteHighScores() {
+    if(!file.open(QIODevice::WriteOnly)) {
+        qDebug() << "Could not read score file!";
+    } else {
+        QTextStream out(&file);
+        out << "";
     }
     file.close();
 }

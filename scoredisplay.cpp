@@ -36,3 +36,9 @@ void ScoreDisplay::on_btnDone_clicked()
 {
     hide();
 }
+
+void ScoreDisplay::on_btnClear_clicked()
+{
+    ScoreManager::instance().deleteHighScores();
+    update();
+}

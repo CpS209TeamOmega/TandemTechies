@@ -71,7 +71,7 @@ public:
     int getLives() { return lives; }
     bool mustUpdateGUI() { return updateGUI; }
     int getLevelNumber() { return currentLevel + 1; }
-    Level* getCurrentLevel() { return levels[currentLevel]; }
+    Level* getCurrentLevel();
     bool isCheating(){return cheating;}
 
     //Setters
@@ -81,7 +81,7 @@ public:
     void setLives(int newLives) { lives = newLives; }
 
 signals:
-    void gameFinished(bool done);
+    void gameFinished(bool done, bool server);
 };
 
 #endif // GAMEMODEL_H

@@ -23,6 +23,8 @@ public:
 private slots:
     void on_btnDone_clicked();
 
+    void on_btnClear_clicked();
+
 private:
     Ui::ScoreDisplay *ui;
 };

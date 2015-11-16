@@ -90,7 +90,7 @@ private slots:
     void start(QString server);
     void load();
     void exit();
-    void endGame(bool done);
+    void endGame(bool done, bool server);
     void highScores();
 
     void closeEvent(QCloseEvent *e);

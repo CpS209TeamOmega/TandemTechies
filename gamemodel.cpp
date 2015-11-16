@@ -22,7 +22,7 @@ GameModel::GameModel()
 
 void GameModel::update()
 {
-	//Update the level that the user is currently playing
+    //Update the level that the user is currently playing
     getCurrentLevel()->update();
 
     //If the player is dead, then reset the level and decrement the lives
@@ -31,16 +31,18 @@ void GameModel::update()
         getCurrentLevel()->getPlayer()->setDead(false);
         lives--;
         if(lives <= 0) {
-            emit gameFinished(true);
+            emit gameFinished(false, false);
         }
         Network::instance().send("Reset");
         resetCurrentLevel();
         updateGUI = true;
     }
 
-	//Test to see if the user has gotten to the exit
+    //Test to see if the user has gotten to the exit
     if(getCurrentLevel()->isFinished()) {
-        if(Network::instance().isOpen()) { Network::instance().write("Finished\n"); }
+        if(currentLevel + 1 < levels.size()) {
+            Network::instance().send("Finished");
+        }
 
         levelFinished();
     }
@@ -53,6 +55,11 @@ void GameModel::update()
     back->move(-(pX / width * 250) + getCurrentLevel()->getAmplitudeW(), -(pY / height) * 25 + getCurrentLevel()->getAmplitudeH());
 }
 
+Level* GameModel::getCurrentLevel() {
+    if(currentLevel >= levels.size()) return nullptr;
+    else return levels[currentLevel];
+}
+
 void GameModel::setCurrentLevel(int newLevel) {
     currentLevel = newLevel;
 }
@@ -63,7 +70,7 @@ void GameModel::levelFinished() {
     Sound::instance().endLevel();
     currentLevel++;
     if(currentLevel >= levels.size()) {
-        emit gameFinished(true);
+        emit gameFinished(true, false);
         resetGame();
     }
     getCurrentLevel()->load();
@@ -80,6 +87,7 @@ void GameModel::resetGame() {
     levels.clear();
     loadLevels();
     lives = 8;
+    ScoreManager::instance().setScore(0);
 }
 
 bool GameModel::loadLevels() {
@@ -120,6 +128,7 @@ void GameModel::save() {
     out << "Lives " << lives << "\n";
 
     getCurrentLevel()->save(out);
+    saveFile.close();
     qDebug() << "Game saved.";
 }
 
@@ -205,6 +214,7 @@ bool GameModel::load() {
             }
         }
     }
+    loadFile.close();
     updateGUI = true;
     return true;
 }
@@ -212,7 +222,6 @@ bool GameModel::load() {
 void GameModel::resetCurrentLevel() {
     Level* level = getCurrentLevel();
     ScoreManager::instance().setScore(level->getScoreBeforeLevel());
-    ScoreManager::instance().update();
     QList<QString> data = level->getData();
     Level* newLevel = new Level(data, this);
     newLevel->load();
