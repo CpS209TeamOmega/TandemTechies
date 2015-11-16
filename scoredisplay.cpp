@@ -6,13 +6,10 @@ ScoreDisplay::ScoreDisplay(QWidget *parent) :
     ui(new Ui::ScoreDisplay)
 {
     ui->setupUi(this);
-
-    scoreText = new QLabel(this);
-    scoreText->setGeometry(0, 0, geometry().width(), geometry().height());
-    scoreText->raise();
-
-    connect(menu, SIGNAL(highScores()), this, SLOT(displayScores()));
-    connect(game, SIGNAL(scores()), this, SLOT(displayScores()));
+    setWindowFlags(Qt::WindowStaysOnTopHint);
+    setWindowModality(Qt::ApplicationModal);
+    setWindowTitle("High Scores");
+    setFixedSize(geometry().width(), geometry().height());
 }
 
 ScoreDisplay::~ScoreDisplay()
@@ -20,8 +17,22 @@ ScoreDisplay::~ScoreDisplay()
     delete ui;
 }
 
-void ScoreDisplay::displayScores()
+void ScoreDisplay::update()
 {
-    scoreText->setText(ScoreManager::instance().readScores());
-    scoreText->show();
+    QString display = "<center><b style=\"color:green;\">";
+    QStringList list = ScoreManager::instance().readScores();
+
+    for(int i = 0; i < list.size(); i++) {
+        display += list[i];
+        if(i < list.size() - 1) display += "<hr style=\"size:3;\"/>";
+    }
+
+    display += "</b></center>";
+
+    ui->txtScores->setText(display);
+}
+
+void ScoreDisplay::on_btnDone_clicked()
+{
+    hide();
 }

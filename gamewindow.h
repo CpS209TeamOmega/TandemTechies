@@ -17,6 +17,7 @@
 #include "entity.h"
 #include "menu.h"
 #include "scoremanager.h"
+#include "scoredisplay.h"
 
 namespace Ui
 {
@@ -29,6 +30,7 @@ class GameWindow : public QMainWindow
 
     GameModel model;          //For the GUI/model interactions
     Menu* menu;               //The Game menu
+    ScoreDisplay* display;
     RemotePlayer* otherPlayer;
     bool multiPlayer;
 
@@ -89,6 +91,7 @@ private slots:
     void load();
     void exit();
     void endGame(bool done);
+    void highScores();
 
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *k);

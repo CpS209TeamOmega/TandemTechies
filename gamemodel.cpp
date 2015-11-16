@@ -63,7 +63,6 @@ void GameModel::levelFinished() {
     Sound::instance().endLevel();
     currentLevel++;
     if(currentLevel >= levels.size()) {
-        ScoreManager::instance().addHighScore("Winner", ScoreManager::instance().getCurScore());
         emit gameFinished(true);
         resetGame();
     }
@@ -77,8 +76,10 @@ void GameModel::resetGame() {
         delete levels[i];
     }
     cheating = false;
+    currentLevel = 0;
     levels.clear();
     loadLevels();
+    lives = 8;
 }
 
 bool GameModel::loadLevels() {

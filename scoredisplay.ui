@@ -6,32 +6,86 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>320</height>
+    <width>510</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/images/player.png</normaloff>:/images/player.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QTextEdit" name="txtScores">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>471</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnDone">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>430</y>
+     <width>85</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Done</string>
+   </property>
+  </widget>
   <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>10</y>
+     <width>381</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: orange;
+font: 30pt Arial;
+background-color: rgba(0,0,0,.7);
+padding: 7px;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>      High Scores</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblimg">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>240</width>
-     <height>320</height>
+     <width>510</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="resources.qrc">:/images/back.jpg</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
+    <pixmap resource="resources.qrc">:/images/bg.png</pixmap>
    </property>
   </widget>
+  <zorder>lblimg</zorder>
+  <zorder>txtScores</zorder>
+  <zorder>btnDone</zorder>
+  <zorder>label</zorder>
  </widget>
  <resources>
   <include location="resources.qrc"/>

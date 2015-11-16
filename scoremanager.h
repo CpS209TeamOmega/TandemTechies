@@ -7,7 +7,6 @@
 #ifndef SCOREMANAGER_H
 #define SCOREMANAGER_H
 
-#include <QHash>
 #include <QDebug>
 #include <QString>
 #include <QLabel>
@@ -23,9 +22,7 @@ private:
     //The file to save the scores to
     QFile file;
 
-    //The virtual score "dashboard"
-    QHash<QString, int> dashBoard;
-
+    //The label on the screen with the score
     QLabel *buddy;
 
     //the in-game score
@@ -35,24 +32,16 @@ private:
     ScoreManager() : file("scores.txt"), curScore(0) { }
 
 public:
-    //Return the highest score ever
-    int getHiScore();
 
     //add points to the current score
     int addToScore(int plusScore);
 
     //<player> The player's name
     //<score> The score the player got
-    void addHighScore(QString player, int score);//Add to scoreTable and update dashBoard
-
-    //Return the records of scores and players
-    QHash<QString, int> getAllScores();
-
-    //Saves the scores to the file
-    void writeScores();
+    void addHighScore(QString player);//Add to scoreTable and update dashBoard
 
     //Loads all of the scores from file
-    QString readScores();
+    QStringList readScores();
 
     //Updates the label on the screen
     void update();

@@ -8,6 +8,7 @@
 #include "ui_gamewindow.h"
 #include "enemy.h"
 #include "remoteplayer.h"
+#include "scoredisplay.h"
 #include "network.h"
 #include "sound.h"
 #include "bullet.h"
@@ -19,6 +20,7 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QFile>
+#include <QInputDialog>
 #include <QtGlobal>
 #include <QStringList>
 #include <QIcon>
@@ -41,6 +43,7 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     setWindowTitle("Tandem Techies");
     fps = 60;
 
+    display = new ScoreDisplay();
     menu = new Menu();
     menu->show();
     multiPlayer = false;
@@ -49,6 +52,7 @@ GameWindow::GameWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::GameWi
     connect(menu, SIGNAL(startGame(QString)), this, SLOT(start(QString)));
     connect(menu, SIGNAL(loadGame()), this, SLOT(load()));
     connect(menu, SIGNAL(exitGame()), this, SLOT(exit()));
+    connect(menu, SIGNAL(highScores()), this, SLOT(highScores()));
     connect(&model, SIGNAL(gameFinished(bool)), this, SLOT(endGame(bool)));
 
     //Connect server signals
@@ -315,22 +319,33 @@ void GameWindow::keyPressEvent(QKeyEvent *k){
     }
 }
 
+void GameWindow::highScores() {
+    display->update();
+    display->show();
+}
+
 void GameWindow::endGame(bool done)
 {
     if(done)
     {
         QMessageBox::information(this, "YOU LOST", "You lost all your lives. Try again.");
-        ScoreManager::instance().addHighScore("Loser", ScoreManager::instance().getCurScore());
-        emit scores();
-
     }
     else
     {
         QMessageBox::information(this, "CONGRATULATIONS", "You won!");
-        ScoreManager::instance().addHighScore("Winner", ScoreManager::instance().getCurScore());
-        emit scores();
     }
-    close();
+
+    bool ok = false;
+    while(!ok)
+    {
+        QString userName = QInputDialog::getText(this, "High Score!", "Enter Your Name:", QLineEdit::Normal, "Banana", &ok);
+        ScoreManager::instance().addHighScore(userName);
+    }
+
+    display->update();
+    display->show();
+
+    model.resetGame();
 }
 
 void GameWindow::focusOutEvent(QFocusEvent *) {

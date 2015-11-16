@@ -1,8 +1,6 @@
 #ifndef SCOREDISPLAY_H
 #define SCOREDISPLAY_H
 
-#include "menu.h"
-#include "gamewindow.h"
 #include "scoremanager.h"
 
 #include <QWidget>
@@ -16,20 +14,17 @@ class ScoreDisplay : public QWidget
 {
     Q_OBJECT
 
-    Menu *menu;
-    GameWindow *game;
-
-    QLabel *scoreText;
-
 public:
     explicit ScoreDisplay(QWidget *parent = 0);
     ~ScoreDisplay();
 
-private:
-    Ui::ScoreDisplay *ui;
+    void update();
 
 private slots:
-    void displayScores();
+    void on_btnDone_clicked();
+
+private:
+    Ui::ScoreDisplay *ui;
 };
 
 #endif // SCOREDISPLAY_H
